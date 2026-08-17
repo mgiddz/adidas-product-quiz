@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>adidas Running — Product Knowledge Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link
+  href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow:wght@400;600;700;800&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<div class="app">
+  <div class="header">
+    <div class="header-top">
+      <div class="stripes"><span></span><span></span><span></span></div>
+    </div>
+    <div class="brand">adidas RUNNING</div>
+    <div class="eyebrow">Retail Specialist Program</div>
+  </div>
+
+  <!-- ================= INTAKE ================= -->
+  <section id="screen-intake" class="screen">
+    <div class="badge-pill">Product Knowledge Quiz</div>
+    <h1 class="title">RUNNING LINE<br />PRODUCT TEST</h1>
+    <p class="subtext">
+      20 questions covering the current running lineup — Hyperboost Edge,
+      Adios Pro 4, Boston 13, Evo SL Woven, and Supernova Rise 3 — with a
+      spotlight on this season's featured push, Hyperboost Edge.
+    </p>
+    <p class="subtext">
+      Score 14+ for Specialist status, 18+ for Legend Status, and be
+      eligible for a prize. Fill in your info below, then start the quiz —
+      you'll see your score and a full breakdown the moment you finish.
+    </p>
+
+    <form id="intake-form" novalidate>
+      <div class="field">
+        <label for="field-name">Employee Name</label>
+        <input type="text" id="field-name" data-field="employeeName" required />
+      </div>
+
+      <div class="field">
+        <label for="field-store-name">Store / Banner Name</label>
+        <input
+          type="text"
+          id="field-store-name"
+          data-field="storeName"
+          placeholder="e.g. Fleet Feet"
+          required
+        />
+      </div>
+
+      <div class="field">
+        <label for="field-store-location">Store Location</label>
+        <input
+          type="text"
+          id="field-store-location"
+          data-field="storeLocation"
+          placeholder="e.g. Cincinnati — Rookwood Commons"
+          required
+        />
+      </div>
+
+      <div class="field">
+        <label for="field-shoe-size">Shoe Size</label>
+        <input type="text" id="field-shoe-size" data-field="shoeSize" placeholder="e.g. 10.5" required />
+        <div class="toggle-group" id="shoe-gender-toggle" style="margin-top: 8px">
+          <button type="button" data-value="M">Men's (M)</button>
+          <button type="button" data-value="W">Women's (W)</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="field-clothing-size">Clothing Size</label>
+        <select id="field-clothing-size" data-field="clothingSize" required>
+          <option value="" disabled selected>Select a size</option>
+          <option value="XS">XS</option>
+          <option value="S">S</option>
+          <option value="M">M</option>
+          <option value="L">L</option>
+          <option value="XL">XL</option>
+          <option value="XXL">XXL</option>
+        </select>
+        <div class="toggle-group" id="clothing-gender-toggle" style="margin-top: 8px">
+          <button type="button" data-value="M">Men's (M)</button>
+          <button type="button" data-value="W">Women's (W)</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="field-email">Email Address</label>
+        <input type="email" id="field-email" data-field="email" required />
+        <div class="error-text" id="email-error">Please enter a valid email address.</div>
+      </div>
+
+      <div class="field">
+        <label for="field-snack">Favorite Snack</label>
+        <select id="field-snack" required>
+          <option value="" disabled selected>Select one</option>
+          <option value="Smoothie">Smoothie</option>
+          <option value="Coffee">Coffee</option>
+          <option value="Candy">Candy</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="field hidden" id="field-snack-other-wrap">
+        <label for="field-snack-other">Tell us what</label>
+        <input type="text" id="field-snack-other" data-field="favoriteSnackOther" />
+      </div>
+
+      <button type="submit" class="btn-primary" id="start-quiz-btn" disabled>START QUIZ</button>
+    </form>
+  </section>
+
+  <!-- ================= QUIZ ================= -->
+  <section id="screen-quiz" class="screen hidden">
+    <div class="quiz-meta">
+      <div class="progress-label" id="progress-label">Question 1 of 21</div>
+      <div class="section-label" id="section-label"></div>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+
+    <div class="question-card">
+      <div class="question-image-wrap hidden" id="question-image-wrap">
+        <img class="question-image" id="question-image" alt="" />
+        <div class="question-image-caption" id="question-image-caption"></div>
+      </div>
+
+      <h2 class="question-text" id="question-text"></h2>
+
+      <div class="option-list" id="option-list"></div>
+
+      <div class="order-list hidden" id="order-list"></div>
+
+      <div class="field hidden" id="open-ended-wrap">
+        <textarea
+          id="open-ended-input"
+          placeholder="Type your answer here — there's no wrong answer."
+        ></textarea>
+      </div>
+
+      <div class="explanation-box hidden" id="explanation-box"></div>
+
+      <div class="quiz-nav">
+        <button type="button" class="btn-secondary check-order-btn hidden" id="check-order-btn">
+          CHECK ORDER
+        </button>
+        <button type="button" class="btn-primary" id="next-btn" disabled>Next Question</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= RESULTS ================= -->
+  <section id="screen-results" class="screen hidden">
+    <div class="score-hero">
+      <div class="tier-pill" id="score-tier-pill"></div>
+      <div class="score-number" id="score-number"></div>
+      <div class="score-message" id="score-message"></div>
+    </div>
+
+    <div class="breakdown-title">Question Breakdown</div>
+    <div id="breakdown-list"></div>
+
+    <div class="status-message" id="status-message"></div>
+
+    <div class="next-steps">
+      <div class="next-steps-title">Want to brush up?</div>
+      <div class="next-steps-grid">
+        <a class="hub-card" href="study-guide.html">
+          <div class="hub-card-label">Prep</div>
+          <div class="hub-card-title">Study Guide</div>
+          <div class="hub-card-desc">The full rundown on every shoe in the lineup.</div>
+        </a>
+        <a class="hub-card" href="cheat-sheet.html">
+          <div class="hub-card-label">Quick Reference</div>
+          <div class="hub-card-title">Cheat Sheet</div>
+          <div class="hub-card-desc">A condensed, one-page refresher.</div>
+        </a>
+        <a class="hub-card" href="https://survey.typeform.com/to/e9urwqa7" target="_blank" rel="noopener">
+          <div class="hub-card-label">Tell Us &middot; Opens in a new tab</div>
+          <div class="hub-card-title">Experience Survey</div>
+          <div class="hub-card-desc">Quick feedback on the training — takes about a minute.</div>
+        </a>
+      </div>
+    </div>
+
+    <button type="button" class="btn-secondary" id="retake-btn" style="margin-top: 24px">
+      RETAKE QUIZ
+    </button>
+  </section>
+</div>
+
+<!-- Supabase client (public anon key only — see js/config.js) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script src="js/questions.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

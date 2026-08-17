@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#0d0d0d"/><text x="50" y="45" font-size="14" fill="#fff" text-anchor="middle" font-family="Arial" font-weight="bold">adidas</text><text x="50" y="62" font-size="9" fill="#e04b3c" text-anchor="middle" font-family="Arial">HYPERBOOST</text><text x="50" y="74" font-size="7" fill="#ccc" text-anchor="middle" font-family="Arial">Product Quiz</text></svg></template>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&amp;family=Barlow:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #0d0d0d; }
+    @keyframes popIn { 0% { transform: scale(0.7); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+  </style>
+  <script src="./image-slot.js"></script>
+</helmet>
+
+<div style="min-height:100vh; background:#0d0d0d; font-family:'Barlow',Arial,sans-serif; color:#f5f5f0; display:flex; flex-direction:column; align-items:center;">
+
+  <div style="width:100%; max-width:900px; padding:22px 18px 0 18px; box-sizing:border-box; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+    <div style="font-family:'Archivo Black',Arial,sans-serif; font-size:clamp(15px,4.5vw,20px); letter-spacing:0.04em;">adidas RUNNING</div>
+    <div style="font-size:clamp(10px,2.8vw,13px); letter-spacing:0.12em; text-transform:uppercase; color:oklch(0.7 0 0);">Retail Specialist Program</div>
+  </div>
+
+  <sc-if value="{{ isIntro }}" hint-placeholder-val="{{ true }}">
+    <div style="width:100%; max-width:900px; padding:28px 18px 64px; box-sizing:border-box;">
+      <div style="position:relative; width:100%; height:clamp(200px,52vw,{{ heroHeight }}px); border-radius:4px; overflow:hidden; margin-bottom:26px;">
+        <image-slot id="quiz-hero" shape="rect" placeholder="Hyperboost Edge — hero product shot" fit="{{ imageFit }}" style="background: linear-gradient(180deg, #c1672a, #28211a); width:100%; height:100%"></image-slot>
+      </div>
+      <div style="display:inline-block; background:oklch(0.55 0.22 25); color:#fff; font-size:12px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; padding:6px 12px; border-radius:2px; margin-bottom:14px;">Product Knowledge Test</div>
+      <h1 style="font-family:'Archivo Black',Arial,sans-serif; font-size:clamp(30px,8.5vw,48px); line-height:1.05; margin:0 0 14px 0; text-wrap:balance;">RUNNING LINE<br>PRODUCT TEST</h1>
+      <p style="font-size:clamp(15px,4vw,18px); line-height:1.6; color:oklch(0.85 0 0); max-width:640px; margin:0 0 10px 0;">20 questions covering the current running lineup — Hyperboost Edge, Adios Pro 4, Boston 13, Evo SL Woven, and Supernova Rise 3 — with a spotlight on this season's featured push, HYPERBOOST EDGE.</p>
+      <p style="font-size:clamp(13px,3.4vw,15px); color:oklch(0.65 0 0); max-width:640px; margin:0 0 26px 0;">Score 18+ to earn Specialist status and win a prize. Once you finish, keep an eye on your inbox — a two-minute experience survey follows right after.</p>
+      <button onclick="{{ start }}" style="width:100%; max-width:320px; background:oklch(0.55 0.22 25); color:#fff; border:none; font-family:'Archivo Black',Arial,sans-serif; font-size:clamp(16px,4.5vw,18px); padding:18px 36px; border-radius:2px; cursor:pointer; letter-spacing:0.03em; min-height:56px;">START TEST</button>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isQuiz }}" hint-placeholder-val="{{ false }}">
+    <div style="width:100%; max-width:900px; padding:24px 18px 64px; box-sizing:border-box;">
+      <div style="display:flex; justify-content:space-between; align-items:baseline; gap:10px; margin-bottom:10px;">
+        <div style="font-size:clamp(11px,3vw,13px); letter-spacing:0.1em; text-transform:uppercase; color:oklch(0.7 0 0); white-space:nowrap;">Question {{ questionNumber }} of 20</div>
+        <div style="font-size:clamp(11px,3vw,13px); letter-spacing:0.1em; text-transform:uppercase; color:oklch(0.55 0.22 25); text-align:right;">{{ topicLabel }}</div>
+      </div>
+      <div style="width:100%; height:6px; background:#262626; border-radius:3px; overflow:hidden; margin-bottom:24px;">
+        <div style="height:100%; background:oklch(0.55 0.22 25); border-radius:3px; width:{{ progressPct }}%; transition:width 0.3s ease;"></div>
+      </div>
+      <div style="background:#171717; border-radius:6px; padding:clamp(18px,5vw,36px) clamp(16px,4.5vw,32px); animation:popIn 0.25s ease; display:flex; flex-wrap:wrap; gap:clamp(18px,4vw,32px); align-items:center;">
+        <div style="flex:1 1 260px; position:relative; width:100%; height:clamp(200px,50vw,324px); border-radius:4px; overflow:hidden;">
+          <image-slot id="{{ cutawaySlotId }}" shape="rect" placeholder="{{ cutawayPlaceholder }}" fit="{{ imageFit }}" style="width:100%; height:100%"></image-slot>
+        </div>
+        <div style="flex:1 1 300px; min-width:0;">
+          <h2 style="font-family:'Archivo Black',Arial,sans-serif; font-size:clamp(20px,5.4vw,26px); line-height:1.3; margin:0 0 22px 0; text-wrap:balance;">{{ currentQuestion.q }}</h2>
+
+          <sc-if value="{{ isOrderQuestion }}" hint-placeholder-val="{{ false }}">
+            <sc-for list="{{ orderRows }}" as="row" hint-placeholder-count="5">
+              <div style="display:flex; align-items:center; gap:10px; background:{{ row.bg }}; border:2px solid {{ row.border }}; border-radius:4px; padding:10px 12px; margin-bottom:10px;">
+                <div style="font-family:'Archivo Black',Arial,sans-serif; font-size:14px; color:oklch(0.55 0.22 25); width:18px; flex:none;">{{ row.rank }}</div>
+                <div style="flex:1; min-width:0; font-family:'Barlow',Arial,sans-serif; font-size:clamp(14px,3.8vw,16px); font-weight:600;">{{ row.label }}</div>
+                <div style="display:flex; gap:8px; flex:none;">
+                  <button onclick="{{ row.moveUp }}" disabled="{{ row.disabled }}" style="background:#262626; color:#f5f5f0; border:none; border-radius:3px; width:44px; height:44px; font-size:18px; cursor:{{ row.cursor }};">↑</button>
+                  <button onclick="{{ row.moveDown }}" disabled="{{ row.disabled }}" style="background:#262626; color:#f5f5f0; border:none; border-radius:3px; width:44px; height:44px; font-size:18px; cursor:{{ row.cursor }};">↓</button>
+                </div>
+              </div>
+            </sc-for>
+            <sc-if value="{{ showOrderCheck }}" hint-placeholder-val="{{ true }}">
+              <button onclick="{{ checkOrder }}" style="margin-top:10px; width:100%; max-width:280px; min-height:52px; background:oklch(0.55 0.22 25); color:#fff; border:none; font-family:'Archivo Black',Arial,sans-serif; font-size:16px; padding:14px 32px; border-radius:2px; cursor:pointer;">CHECK ORDER</button>
+            </sc-if>
+          </sc-if>
+
+          <sc-if value="{{ isMultipleChoice }}" hint-placeholder-val="{{ true }}">
+            <sc-for list="{{ optionButtons }}" as="opt" hint-placeholder-count="4">
+              <button onclick="{{ opt.onClick }}" disabled="{{ opt.disabled }}" style="display:block; width:100%; min-height:52px; text-align:left; background:{{ opt.bg }}; color:{{ opt.color }}; border:2px solid {{ opt.border }}; font-family:'Barlow',Arial,sans-serif; font-size:clamp(15px,4vw,17px); font-weight:600; padding:15px 16px; border-radius:4px; margin-bottom:11px; cursor:{{ opt.cursor }}; line-height:1.35;">{{ opt.text }}</button>
+            </sc-for>
+          </sc-if>
+
+          <sc-if value="{{ showExplain }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:18px; padding:15px 16px; background:#0d0d0d; border-left:3px solid oklch(0.55 0.22 25); border-radius:2px; font-size:clamp(14px,3.6vw,15px); line-height:1.55; color:oklch(0.85 0 0);">{{ currentQuestion.explain }}</div>
+            <button onclick="{{ next }}" style="margin-top:18px; width:100%; max-width:300px; min-height:54px; background:#f5f5f0; color:#0d0d0d; border:none; font-family:'Archivo Black',Arial,sans-serif; font-size:16px; padding:14px 32px; border-radius:2px; cursor:pointer;">{{ nextLabel }}</button>
+          </sc-if>
+        </div>
+      </div>
+      
+    </div>
+  </sc-if>
+
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;heroHeight&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 340, &quot;min&quot;: 200, &quot;max&quot;: 560, &quot;step&quot;: 10, &quot;unit&quot;: &quot;px&quot;, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Images&quot;}, &quot;cutawayHeight&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 160, &quot;min&quot;: 100, &quot;max&quot;: 320, &quot;step&quot;: 10, &quot;unit&quot;: &quot;px&quot;, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Images&quot;}, &quot;imageFit&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;cover&quot;, &quot;options&quot;: [&quot;cover&quot;, &quot;contain&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Images&quot;}}">
+
+const QUESTIONS = [
+  { topic: "Hyperboost Edge", slot: "cutaway-edge", placeholder: "Hyperboost Edge — midsole cutaway diagram", q: "What is the name of the foam that powers the HYPERBOOST EDGE?", options: ["Lightstrike Pro", "Hyperboost Pro", "Dreamstrike+", "Ultraboost Pro"], correct: 1, explain: "Hyperboost Pro is a pelletized foam derived from racing footwear, tuned for energy return, cushioning, and low weight." },
+  { topic: "Hyperboost Edge", slot: "cutaway-edge", placeholder: "Hyperboost Edge — midsole cutaway diagram", q: "What is the HYPERBOOST EDGE's woven upper technology called?", options: ["PRIMEWEAVE", "Flyknit", "Techfit", "Primeknit+"], correct: 0, explain: "PRIMEWEAVE is a super-soft, lightweight woven upper that locks in the foot without weighing it down." },
+  { topic: "Hyperboost Edge", slot: "cutaway-edge", placeholder: "Hyperboost Edge — outsole cutaway diagram", q: "What outsole does the HYPERBOOST EDGE use?", options: ["Continental Rubber", "LIGHTTRAXION", "Adiwear", "Stealth Grip"], correct: 1, explain: "LIGHTTRAXION is a full-length lightweight outsole built for optimum traction across all surfaces." },
+  { topic: "Hyperboost Edge", slot: "cutaway-edge", placeholder: "Hyperboost Edge — spec sheet", q: "What is the HYPERBOOST EDGE's stack height / drop?", options: ["46mm / 40mm, 6mm drop", "45mm / 39mm, 6mm drop", "39mm / 34mm, 5mm drop", "44mm / 38 mm, 6mm drop"], correct: 1, explain: "The Edge sits at 45mm heel / 39mm forefoot with a 6mm drop — one of the tallest stacks in the lineup." },
+  { topic: "Hyperboost Edge", slot: "cutaway-edge", placeholder: "Hyperboost Edge — hero shot", q: "A customer wants to know what the HYPERBOOST EDGE feels like underfoot. Which description is most accurate?", options: ["Firm, urgent, and propulsive", "Soft landing with a springy, plush toe-off", "Barely-there and minimal", "Stiff and rigid through the midfoot"], correct: 1, explain: "Hyperboost Edge feels soft and plush on landing with a springy, bouncy toe-off — comfort-forward, not race-day firm." },
+  { topic: "Adios Pro 4", slot: "cutaway-pro4", placeholder: "Adios Pro 4 — EnergyRods 2.0 cutaway diagram", q: "What is the ADIOS PRO 4's approximate weight and stack height?", options: ["8oz, 39mm/33mm stack", "10oz, 45mm/39mm stack", "6oz, 30mm/24mm stack", "9oz, 42mm/36mm stack"], correct: 0, explain: "The Pro 4 comes in at roughly 8oz with a 39mm/33mm stack (6mm drop) — lightweight and low enough for a fast, propulsive race feel." },
+  { topic: "Adios Pro 4", slot: "cutaway-pro4", placeholder: "Adios Pro 4 — hero shot", q: "What is the ADIOS PRO 4's franchise purpose?", options: ["Race to win", "Daily super trainer", "Hyper comfort", "Long Runs"], correct: 0, explain: "Adios Pro 4 is built purely to race — lightweight, propulsive, and best suited to 0–42km race day and speed work." },
+  { topic: "Adios Pro 4", slot: "cutaway-pro4", placeholder: "Adios Pro 4 — spec sheet", q: "What is the retail price of the ADIOS PRO 4?", options: ["$200", "$225", "$250", "$275"], correct: 2, explain: "The Adios Pro 4 retails at $250, our top-tier race-day shoe." },
+  { topic: "Adios Pro 4", slot: "cutaway-pro4", placeholder: "Adios Pro 4 — EnergyRods 2.0 cutaway diagram", q: "The EnergyRods 2.0 in the ADIOS PRO 4 are shaped to mimic:", options: ["The shape of the outsole lugs", "The shape of the foot, mimicking the metatarsal bones", "A single straight carbon bar", "The heel counter"], correct: 1, explain: "EnergyRods 2.0 are shaped like the foot itself, mimicking the metatarsal bones for a natural, propulsive toe-off." },
+  { topic: "Boston 13", slot: "cutaway-boston", placeholder: "Boston 13 — hero shot", q: "The BOSTON 13 is best positioned as:", options: ["A max-cushion recovery shoe", "A versatile tempo/daily-trainer with energy rods", "A stability shoe for overpronators", "Ultramarathon shoe"], correct: 1, explain: "Boston 13 is the go-to tempo trainer — a springy ride powered by EnergyRods (not a plate) built for daily training up through race pace." },
+  { topic: "Boston 13", slot: "cutaway-boston", placeholder: "Boston 13 — hero shot", q: "What is the BOSTON 13 best used for?", options: ["Race day only", "Tempo workouts and daily training", "Recovery walks only", "Trail running"], correct: 1, explain: "Boston 13 is built for tempo workouts and daily training — a versatile, springy ride powered by EnergyRods." },
+  { topic: "Boston 13", slot: "cutaway-boston", placeholder: "Boston 13 — hero shot", q: "When a customer wants ONE shoe for both easy runs and tempo workouts, which shoe fits best?", options: ["Adios Pro 4", "Boston 13", "Hyperboost Edge", "Supernova Rise 3"], correct: 1, explain: "Boston 13's versatility across paces makes it the natural one-shoe answer for easy-to-tempo training." },
+  { topic: "Evo SL Woven", slot: "cutaway-evosl", placeholder: "Evo SL Woven — hero shot", q: "What distinguishes the EVO SL WOVEN from the Adios Pro racing line?", options: ["It has a carbon plate", "It's plate-free with a smooth, natural ride", "It's the heaviest shoe in the lineup", "It's built only for walking"], correct: 1, explain: "Evo SL Woven is the lighter, more affordable, plate-free sibling of Adios Pro — a natural, forgiving ride at any pace." },
+  { topic: "Evo SL Woven", slot: "cutaway-evosl", placeholder: "Evo SL Woven — upper detail shot", q: "What upper construction gives the EVO SL WOVEN its name?", options: ["A PRIMEWEAVE upper", "A woven mesh upper", "A leather upper", "A neoprene bootie"], correct: 1, explain: "Evo SL Woven uses a woven mesh upper — a lightweight, breathable construction that keeps the shoe soft and minimal." },
+  { topic: "Evo SL Woven", slot: "cutaway-evosl", placeholder: "Evo SL Woven — hero shot", q: "The EVO SL WOVEN is best recommended to a customer who wants:", options: ["Max stability for overpronation", "A lightweight, everyday trainer that's easy on the wallet", "A dedicated race-day super shoe", "A trail running shoe"], correct: 1, explain: "Evo SL Woven trades the plate and price of Adios Pro for a lighter, more accessible everyday ride." },
+  { topic: "Supernova Rise 3", slot: "cutaway-rise3", placeholder: "Supernova Rise 3 — midsole cutaway diagram", q: "What foam is the SUPERNOVA RISE 3 built around?", options: ["Lightstrike Pro", "Hyperboost Pro", "Dreamstrike+", "EnergyFoam"], correct: 2, explain: "Dreamstrike+ is softer and more plush than Lightstrike Pro, tuned for all-day comfort over performance." },
+  { topic: "Supernova Rise 3", slot: "cutaway-rise3", placeholder: "Supernova Rise 3 — hero shot", q: "Which shoe ranks as the MOST stable/planted in the current lineup?", options: ["Adios Pro 4", "Hyperboost Edge", "Supernova Rise 3", "Evo SL Woven"], correct: 2, explain: "Supernova Rise 3 is the most stable, most 'grounded' feel — secure fit, full-length outsole rubber." },
+  { topic: "Supernova Rise 3", slot: "cutaway-rise3", placeholder: "Supernova Rise 3 — hero shot", q: "A nurse who's on her feet all shift asks for the least tiring, most supportive shoe. You lead with:", options: ["Adios Pro 4", "Hyperboost Edge", "Supernova Rise 3", "Boston 13"], correct: 2, explain: "Supernova Rise 3 is the default recommendation for on-feet professionals — calm, stable, and the most budget-friendly option." },
+  { topic: "Full Lineup", slot: "cutaway-lineup", placeholder: "Full running lineup — group shot", q: "Ranking by retail price, which shoe is the MOST expensive?", options: ["Boston 13", "Hyperboost Edge", "Adios Pro 4", "Evo SL Woven"], correct: 2, explain: "Adios Pro 4 ($250) sits above Hyperboost Edge ($200), with Boston 13 and Evo SL Woven priced below both." },
+  { topic: "Full Lineup", slot: "cutaway-lineup", placeholder: "Full running lineup — group shot", type: "order", q: "Drag to put these shoes in order by weight — LIGHTEST to HEAVIEST.", items: ["Adios Pro 4", "Evo SL Woven", "Boston 13", "Hyperboost Edge", "Supernova Rise 3"], startOrder: [2, 4, 0, 3, 1], correct: true, explain: "Lightest to heaviest: Adios Pro 4 (race-day minimal) → Evo SL Woven → Boston 13 → Hyperboost Edge → Supernova Rise 3 (our most cushioned, comfort-first build)." },
+];
+
+const BADGES = [
+  { min: 18, label: "LEGEND STATUS", bg: "oklch(0.55 0.22 25)", color: "#fff", message: "Elite-level product knowledge. You're ready to lead floor training for the rest of the team." },
+  { min: 14, label: "SPECIALIST", bg: "oklch(0.85 0.17 85)", color: "#0d0d0d", message: "Strong grasp of the lineup, especially the Hyperboost story. A quick pass over your missed questions and you're set." },
+  { min: 10, label: "ROOKIE", bg: "oklch(0.8 0.03 90)", color: "#0d0d0d", message: "Solid start. Revisit the study guide's Hyperboost Edge section before your next shift." },
+  { min: 0, label: "KEEP STUDYING", bg: "oklch(0.75 0 0)", color: "#0d0d0d", message: "Give the cheat sheet another read — focus on the featured Hyperboost Edge." },
+];
+
+class Component extends DCLogic {
+  state = { screen: "intro", idx: 0, selected: null, answers: [], order: null, orderChecked: false };
+
+  start() { this.setState({ screen: "quiz", idx: 0, selected: null, answers: [], order: null, orderChecked: false }); }
+  retake() { this.setState({ screen: "intro", idx: 0, selected: null, answers: [], order: null, orderChecked: false }); }
+
+  selectAnswer(i) {
+    if (this.state.selected !== null) return;
+    const answers = [...this.state.answers];
+    answers[this.state.idx] = i;
+    this.setState({ selected: i, answers });
+  }
+
+  moveOrder(pos, dir) {
+    if (this.state.orderChecked) return;
+    const q = QUESTIONS[this.state.idx];
+    const order = [...(this.state.order || q.startOrder)];
+    const j = pos + dir;
+    if (j < 0 || j >= order.length) return;
+    [order[pos], order[j]] = [order[j], order[pos]];
+    this.setState({ order });
+  }
+
+  checkOrder() {
+    const q = QUESTIONS[this.state.idx];
+    const order = this.state.order || q.startOrder;
+    const isCorrect = order.every((itemIdx, pos) => itemIdx === pos);
+    const answers = [...this.state.answers];
+    answers[this.state.idx] = isCorrect;
+    this.setState({ orderChecked: true, answers, order });
+  }
+
+  next() {
+    const nextIdx = this.state.idx + 1;
+    if (nextIdx >= QUESTIONS.length) {
+      const score = this.state.answers.reduce((s, a, i) => s + (a === QUESTIONS[i].correct ? 1 : 0), 0);
+      window.location.href = "Hyperboost Quiz Results.dc.html?score=" + score;
+    } else {
+      const nq = QUESTIONS[nextIdx];
+      this.setState({ idx: nextIdx, selected: null, order: nq && nq.type === "order" ? [...nq.startOrder] : null, orderChecked: false });
+    }
+  }
+
+  renderVals() {
+    const { screen, idx, selected, answers, order, orderChecked } = this.state;
+    const q = QUESTIONS[idx];
+    const score = answers.reduce((s, a, i) => s + (a === QUESTIONS[i].correct ? 1 : 0), 0);
+    const badge = BADGES.find(b => score >= b.min);
+    const isOrder = q && q.type === "order";
+    const effectiveOrder = isOrder ? (order || q.startOrder) : null;
+
+    const orderRows = effectiveOrder ? effectiveOrder.map((itemIdx, pos) => {
+      let bg = "#0d0d0d", border = "#333";
+      if (orderChecked) {
+        bg = itemIdx === pos ? "oklch(0.7 0.16 145)" : "oklch(0.6 0.19 25)";
+        border = bg;
+      }
+      return {
+        label: q.items[itemIdx],
+        rank: pos + 1,
+        bg, border,
+        disabled: orderChecked,
+        cursor: orderChecked ? "default" : "pointer",
+        moveUp: () => this.moveOrder(pos, -1),
+        moveDown: () => this.moveOrder(pos, 1),
+      };
+    }) : [];
+
+    const optionButtons = (q && !isOrder) ? q.options.map((text, i) => {
+      let bg = "#0d0d0d", color = "#f5f5f0", border = "#333";
+      if (selected !== null) {
+        if (i === q.correct) { bg = "oklch(0.7 0.16 145)"; color = "#0d0d0d"; border = "oklch(0.7 0.16 145)"; }
+        else if (i === selected) { bg = "oklch(0.6 0.19 25)"; color = "#f5f5f0"; border = "oklch(0.6 0.19 25)"; }
+      }
+      return {
+        text, bg, color, border,
+        disabled: selected !== null,
+        cursor: selected !== null ? "default" : "pointer",
+        onClick: () => this.selectAnswer(i),
+      };
+    }) : [];
+
+    return {
+      isIntro: screen === "intro",
+      isQuiz: screen === "quiz",
+      isResults: screen === "results",
+      start: () => this.start(),
+      retake: () => this.retake(),
+      next: () => this.next(),
+      questionNumber: idx + 1,
+      topicLabel: q ? q.topic : "",
+      progressPct: Math.round((idx / QUESTIONS.length) * 100),
+      currentQuestion: q || { q: "", explain: "" },
+      optionButtons,
+      isOrderQuestion: isOrder,
+      isMultipleChoice: !isOrder,
+      orderRows,
+      showOrderCheck: !orderChecked,
+      checkOrder: () => this.checkOrder(),
+      showExplain: isOrder ? orderChecked : selected !== null,
+      cutawaySlotId: q ? ("cutaway-q" + idx) : "cutaway",
+      cutawayPlaceholder: q ? q.placeholder : "",
+      nextLabel: idx + 1 >= QUESTIONS.length ? "SEE RESULTS" : "NEXT QUESTION",
+      score,
+      badge,
+      heroHeight: this.props.heroHeight ?? 340,
+      cutawayHeight: this.props.cutawayHeight ?? 160,
+      imageFit: this.props.imageFit ?? "cover",
+    };
+  }
+}
+
+</script>
+</body>
+</html>

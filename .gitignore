@@ -1,0 +1,29 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+.vercel/
+.netlify/
+
+# Env / secrets
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# Files staged for manual deletion (see repo notes) — not part of the app
+_to_delete/
