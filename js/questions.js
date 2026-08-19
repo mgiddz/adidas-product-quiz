@@ -98,14 +98,14 @@ const QUIZ_QUESTIONS = [
     section: "Adios Pro 4",
     prompt: "What is the Adios Pro 4's approximate weight and stack height?",
     options: [
-      "8oz, 39mm/33mm stack",
+      "7oz, 39mm/33mm stack",
       "10oz, 45mm/39mm stack",
       "6oz, 30mm/24mm stack",
       "9oz, 42mm/36mm stack",
     ],
     correctIndex: 0,
     explain:
-      "The Pro 4 comes in at roughly 8oz with a 39mm/33mm stack (6mm drop) — lightweight and low enough for a fast, propulsive race feel.",
+      "The Pro 4 comes in at roughly 7oz with a 39mm/33mm stack (6mm drop) — lightweight and low enough for a fast, propulsive race feel.",
     image: "adios-pro-4-hero.jpg",
     imageCaption: "Adios Pro 4",
   },
@@ -119,7 +119,7 @@ const QUIZ_QUESTIONS = [
     explain:
       "Adios Pro 4 is built purely to race — lightweight, propulsive, and best suited to 0–42km race day and speed work.",
     image: "adios-pro-4-action.jpg",
-    imageCaption: "Adios Pro 4 — built to race",
+    imageCaption: "Adios Pro 4",
   },
   {
     id: 8,
@@ -188,8 +188,6 @@ const QUIZ_QUESTIONS = [
     correctIndex: 1,
     explain:
       "Boston 13's versatility across paces makes it the natural one-shoe answer for easy-to-tempo training.",
-    image: "boston-13-sole.jpg",
-    imageCaption: "Boston 13 — full outsole",
   },
   {
     id: 13,
@@ -212,11 +210,16 @@ const QUIZ_QUESTIONS = [
     id: 14,
     type: "mc",
     section: "Evo SL Woven",
-    prompt: "What upper construction gives the Evo SL Woven its name?",
-    options: ["A PRIMEWEAVE upper", "A woven mesh upper", "A leather upper", "A neoprene bootie"],
+    prompt: "How would you describe the Evo SL Woven's ride compared to the Hyperboost Edge?",
+    options: [
+      "Softer and plusher — built as an everyday, do-it-all trainer",
+      "Snappier, lighter, and more flexible — built for speed, without Hyperboost's plush cushioning",
+      "Identical ride, just a different upper material",
+      "Heavier and more stable, built for overpronators",
+    ],
     correctIndex: 1,
     explain:
-      "Evo SL Woven uses a woven mesh upper — a lightweight, breathable construction that keeps the shoe soft and minimal.",
+      "Hyperboost Edge is the plush, do-it-all super trainer built for all-day comfort. Evo SL Woven trades that cushioning for a lighter, snappier, more flexible ride — still plate-free, but built for speed over comfort.",
     image: "evo-sl-side.jpg",
     imageCaption: "Evo SL Woven",
   },
@@ -226,14 +229,14 @@ const QUIZ_QUESTIONS = [
     section: "Evo SL Woven",
     prompt: "The Evo SL Woven is best recommended to a customer who wants:",
     options: [
+      "A plush, all-day comfort trainer built for easy miles",
+      "A snappy, race-inspired shoe for intervals and track work — without Adios Pro's price tag",
       "Max stability for overpronation",
-      "A lightweight, everyday trainer that's easy on the wallet",
-      "A dedicated race-day super shoe",
       "A trail running shoe",
     ],
     correctIndex: 1,
     explain:
-      "Evo SL Woven trades the plate and price of Adios Pro for a lighter, more accessible everyday ride.",
+      "Evo SL Woven runs on Lightstrike foam — the same foam family as our racing shoes — in a lighter, plate-free build made for snappy sessions like intervals and track work. At $150 it's not the budget pick in the lineup (that's Supernova Rise 3 at $140) — it's an accessible taste of race-day speed.",
     image: "evo-sl-outsole.jpg",
     imageCaption: "Evo SL Woven — outsole",
   },
@@ -258,8 +261,6 @@ const QUIZ_QUESTIONS = [
     correctIndex: 2,
     explain:
       "Supernova Rise 3 is the most stable, most ‘grounded’ feel — secure fit, full-length outsole rubber.",
-    image: "supernova-rise-pair.jpg",
-    imageCaption: "Supernova Rise 3",
   },
   {
     id: 18,
@@ -271,8 +272,6 @@ const QUIZ_QUESTIONS = [
     correctIndex: 2,
     explain:
       "Supernova Rise 3 is the default recommendation for on-feet professionals — calm, stable, and the most budget-friendly option.",
-    image: "supernova-rise-running.jpg",
-    imageCaption: "Supernova Rise 3 — on the run",
   },
   {
     id: 19,
@@ -295,7 +294,7 @@ const QUIZ_QUESTIONS = [
     items: ["Adios Pro 4", "Evo SL Woven", "Boston 13", "Hyperboost Edge", "Supernova Rise 3"],
     startOrder: [2, 4, 0, 3, 1],
     explain:
-      "Lightest to heaviest: Adios Pro 4 (race-day minimal) → Evo SL Woven → Boston 13 → Hyperboost Edge → Supernova Rise 3 (our most cushioned, comfort-first build).",
+      "Lightest to heaviest: Adios Pro 4 (~7oz, race-day minimal) → Evo SL Woven (~8oz) → Boston 13 (~8.5oz) → Hyperboost Edge (~9oz) → Supernova Rise 3 (~9.5oz, our most cushioned, comfort-first build).",
   },
 ];
 

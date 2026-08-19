@@ -45,13 +45,9 @@
 
       <div class="field">
         <label for="field-store-name">Store / Banner Name</label>
-        <input
-          type="text"
-          id="field-store-name"
-          data-field="storeName"
-          placeholder="e.g. Fleet Feet"
-          required
-        />
+        <select id="field-store-name" data-field="storeName" required>
+          <option value="" disabled selected>Select your store</option>
+        </select>
       </div>
 
       <div class="field">
@@ -200,6 +196,7 @@
 <!-- Supabase client (public anon key only — see js/config.js) -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/config.js"></script>
+<script src="js/stores.js"></script>
 <script src="js/questions.js"></script>
 <script src="js/app.js"></script>
 </body>

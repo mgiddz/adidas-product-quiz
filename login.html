@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>Colleague Sign In — adidas Product Education Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link
+  href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow:wght@400;600;700;800&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="css/styles.css" />
+<link rel="stylesheet" href="css/admin.css" />
+</head>
+<body>
+
+<div class="admin-app">
+  <div class="auth-card">
+    <h1 class="display">Results Dashboard</h1>
+    <p class="subtext">Sign in to see your store's quiz results.</p>
+
+    <div class="auth-toggle">
+      <button type="button" id="show-signin" class="active">Sign In</button>
+      <button type="button" id="show-signup">Create Account</button>
+    </div>
+
+    <div id="auth-error" class="auth-message error hidden"></div>
+    <div id="auth-success" class="auth-message success hidden"></div>
+
+    <form id="signin-panel">
+      <div class="field">
+        <label for="signin-email">Email</label>
+        <input type="email" id="signin-email" required />
+      </div>
+      <div class="field">
+        <label for="signin-password">Password</label>
+        <input type="password" id="signin-password" required />
+      </div>
+      <button type="submit" class="btn-primary">Sign In</button>
+    </form>
+
+    <form id="signup-panel" class="hidden">
+      <div class="field">
+        <label for="signup-store">Your Store</label>
+        <select id="signup-store" required>
+          <option value="" disabled selected>Select your store</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="signup-email">Email</label>
+        <input type="email" id="signup-email" required />
+      </div>
+      <div class="field">
+        <label for="signup-password">Password</label>
+        <input type="password" id="signup-password" minlength="8" required />
+      </div>
+      <button type="submit" class="btn-primary">Create Account</button>
+    </form>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script src="js/stores.js"></script>
+<script src="js/auth.js"></script>
+</body>
+</html>

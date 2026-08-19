@@ -5,49 +5,69 @@ not a history log (that's `MEMORY.md`'s decision log). Durable facts and
 locked decisions belong in [`MEMORY.md`](./MEMORY.md), not here. Toolchain
 and stack details live in [`CLAUDE.md`](./CLAUDE.md).
 
-_Last updated: 2026-08-17 (Cowork session — deployed live, QR code generated)_
+_Last updated: 2026-08-18 (Cowork session — colleague dashboard + real store list wired in)_
 
 ## What we're building right now
 
-The site is **live**: `https://adidas-product-quiz-4v5e.vercel.app/`.
-Repo pushed to `github.com/mgiddz/adidas-product-quiz` (Mike's account),
-connected to Vercel (auto-redeploys on every push to `main`). Verified via
-WebFetch: no login wall, correct title/content. QR code image generated
-pointing at the live URL and delivered to Mike.
+The quiz is **live and taking real submissions**:
+`https://adidas-product-quiz-4v5e.vercel.app/`. Supabase is fully wired —
+Mike's own test submission (20/20) landed in `quiz_submissions`, confirming
+the whole pipeline end to end. Today's build: a **colleague results
+dashboard** (`login.html` + `dashboard.html`) so Mike's colleagues can log
+in and see their own store's results, grouped by store like spreadsheet
+tabs. Mike sent his real 24-store list (may be incomplete — his message
+cut off mid-row), which is now wired into both the signup dropdown and
+the quiz intake form's "Store / Banner Name" field (converted from free
+text to a dropdown, so the two can't drift apart). All staged on Mike's
+machine, not yet pushed live.
 
 ## Current status
 
-- ✅ Quiz itself (content/format/scoring) is done and working.
-- ✅ `index.html` is the quiz (intake → quiz → results).
-- ✅ Results screen has a "Want to brush up?" section linking to
-  `study-guide.html`, `cheat-sheet.html`, and the external Typeform survey.
-- ✅ Real product photos show on every question card — all 5 shoe
-  sections are Mike-confirmed. One spare Boston 13 photo
-  (`images/boston-13-upper.jpg`) is unused in the quiz but available for
-  the study guide.
-- ✅ **Deployed and live** — GitHub repo `mgiddz/adidas-product-quiz`,
-  hosted on Vercel at `adidas-product-quiz-4v5e.vercel.app`. Every future
-  `git push` to `main` auto-redeploys, no reconnecting needed.
-- ✅ **QR code generated** pointing at the live URL, delivered to Mike.
+- ✅ Quiz itself (content/format/scoring) is done and working, deployed,
+  and confirmed saving real submissions to Supabase.
+- ✅ Real product photos on every question card, all Mike-confirmed.
+  Several photos reframed to focus on the shoe; answer-giveaway photos
+  removed from "which shoe in the lineup" questions (Q12/17/18).
+- ✅ Content accuracy pass, 2026-08-18: Q14/Q15 rewritten to fix an
+  Evo SL Woven / Supernova Rise 3 positioning mix-up and self-answering
+  wording; real (reviewer-measured) shoe weights cross-referenced into
+  Q6/Q20.
+- ✅ **Colleague results dashboard built** (`login.html` + `dashboard.html`)
+  — a colleague creates their own account, picks their store from a
+  dropdown (`js/stores.js`), and sees only their store's results after
+  signing in. Mike's account, once flagged `is_admin` in the `profiles`
+  table, sees every store as tabs. Enforced with Supabase Auth + Row Level
+  Security (not just hidden in the UI — a colleague genuinely cannot query
+  another store's rows). **Staged on Mike's machine, not committed/pushed
+  yet.** See MEMORY.md decision log for full design.
+- ✅ **Real store list wired in** — `js/stores.js` now has Mike's 24
+  Columbus-region stores (Columbus Running Co, Fleet Feet, Second Sole,
+  Runner's Plus, Athletic Annex, Tri-State Running Co, Running Away Inc).
+  The quiz intake form's store field is now a dropdown from this same
+  list, not free text — keeps intake submissions and colleague signups
+  from drifting apart. **List may be incomplete** — Mike's message
+  appeared to cut off mid-row at "Road Runner**".
+- ❌ **Blocked on Mike to finish dashboard setup:**
+  1. Confirm/complete the store list (see above — likely missing at least
+     "Road Runner" and possibly more after it).
+  2. Mike needs to sign up his own account via `login.html`, then tell
+     Claude the email he used so it can be flagged `is_admin = true` in
+     Supabase (no self-serve way to become admin, by design).
 - ❌ **Blocked on Mike:** study guide and cheat sheet content — he said he
   has existing docs to share. Pages are ready to receive them once sent.
-- 🟡 **Supabase wired but not yet pushed live.** Mike created the project
-  and ran the schema himself. Claude pulled the project URL + anon key
-  directly via the Supabase MCP connector, filled in `js/config.js`, and
-  verified schema/grants/RLS policy match `supabase/schema.sql` exactly
-  (see MEMORY.md decision log, 2026-08-17). Staged in git, waiting on
-  Mike's device to reconnect so it can be pushed to his machine, then one
-  more `git commit` + `git push` (same pattern as the initial deploy) to
-  go live.
 
 ## Immediate next steps
 
-1. Mike sends over his existing study guide / cheat sheet content →
-   Claude drops it into `study-guide.html` / `cheat-sheet.html`.
-2. Mike creates a Supabase project, runs `supabase/schema.sql`, pastes
-   URL/anon key into `js/config.js`, commits + pushes (auto-redeploys).
-3. Optional/nice-to-have, still not blocking: password-protected admin
-   view, CSV export button, animated question transitions.
+1. Mike commits + pushes the dashboard + store-list files (same pattern
+   as every prior push this project — see "Deploy notes" below).
+2. Mike confirms whether the store list is complete (see above) →
+   Claude updates `js/stores.js` if not.
+3. Mike signs up on `login.html`, tells Claude the email → Claude flags
+   that profile `is_admin = true` via the Supabase connector.
+4. Mike sends over study guide / cheat sheet content → Claude drops it
+   into `study-guide.html` / `cheat-sheet.html`.
+5. Optional/nice-to-have, still not blocking: CSV export from the
+   dashboard, animated question transitions, sortable dashboard columns.
 
 ## Deploy notes for next time
 
@@ -64,13 +84,20 @@ pointing at the live URL and delivered to Mike.
   Mike's own git commands in his Terminal since they share one `.git`
   directory — clear with the `_stale_locks` mv pattern before handing
   control back to Mike.
+- Database/schema changes (new tables, RLS policies) get applied directly
+  to Mike's live Supabase project via the Supabase MCP connector — no git
+  push needed for those to take effect, only for the front-end files that
+  read from them (`login.html`, `dashboard.html`, etc.).
 
 ## Open questions
 
+- **Store location list completeness** — Mike sent 24 stores but the
+  message looked cut off mid-row ("Road Runner**"). Both the intake form
+  and signup dropdown now pull from `js/stores.js`, so they'll stay in
+  sync automatically once Mike confirms/completes the list — just needs
+  him to say "that's everything" or send the rest.
 - **Study guide / cheat sheet content** — waiting on Mike's docs.
 - **"Prize"/incentive copy** — spec's intake screen mentions a generic
   "top scorers may be eligible for a reward" nod (nice-to-have, flexible,
   fulfillment happens outside the app). Confirm exact wording with Mike
   before the live event, or leave generic.
-- **Password-protected admin view** — nice-to-have, not a v1 blocker.
-  Mike can review submissions directly in the Supabase table editor.

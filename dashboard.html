@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>Results Dashboard — adidas Product Education Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link
+  href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow:wght@400;600;700;800&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="css/styles.css" />
+<link rel="stylesheet" href="css/admin.css" />
+</head>
+<body>
+
+<div class="admin-app">
+  <div class="admin-header">
+    <div>
+      <div class="admin-title display">Results Dashboard</div>
+      <div class="admin-whoami" id="whoami">Loading…</div>
+    </div>
+    <button type="button" class="btn-link" id="logout-btn">Sign out</button>
+  </div>
+
+  <div class="store-tabs hidden" id="store-tabs"></div>
+
+  <div class="results-wrap">
+    <table class="results-table">
+      <thead>
+        <tr>
+          <th>Employee</th>
+          <th>Score</th>
+          <th>Location</th>
+          <th>Submitted</th>
+        </tr>
+      </thead>
+      <tbody id="results-tbody"></tbody>
+    </table>
+    <div class="empty-state hidden" id="empty-state">No submissions yet.</div>
+  </div>
+</div>
+
+<div class="modal-overlay hidden" id="detail-modal">
+  <div class="modal-card">
+    <button type="button" class="modal-close" id="detail-modal-close">&times;</button>
+    <div id="detail-modal-body"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>

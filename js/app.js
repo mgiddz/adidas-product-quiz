@@ -90,9 +90,20 @@
 
   const intakeForm = document.getElementById("intake-form");
   const startBtn = document.getElementById("start-quiz-btn");
+  const storeNameSelect = document.getElementById("field-store-name");
   const snackSelect = document.getElementById("field-snack");
   const snackOtherWrap = document.getElementById("field-snack-other-wrap");
   const emailError = document.getElementById("email-error");
+
+  // Populate the store dropdown from js/stores.js — the same list feeds
+  // the colleague login page's signup dropdown, so results end up grouped
+  // consistently on the results dashboard.
+  (typeof STORE_LOCATIONS !== "undefined" ? STORE_LOCATIONS : []).forEach((name) => {
+    const opt = document.createElement("option");
+    opt.value = name;
+    opt.textContent = name;
+    storeNameSelect.appendChild(opt);
+  });
 
   function setupToggleGroup(groupEl, onChange) {
     groupEl.querySelectorAll("button").forEach((btn) => {
