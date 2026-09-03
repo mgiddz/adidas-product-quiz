@@ -53,11 +53,16 @@ create policy "Allow anonymous insert"
 
 -- ---------------------------------------------------------------------
 -- Colleague results dashboard (login.html / dashboard.html), added
--- 2026-08-18. Already applied directly to Mike's live Supabase project
--- via the Supabase MCP connector — this block is kept here so the schema
--- stays reproducible from scratch. Do not re-run manually against the
--- live project; it's already there (the `if not exists` / `drop ... if
--- exists` guards make it safe to re-run anyway, but it's redundant).
+-- 2026-08-18. Applied via the Supabase MCP connector — this block is kept
+-- here so the schema stays reproducible from scratch. The `if not exists`
+-- / `drop ... if exists` guards make it safe to re-run.
+--
+-- 2026-09-03: this whole file was re-applied to a NEW, dedicated project
+-- ("Product Education Quiz", ref hlfcaczeayotkfkukaca) after the old
+-- shared project dropped these tables. The trigger function below is
+-- named `handle_new_quiz_colleague`, NOT the generic `handle_new_user`,
+-- precisely because a second app in the shared project defined its own
+-- `handle_new_user` and the two collided. Keep app-specific names.
 -- ---------------------------------------------------------------------
 
 -- Colleague/store-manager profiles, linked 1:1 to Supabase Auth users.
@@ -96,7 +101,7 @@ create policy "Users can update their own profile"
 -- trigger can insert into public.profiles regardless of who's signing
 -- up; EXECUTE is revoked from anon/authenticated below so it can only
 -- run as a trigger, never called directly over the API.
-create or replace function public.handle_new_user()
+create or replace function public.handle_new_quiz_colleague()
 returns trigger
 language plpgsql
 security definer set search_path = public
@@ -108,12 +113,12 @@ begin
 end;
 $$;
 
-revoke execute on function public.handle_new_user() from public, anon, authenticated;
+revoke execute on function public.handle_new_quiz_colleague() from public, anon, authenticated;
 
-drop trigger if exists on_auth_user_created on auth.users;
-create trigger on_auth_user_created
+drop trigger if exists on_auth_user_created_quiz_colleague on auth.users;
+create trigger on_auth_user_created_quiz_colleague
   after insert on auth.users
-  for each row execute function public.handle_new_user();
+  for each row execute function public.handle_new_quiz_colleague();
 
 -- Let logged-in colleagues read quiz submissions scoped to their own
 -- store; admins (Mike) see every store. Trimmed/lowercased comparison to

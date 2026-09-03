@@ -5,7 +5,7 @@ not a history log (that's `MEMORY.md`'s decision log). Durable facts and
 locked decisions belong in [`MEMORY.md`](./MEMORY.md), not here. Toolchain
 and stack details live in [`CLAUDE.md`](./CLAUDE.md).
 
-_Last updated: 2026-09-03 (Cowork session — intake form simplified; everything outstanding committed and pushed live)_
+_Last updated: 2026-09-03 (Cowork session — intake form simplified; quiz moved to its own Supabase project after the shared one dropped its tables)_
 
 ## What we're building right now
 
@@ -29,6 +29,17 @@ Vercel redeployed, and the live site was verified showing the five-field
 intake form.
 
 ## Current status
+
+- 🚨 **Data loss, 2026-09-03: every submission before today is gone.** The
+  Supabase project the quiz shared with an unrelated app had
+  `quiz_submissions` and `profiles` dropped out from under it at 05:45 UTC
+  (migration `drop_quiz_and_profiles_tables`, not intentional). Fixed by
+  moving the quiz to its own project — **"Product Education Quiz", ref
+  `hlfcaczeayotkfkukaca`** — with the full schema re-applied and
+  `js/config.js` repointed. **Mike still needs to push that config change
+  before the live site saves anything.** Old data may be recoverable from
+  the old project's daily backups (Supabase Dashboard -> Database ->
+  Backups) — unchecked as of this writing.
 
 - ✅ Quiz itself (content/format/scoring) is done and working, deployed,
   and confirmed saving real submissions to Supabase.
@@ -80,15 +91,24 @@ intake form.
 
 ## Immediate next steps
 
-1. Optional cleanup in Mike's Terminal: `rm -rf .git/_stale_locks` —
+1. **Push the new Supabase config** (`git push origin main` from Mike's
+   Terminal) — until then the live site is still pointed at the old,
+   table-less project and every submission is silently lost.
+2. Re-take the quiz on the live site once pushed; Claude verifies the row
+   landed in the new project. A green results screen is not proof it
+   saved — `js/app.js` only logs insert failures to the console.
+3. Decide whether to try restoring the old project's backup to recover
+   pre-2026-09-03 submissions (Dashboard -> Database -> Backups).
+4. Colleague accounts: the 9 auth users survived but their `profiles`
+   rows did not. Colleagues will need to sign up again on `login.html`,
+   and Mike still needs his own account flagged `is_admin = true`.
+5. Optional cleanup in Mike's Terminal: `rm -rf .git/_stale_locks` —
    leftover git lock/temp files from the Cowork device-bridge shell, which
    can move them aside but not delete them. Harmless if left.
-2. Mike signs up on `login.html`, tells Claude the email → Claude flags
-   that profile `is_admin = true` via the Supabase connector.
-3. Mike says when the embargoed FW26 shoes (Adios Pro 5, Hyperboost Run,
+6. Mike says when the embargoed FW26 shoes (Adios Pro 5, Hyperboost Run,
    Evo SL 2, Supernova Rise 4) are public/in his stores → Claude adds them
    to the study guide, cheat sheet, and quiz.
-4. Optional/nice-to-have, still not blocking: CSV export from the
+7. Optional/nice-to-have, still not blocking: CSV export from the
    dashboard, animated question transitions, sortable dashboard columns.
 
 ## Deploy notes for next time
