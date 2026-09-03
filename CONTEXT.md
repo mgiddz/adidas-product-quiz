@@ -5,7 +5,7 @@ not a history log (that's `MEMORY.md`'s decision log). Durable facts and
 locked decisions belong in [`MEMORY.md`](./MEMORY.md), not here. Toolchain
 and stack details live in [`CLAUDE.md`](./CLAUDE.md).
 
-_Last updated: 2026-09-03 (Cowork session — intake form simplified; everything outstanding committed, push pending)_
+_Last updated: 2026-09-03 (Cowork session — intake form simplified; everything outstanding committed and pushed live)_
 
 ## What we're building right now
 
@@ -24,9 +24,9 @@ dropdown is gone (Store Location is now the single store picker, feeding
 both DB columns) and Favorite Snack is now free text instead of a
 dropdown. Everything that had been sitting staged since 2026-08-19 (the
 385-store list, study guide, cheat sheet, styles) went into the same
-commit. **Committed but not yet pushed** — the Cowork
-workspace has no GitHub credentials, so Mike runs `git push` from his own
-Terminal (see Deploy notes).
+commit. **Pushed by Mike 2026-09-03** — `74b7095` is on `origin/main`,
+Vercel redeployed, and the live site was verified showing the five-field
+intake form.
 
 ## Current status
 
@@ -52,8 +52,7 @@ Terminal (see Deploy notes).
   a national list pulled from Mike's monday.com "aBSP Doors" board
   (Covered Doors, filtered to doors with an assigned Product Educator),
   covering Mike + 14 colleagues. The quiz intake form's store field stays
-  a dropdown from this same list. **Committed 2026-09-03,
-  push pending.**
+  a dropdown from this same list. **Pushed live 2026-09-03.**
   **Excluded 2 colleagues' doors** (Teresita Pelayo,
   Edward Yeboah-Alexander — almost entirely soccer-specialty retailers)
   — **Mike confirmed 2026-08-22: correct, do not add soccer doors.**
@@ -68,8 +67,8 @@ Terminal (see Deploy notes).
   5 shoes plus a Technology Glossary. Deliberately excludes several FW26
   launches previewed in that deck that are unreleased or still under PR
   embargo (Adios Pro 5, Hyperboost Run, Evo SL 2, Supernova Rise 4) since
-  this is a public site — see MEMORY.md decision log. **Committed
-  2026-09-03, push pending.**
+  this is a public site — see MEMORY.md decision log. **Pushed live
+  2026-09-03.**
 
 - ✅ **Intake form simplified (2026-09-03)** — five fields now: Employee
   Name, Store Location (the single `js/stores.js` dropdown, written to
@@ -81,11 +80,9 @@ Terminal (see Deploy notes).
 
 ## Immediate next steps
 
-1. Mike runs `git push origin main` in his own Terminal to put the
-   2026-09-03 commit live (Vercel auto-redeploys). Optional cleanup while
-   he's there:
-   `rm -rf .git/_stale_locks` — leftover git lock/temp files Claude could
-   only move aside, not delete.
+1. Optional cleanup in Mike's Terminal: `rm -rf .git/_stale_locks` —
+   leftover git lock/temp files from the Cowork device-bridge shell, which
+   can move them aside but not delete them. Harmless if left.
 2. Mike signs up on `login.html`, tells Claude the email → Claude flags
    that profile `is_admin = true` via the Supabase connector.
 3. Mike says when the embargoed FW26 shoes (Adios Pro 5, Hyperboost Run,
