@@ -5,21 +5,28 @@ not a history log (that's `MEMORY.md`'s decision log). Durable facts and
 locked decisions belong in [`MEMORY.md`](./MEMORY.md), not here. Toolchain
 and stack details live in [`CLAUDE.md`](./CLAUDE.md).
 
-_Last updated: 2026-08-18 (Cowork session — colleague dashboard + real store list wired in)_
+_Last updated: 2026-09-03 (Cowork session — intake form simplified; everything outstanding committed, push pending)_
 
 ## What we're building right now
 
 The quiz is **live and taking real submissions**:
 `https://adidas-product-quiz-4v5e.vercel.app/`. Supabase is fully wired —
 Mike's own test submission (20/20) landed in `quiz_submissions`, confirming
-the whole pipeline end to end. Today's build: a **colleague results
-dashboard** (`login.html` + `dashboard.html`) so Mike's colleagues can log
-in and see their own store's results, grouped by store like spreadsheet
-tabs. Mike sent his real 24-store list (may be incomplete — his message
-cut off mid-row), which is now wired into both the signup dropdown and
-the quiz intake form's "Store / Banner Name" field (converted from free
-text to a dropdown, so the two can't drift apart). All staged on Mike's
-machine, not yet pushed live.
+the whole pipeline end to end. The **colleague results dashboard**
+(`login.html` + `dashboard.html`) from the last session is confirmed
+**pushed and live** — `fd8301e` is on `origin/main`. This session:
+replaced the 24-entry hand-typed Columbus store list with a **385-store
+national list** pulled from Mike's monday.com "aBSP Doors" board, covering
+Mike + 14 colleagues (excluded 2 colleagues' territories that are almost
+entirely soccer-specialty retailers — flagged to Mike, see Open questions).
+This session: **simplified the intake form** — the "Store / Banner Name"
+dropdown is gone (Store Location is now the single store picker, feeding
+both DB columns) and Favorite Snack is now free text instead of a
+dropdown. Everything that had been sitting staged since 2026-08-19 (the
+385-store list, study guide, cheat sheet, styles) went into the same
+commit. **Committed but not yet pushed** — the Cowork
+workspace has no GitHub credentials, so Mike runs `git push` from his own
+Terminal (see Deploy notes).
 
 ## Current status
 
@@ -32,41 +39,59 @@ machine, not yet pushed live.
   Evo SL Woven / Supernova Rise 3 positioning mix-up and self-answering
   wording; real (reviewer-measured) shoe weights cross-referenced into
   Q6/Q20.
-- ✅ **Colleague results dashboard built** (`login.html` + `dashboard.html`)
-  — a colleague creates their own account, picks their store from a
-  dropdown (`js/stores.js`), and sees only their store's results after
-  signing in. Mike's account, once flagged `is_admin` in the `profiles`
-  table, sees every store as tabs. Enforced with Supabase Auth + Row Level
-  Security (not just hidden in the UI — a colleague genuinely cannot query
-  another store's rows). **Staged on Mike's machine, not committed/pushed
-  yet.** See MEMORY.md decision log for full design.
-- ✅ **Real store list wired in** — `js/stores.js` now has Mike's 24
-  Columbus-region stores (Columbus Running Co, Fleet Feet, Second Sole,
-  Runner's Plus, Athletic Annex, Tri-State Running Co, Running Away Inc).
-  The quiz intake form's store field is now a dropdown from this same
-  list, not free text — keeps intake submissions and colleague signups
-  from drifting apart. **List may be incomplete** — Mike's message
-  appeared to cut off mid-row at "Road Runner**".
+- ✅ **Colleague results dashboard built and confirmed live**
+  (`login.html` + `dashboard.html`) — a colleague creates their own
+  account, picks their store from a dropdown (`js/stores.js`), and sees
+  only their store's results after signing in. Mike's account, once
+  flagged `is_admin` in the `profiles` table, sees every store as tabs.
+  Enforced with Supabase Auth + Row Level Security (not just hidden in
+  the UI — a colleague genuinely cannot query another store's rows).
+  Confirmed pushed: `origin/main` is at `fd8301e`. See MEMORY.md decision
+  log for full design.
+- ✅ **Store list expanded to 385 doors** — `js/stores.js` replaced with
+  a national list pulled from Mike's monday.com "aBSP Doors" board
+  (Covered Doors, filtered to doors with an assigned Product Educator),
+  covering Mike + 14 colleagues. The quiz intake form's store field stays
+  a dropdown from this same list. **Committed 2026-09-03,
+  push pending.**
+  **Excluded 2 colleagues' doors** (Teresita Pelayo,
+  Edward Yeboah-Alexander — almost entirely soccer-specialty retailers)
+  — **Mike confirmed 2026-08-22: correct, do not add soccer doors.**
+  Settled, no longer an open question.
 - ❌ **Blocked on Mike to finish dashboard setup:**
-  1. Confirm/complete the store list (see above — likely missing at least
-     "Road Runner" and possibly more after it).
-  2. Mike needs to sign up his own account via `login.html`, then tell
+  1. Mike needs to sign up his own account via `login.html`, then tell
      Claude the email he used so it can be flagged `is_admin = true` in
      Supabase (no self-serve way to become admin, by design).
-- ❌ **Blocked on Mike:** study guide and cheat sheet content — he said he
-  has existing docs to share. Pages are ready to receive them once sent.
+- ✅ **Study guide + cheat sheet built out** — Mike uploaded adidas's
+  internal Product Education PDF deck (July 2026, 104 pages); both pages
+  now have real content (spec tables, tech breakdowns, sell lines) for all
+  5 shoes plus a Technology Glossary. Deliberately excludes several FW26
+  launches previewed in that deck that are unreleased or still under PR
+  embargo (Adios Pro 5, Hyperboost Run, Evo SL 2, Supernova Rise 4) since
+  this is a public site — see MEMORY.md decision log. **Committed
+  2026-09-03, push pending.**
+
+- ✅ **Intake form simplified (2026-09-03)** — five fields now: Employee
+  Name, Store Location (the single `js/stores.js` dropdown, written to
+  both `store_name` and `store_location`), Shoe Size + gender, Clothing
+  Size + gender, Email, Favorite Snack (free text). The redundant "Store /
+  Banner Name" dropdown and the snack dropdown's conditional "Tell us
+  what" field are gone. No Supabase change was needed — see MEMORY.md
+  decision log for why `store_name` stayed the grouping key.
 
 ## Immediate next steps
 
-1. Mike commits + pushes the dashboard + store-list files (same pattern
-   as every prior push this project — see "Deploy notes" below).
-2. Mike confirms whether the store list is complete (see above) →
-   Claude updates `js/stores.js` if not.
-3. Mike signs up on `login.html`, tells Claude the email → Claude flags
+1. Mike runs `git push origin main` in his own Terminal to put the
+   2026-09-03 commit live (Vercel auto-redeploys). Optional cleanup while
+   he's there:
+   `rm -rf .git/_stale_locks` — leftover git lock/temp files Claude could
+   only move aside, not delete.
+2. Mike signs up on `login.html`, tells Claude the email → Claude flags
    that profile `is_admin = true` via the Supabase connector.
-4. Mike sends over study guide / cheat sheet content → Claude drops it
-   into `study-guide.html` / `cheat-sheet.html`.
-5. Optional/nice-to-have, still not blocking: CSV export from the
+3. Mike says when the embargoed FW26 shoes (Adios Pro 5, Hyperboost Run,
+   Evo SL 2, Supernova Rise 4) are public/in his stores → Claude adds them
+   to the study guide, cheat sheet, and quiz.
+4. Optional/nice-to-have, still not blocking: CSV export from the
    dashboard, animated question transitions, sortable dashboard columns.
 
 ## Deploy notes for next time
@@ -91,12 +116,6 @@ machine, not yet pushed live.
 
 ## Open questions
 
-- **Store location list completeness** — Mike sent 24 stores but the
-  message looked cut off mid-row ("Road Runner**"). Both the intake form
-  and signup dropdown now pull from `js/stores.js`, so they'll stay in
-  sync automatically once Mike confirms/completes the list — just needs
-  him to say "that's everything" or send the rest.
-- **Study guide / cheat sheet content** — waiting on Mike's docs.
 - **"Prize"/incentive copy** — spec's intake screen mentions a generic
   "top scorers may be eligible for a reward" nod (nice-to-have, flexible,
   fulfillment happens outside the app). Confirm exact wording with Mike

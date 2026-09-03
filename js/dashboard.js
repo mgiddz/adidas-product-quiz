@@ -79,7 +79,11 @@
     const submitted = r.created_at ? new Date(r.created_at).toLocaleString() : "";
     modalBody.innerHTML = `
       <h3>${escapeHtml(r.employee_name)}</h3>
-      <p><strong>Store:</strong> ${escapeHtml(r.store_name)} — ${escapeHtml(r.store_location)}</p>
+      <p><strong>Store:</strong> ${escapeHtml(r.store_name)}${
+        r.store_location && r.store_location !== r.store_name
+          ? " — " + escapeHtml(r.store_location)
+          : ""
+      }</p>
       <p><strong>Score:</strong> ${r.score} / 20</p>
       <p><strong>Email:</strong> ${escapeHtml(r.email)}</p>
       <p><strong>Shoe size:</strong> ${escapeHtml(r.shoe_size)} (${escapeHtml(r.shoe_size_gender)})</p>

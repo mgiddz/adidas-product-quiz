@@ -44,21 +44,10 @@
       </div>
 
       <div class="field">
-        <label for="field-store-name">Store / Banner Name</label>
-        <select id="field-store-name" data-field="storeName" required>
+        <label for="field-store-location">Store Location</label>
+        <select id="field-store-location" data-field="storeLocation" required>
           <option value="" disabled selected>Select your store</option>
         </select>
-      </div>
-
-      <div class="field">
-        <label for="field-store-location">Store Location</label>
-        <input
-          type="text"
-          id="field-store-location"
-          data-field="storeLocation"
-          placeholder="e.g. Cincinnati — Rookwood Commons"
-          required
-        />
       </div>
 
       <div class="field">
@@ -95,18 +84,13 @@
 
       <div class="field">
         <label for="field-snack">Favorite Snack</label>
-        <select id="field-snack" required>
-          <option value="" disabled selected>Select one</option>
-          <option value="Smoothie">Smoothie</option>
-          <option value="Coffee">Coffee</option>
-          <option value="Candy">Candy</option>
-          <option value="Other">Other</option>
-        </select>
-      </div>
-
-      <div class="field hidden" id="field-snack-other-wrap">
-        <label for="field-snack-other">Tell us what</label>
-        <input type="text" id="field-snack-other" data-field="favoriteSnackOther" />
+        <input
+          type="text"
+          id="field-snack"
+          data-field="favoriteSnack"
+          placeholder="e.g. trail mix, cold brew, gummy bears"
+          required
+        />
       </div>
 
       <button type="submit" class="btn-primary" id="start-quiz-btn" disabled>START QUIZ</button>

@@ -21,7 +21,6 @@
     screen: "intake", // 'intake' | 'quiz' | 'results'
     intake: {
       employeeName: "",
-      storeName: "",
       storeLocation: "",
       shoeSize: "",
       shoeSizeGender: null, // 'M' | 'W'
@@ -29,7 +28,6 @@
       clothingSizeGender: null, // 'M' | 'W'
       email: "",
       favoriteSnack: "",
-      favoriteSnackOther: "",
     },
     // quizIdx counts across QUIZ_QUESTIONS.length graded questions, then
     // one more step for the open-ended question.
@@ -90,19 +88,19 @@
 
   const intakeForm = document.getElementById("intake-form");
   const startBtn = document.getElementById("start-quiz-btn");
-  const storeNameSelect = document.getElementById("field-store-name");
-  const snackSelect = document.getElementById("field-snack");
-  const snackOtherWrap = document.getElementById("field-snack-other-wrap");
+  const storeLocationSelect = document.getElementById("field-store-location");
   const emailError = document.getElementById("email-error");
 
   // Populate the store dropdown from js/stores.js — the same list feeds
   // the colleague login page's signup dropdown, so results end up grouped
-  // consistently on the results dashboard.
+  // consistently on the results dashboard. This single "Store Location"
+  // picker replaced the old two-field Store/Banner Name + free-text
+  // Location pair; its value is what gets written to store_name.
   (typeof STORE_LOCATIONS !== "undefined" ? STORE_LOCATIONS : []).forEach((name) => {
     const opt = document.createElement("option");
     opt.value = name;
     opt.textContent = name;
-    storeNameSelect.appendChild(opt);
+    storeLocationSelect.appendChild(opt);
   });
 
   function setupToggleGroup(groupEl, onChange) {
@@ -123,12 +121,6 @@
     state.intake.clothingSizeGender = val;
   });
 
-  snackSelect.addEventListener("change", () => {
-    state.intake.favoriteSnack = snackSelect.value;
-    snackOtherWrap.classList.toggle("hidden", snackSelect.value !== "Other");
-    validateIntake();
-  });
-
   function isValidEmail(value) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
   }
@@ -137,15 +129,13 @@
     const i = state.intake;
     const requiredFilled =
       i.employeeName.trim() &&
-      i.storeName.trim() &&
       i.storeLocation.trim() &&
       i.shoeSize.toString().trim() &&
       i.shoeSizeGender &&
       i.clothingSize &&
       i.clothingSizeGender &&
       i.email.trim() &&
-      i.favoriteSnack &&
-      (i.favoriteSnack !== "Other" || i.favoriteSnackOther.trim());
+      i.favoriteSnack.trim();
 
     const emailOk = isValidEmail(i.email.trim());
     emailError.classList.toggle("visible", i.email.trim().length > 0 && !emailOk);
@@ -482,16 +472,18 @@
 
     const payload = {
       employee_name: state.intake.employeeName.trim(),
-      store_name: state.intake.storeName.trim(),
+      // One store picker now feeds both columns: store_name is what the
+      // colleague dashboard groups and RLS-filters on, so it has to keep
+      // matching the js/stores.js values exactly.
+      store_name: state.intake.storeLocation.trim(),
       store_location: state.intake.storeLocation.trim(),
       shoe_size: state.intake.shoeSize.toString().trim(),
       shoe_size_gender: state.intake.shoeSizeGender,
       clothing_size: state.intake.clothingSize,
       clothing_size_gender: state.intake.clothingSizeGender,
       email: state.intake.email.trim(),
-      favorite_snack: state.intake.favoriteSnack,
-      favorite_snack_other:
-        state.intake.favoriteSnack === "Other" ? state.intake.favoriteSnackOther.trim() : null,
+      favorite_snack: state.intake.favoriteSnack.trim(),
+      favorite_snack_other: null,
       answers: detailed.map((d) => ({
         questionId: d.questionId,
         type: d.type,

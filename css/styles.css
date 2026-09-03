@@ -666,6 +666,160 @@ button,
   color: var(--text);
 }
 
+/* Study guide / cheat sheet — shoe reference blocks */
+.franchise-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 2px;
+  padding: 3px 8px;
+  margin-bottom: 10px;
+}
+
+.shoe-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 22px 20px;
+  margin-bottom: 22px;
+}
+
+.shoe-block h2 {
+  font-family: "Archivo Black", Arial, sans-serif;
+  font-size: 22px;
+  margin-bottom: 4px;
+}
+
+.shoe-block .shoe-tagline {
+  font-size: 13px;
+  color: var(--text-dim);
+  font-style: italic;
+  margin-bottom: 16px;
+}
+
+.spec-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px 16px;
+  margin-bottom: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.spec-item .spec-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 2px;
+}
+
+.spec-item .spec-value {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.tech-callout {
+  margin-bottom: 12px;
+}
+
+.tech-callout .tech-name {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 3px;
+}
+
+.tech-callout p {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-dim);
+  margin: 0;
+}
+
+.sell-line {
+  margin-top: 16px;
+  padding: 12px 14px;
+  background: var(--surface-2);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.sell-line strong {
+  color: var(--accent);
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.source-note {
+  font-size: 12px;
+  color: var(--text-dim);
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+  margin-top: 8px;
+  line-height: 1.6;
+}
+
+/* Cheat sheet — condensed table style */
+.cheat-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+
+.cheat-table th,
+.cheat-table td {
+  text-align: left;
+  padding: 8px 6px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.cheat-table th {
+  color: var(--text-dim);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 800;
+}
+
+.cheat-quick-lines {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0;
+}
+
+.cheat-quick-lines li {
+  font-size: 13px;
+  line-height: 1.6;
+  padding: 3px 0;
+}
+
+.cheat-quick-lines li::before {
+  content: "→ ";
+  color: var(--accent);
+  font-weight: 800;
+}
+
+@media (max-width: 420px) {
+  .spec-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 /* Survey */
 .likert-row {
   margin-bottom: 20px;
