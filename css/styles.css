@@ -885,3 +885,19 @@ button,
     grid-template-columns: 1fr 1fr;
   }
 }
+
+/* Footwear Pillars graphic (study guide + cheat sheet) */
+.pillars-figure {
+  margin: 12px 0 0;
+}
+.pillars-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+.pillars-list {
+  margin: 12px 0 0;
+  padding-left: 18px;
+  line-height: 1.55;
+}

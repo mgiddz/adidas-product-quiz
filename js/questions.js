@@ -11,6 +11,11 @@
 // 19 multiple-choice questions (type: "mc") + 1 drag/reorder ranking
 // question (type: "order"), for 20 graded questions total.
 //
+// `id` is stored with each answer in Supabase, so ids stay stable and are
+// NOT the display number (the app numbers by array position). Retired ids
+// are never reused: id 11 (a duplicate Boston 13 "best used for" question)
+// was removed 2026-09-10 and replaced by id 22 (Footwear Pillars).
+//
 // `image` / `imageCaption` — real product photos Mike shared directly (see
 // MEMORY.md "Product images" decision log entries, 2026-08-16). Mike
 // renamed the source files himself with the correct shoe/part per photo,
@@ -19,6 +24,10 @@
 // two of those Boston photos turn out to be the same shoe that had been
 // mis-filed under Adios Pro 4 in an earlier pass. All five shoe sections
 // are now Mike-confirmed.
+//
+// 2026-09-10: Adios Pro 4 section (Q6-9) replaced with Adios Pro 5, and
+// every lineup reference updated. Facts + photos come from the official
+// Adios Pro 5 tech sheet and the FW26 Product Education deck (pp. 9-14).
 
 const QUIZ_QUESTIONS = [
   {
@@ -95,59 +104,61 @@ const QUIZ_QUESTIONS = [
   {
     id: 6,
     type: "mc",
-    section: "Adios Pro 4",
-    prompt: "What is the Adios Pro 4's approximate weight and stack height?",
+    section: "Adios Pro 5",
+    prompt: "What are the Adios Pro 5's (men's) weight and stack height?",
     options: [
-      "7oz, 39mm/33mm stack",
-      "10oz, 45mm/39mm stack",
-      "6oz, 30mm/24mm stack",
-      "9oz, 42mm/36mm stack",
+      "7oz, 39mm/33mm stack (6mm drop)",
+      "6.3oz, 39mm/34mm stack (5mm drop)",
+      "8.5oz, 45mm/39mm stack (6mm drop)",
+      "9oz, 42mm/36mm stack (8mm drop)",
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explain:
-      "The Pro 4 comes in at roughly 7oz with a 39mm/33mm stack (6mm drop) — lightweight and low enough for a fast, propulsive race feel.",
-    image: "adios-pro-4-hero.jpg",
-    imageCaption: "Adios Pro 4",
+      "The men's Pro 5 weighs 177g / 6.3oz (women's: 150g / 5.3oz) on a 39mm/34mm stack with a 5mm drop. The 7oz, 39/33mm option is the outgoing Pro 4.",
+    image: "adios-pro-5-hero.jpg",
+    imageCaption: "Adizero Adios Pro 5",
   },
   {
     id: 7,
     type: "mc",
-    section: "Adios Pro 4",
-    prompt: "What is the Adios Pro 4's franchise purpose?",
-    options: ["Race to win", "Daily super trainer", "Hyper comfort", "Long runs"],
-    correctIndex: 0,
+    section: "Adios Pro 5",
+    prompt: "What is the all-new, carbon-fiber-infused midsole technology in the Adios Pro 5?",
+    options: ["EnergyRods 2.0", "ENERGYRIM", "Dreamstrike+", "Hyperboost Pro"],
+    correctIndex: 1,
     explain:
-      "Adios Pro 4 is built purely to race — lightweight, propulsive, and best suited to 0–42km race day and speed work.",
-    image: "adios-pro-4-action.jpg",
-    imageCaption: "Adios Pro 4",
+      "ENERGYRIM is new for the Pro 5, taking over from the Pro 4's EnergyRods 2.0. The carbon-fiber-infused rim sits in 39mm of LIGHTSTRIKE PRO and gives uninterrupted energy return directly underfoot, plus more stability.",
+    image: "adios-pro-5-midsole.jpg",
+    imageCaption: "Adios Pro 5 — midsole, exploded view",
   },
   {
     id: 8,
     type: "mc",
-    section: "Adios Pro 4",
-    prompt: "What is the retail price of the Adios Pro 4?",
-    options: ["$200", "$225", "$250", "$275"],
+    section: "Adios Pro 5",
+    prompt: "What is the retail price of the Adios Pro 5?",
+    options: ["$225", "$250", "$275", "$300"],
     correctIndex: 2,
-    explain: "The Adios Pro 4 retails at $250, our top-tier race-day shoe.",
-    image: "adios-pro-4-outsole.jpg",
-    imageCaption: "Adios Pro 4 — on foot",
+    explain:
+      "The Adios Pro 5 retails at $275, up $25 from the Pro 4's $250. It's our top-tier race-day shoe.",
+    image: "adios-pro-5-upper.jpg",
+    imageCaption: "Adios Pro 5 — Engineered LIGHTLOCK 2.0 upper",
   },
   {
     id: 9,
     type: "mc",
-    section: "Adios Pro 4",
-    prompt: "The EnergyRods 2.0 in the Adios Pro 4 are shaped to mimic:",
+    section: "Adios Pro 5",
+    prompt:
+      "A customer who raced in the Pro 4 asks what's actually new in the Pro 5. What's the most accurate answer?",
     options: [
-      "The shape of the outsole lugs",
-      "The shape of the foot, mimicking the metatarsal bones",
-      "A single straight carbon bar",
-      "The heel counter",
+      "Nothing structural. It's the Pro 4 in a new colorway",
+      "New ENERGYRIMS, a more breathable LIGHTLOCK 2.0 upper, and more foam underfoot",
+      "It swaps LIGHTSTRIKE PRO for Dreamstrike+ for a softer daily ride",
+      "It drops the carbon entirely to become a plate-free tempo shoe",
     ],
     correctIndex: 1,
     explain:
-      "EnergyRods 2.0 are shaped like the foot itself, mimicking the metatarsal bones for a natural, propulsive toe-off.",
-    image: "adios-pro-4-outsole.jpg",
-    imageCaption: "Adios Pro 4 — outsole/midsole detail",
+      "Pro 4 → Pro 5: EnergyRods 2.0 become carbon-infused ENERGYRIMS (higher energy return, more stability), LIGHTLOCK becomes Engineered LIGHTLOCK 2.0 (better breathability), and LIGHTSTRIKE PRO puts more foam underfoot. It also gets a new Adizero stripe design and signature heel. Same job as before: race to win, 0–42km.",
+    image: "adios-pro-5-outsole.jpg",
+    imageCaption: "Adios Pro 5 — LIGHTTRAXION outsole with Continental™ rubber",
   },
   {
     id: 10,
@@ -167,24 +178,12 @@ const QUIZ_QUESTIONS = [
     imageCaption: "Adizero Boston 13",
   },
   {
-    id: 11,
-    type: "mc",
-    section: "Boston 13",
-    prompt: "What is the Boston 13 best used for?",
-    options: ["Race day only", "Tempo workouts and daily training", "Recovery walks only", "Trail running"],
-    correctIndex: 1,
-    explain:
-      "Boston 13 is built for tempo workouts and daily training — a versatile, springy ride powered by EnergyRods.",
-    image: "boston-13-outsole-detail.jpg",
-    imageCaption: "Boston 13 — LIGHTSTRIKE PRO midsole and outsole",
-  },
-  {
     id: 12,
     type: "mc",
     section: "Boston 13",
     prompt:
       "When a customer wants ONE shoe for both easy runs and tempo workouts, which shoe fits best?",
-    options: ["Adios Pro 4", "Boston 13", "Hyperboost Edge", "Supernova Rise 3"],
+    options: ["Adios Pro 5", "Boston 13", "Hyperboost Edge", "Supernova Rise 3"],
     correctIndex: 1,
     explain:
       "Boston 13's versatility across paces makes it the natural one-shoe answer for easy-to-tempo training.",
@@ -257,7 +256,7 @@ const QUIZ_QUESTIONS = [
     type: "mc",
     section: "Supernova Rise 3",
     prompt: "Which shoe ranks as the MOST stable/planted in the current lineup?",
-    options: ["Adios Pro 4", "Hyperboost Edge", "Supernova Rise 3", "Evo SL Woven"],
+    options: ["Adios Pro 5", "Hyperboost Edge", "Supernova Rise 3", "Evo SL Woven"],
     correctIndex: 2,
     explain:
       "Supernova Rise 3 is the most stable, most ‘grounded’ feel — secure fit, full-length outsole rubber.",
@@ -268,20 +267,36 @@ const QUIZ_QUESTIONS = [
     section: "Supernova Rise 3",
     prompt:
       "A nurse who's on her feet all shift asks for the least tiring, most supportive shoe. You lead with:",
-    options: ["Adios Pro 4", "Hyperboost Edge", "Supernova Rise 3", "Boston 13"],
+    options: ["Adios Pro 5", "Hyperboost Edge", "Supernova Rise 3", "Boston 13"],
     correctIndex: 2,
     explain:
       "Supernova Rise 3 is the default recommendation for on-feet professionals — calm, stable, and the most budget-friendly option.",
+  },
+  {
+    id: 22,
+    type: "mc",
+    section: "Footwear Pillars",
+    prompt:
+      "adidas Running footwear sits in three pillars, from LIGHTEST & FASTEST to MOST SUPPORTIVE. Which gets the order and each pillar's promise right?",
+    options: [
+      "Hyperboost (Light & Fast) → Adizero (Comfort Energized) → Supernova (Supportive Comfort)",
+      "Adizero (Light & Fast) → Supernova (Comfort Energized) → Hyperboost (Supportive Comfort)",
+      "Adizero (Light & Fast) → Hyperboost (Comfort Energized) → Supernova (Supportive Comfort)",
+      "Supernova (Light & Fast) → Hyperboost (Comfort Energized) → Adizero (Supportive Comfort)",
+    ],
+    correctIndex: 2,
+    explain:
+      "Adizero = Light & Fast (Adios Pro 5, Evo SL). Hyperboost = Comfort Energized (Hyperboost Edge). Supernova = Supportive Comfort (Supernova Rise 3). On the floor, find out whether the customer wants speed, energized everyday comfort, or support, and start in that pillar.",
   },
   {
     id: 19,
     type: "mc",
     section: "Full Lineup",
     prompt: "Ranking by retail price, which shoe is the MOST expensive?",
-    options: ["Boston 13", "Hyperboost Edge", "Adios Pro 4", "Evo SL Woven"],
+    options: ["Boston 13", "Hyperboost Edge", "Adios Pro 5", "Evo SL Woven"],
     correctIndex: 2,
     explain:
-      "Adios Pro 4 ($250) sits above Hyperboost Edge ($200), with Boston 13 and Evo SL Woven priced below both.",
+      "Adios Pro 5 ($275) sits above Hyperboost Edge ($200), with Boston 13 and Evo SL Woven priced below both.",
   },
   {
     id: 20,
@@ -291,10 +306,10 @@ const QUIZ_QUESTIONS = [
     // `items` is already in the CORRECT order (lightest to heaviest).
     // `startOrder` is how they're shuffled on screen at first — it's an
     // array of indices into `items`.
-    items: ["Adios Pro 4", "Evo SL Woven", "Boston 13", "Hyperboost Edge", "Supernova Rise 3"],
+    items: ["Adios Pro 5", "Evo SL Woven", "Boston 13", "Hyperboost Edge", "Supernova Rise 3"],
     startOrder: [2, 4, 0, 3, 1],
     explain:
-      "Lightest to heaviest: Adios Pro 4 (~7oz, race-day minimal) → Evo SL Woven (~8oz) → Boston 13 (~8.5oz) → Hyperboost Edge (~9oz) → Supernova Rise 3 (~9.5oz, our most cushioned, comfort-first build).",
+      "Lightest to heaviest: Adios Pro 5 (~6.3oz, race-day minimal) → Evo SL Woven (~8oz) → Boston 13 (~8.5oz) → Hyperboost Edge (~9oz) → Supernova Rise 3 (~9.5oz, our most cushioned, comfort-first build).",
   },
 ];
 

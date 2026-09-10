@@ -5,7 +5,7 @@ not a history log (that's `MEMORY.md`'s decision log). Durable facts and
 locked decisions belong in [`MEMORY.md`](./MEMORY.md), not here. Toolchain
 and stack details live in [`CLAUDE.md`](./CLAUDE.md).
 
-_Last updated: 2026-09-03 (Cowork session — intake form simplified; quiz moved to its own Supabase project after the shared one dropped its tables)_
+_Last updated: 2026-09-10 (Cowork session: Adios Pro 5 replaces Pro 4 across the quiz, study guide, and cheat sheet; Mike cleared it to publish; FW26 brand rule added)_
 
 ## What we're building right now
 
@@ -91,6 +91,16 @@ intake form.
 
 ## Immediate next steps
 
+0. **Adios Pro 5 update is staged, waiting on Mike to commit + push.**
+   Quiz (Q6–9 plus lineup references), `index.html` intro, study guide,
+   cheat sheet, and 4 new `images/adios-pro-5-*.jpg`. Same batch: new
+   Footwear Pillars quiz question (Q18) replacing the old duplicate Boston
+   Q11, plus the pillars graphic on the study guide and cheat sheet
+   (Supernova Rise 4 swapped for Rise 3 until Rise 4's embargo lifts). Mike confirmed
+   2026-09-10 that he's cleared to publish, even though the deck listed a
+   9/22 embargo. Follow-up: do a brand pass so the site's fonts/logo match
+   the FW26 deck (see MEMORY.md's Visual language brand rule).
+
 1. **Push the new Supabase config** (`git push origin main` from Mike's
    Terminal) — until then the live site is still pointed at the old,
    table-less project and every submission is silently lost.
@@ -105,9 +115,10 @@ intake form.
 5. Optional cleanup in Mike's Terminal: `rm -rf .git/_stale_locks` —
    leftover git lock/temp files from the Cowork device-bridge shell, which
    can move them aside but not delete them. Harmless if left.
-6. Mike says when the embargoed FW26 shoes (Adios Pro 5, Hyperboost Run,
-   Evo SL 2, Supernova Rise 4) are public/in his stores → Claude adds them
-   to the study guide, cheat sheet, and quiz.
+6. Mike says when the embargoed FW26 shoes (Hyperboost Run, Evo SL 2,
+   Supernova Rise 4) are public/in his stores → Claude adds them to the
+   study guide, cheat sheet, and quiz. (Adios Pro 5 is already in the quiz
+   as of 2026-09-10; see step 0.)
 7. Optional/nice-to-have, still not blocking: CSV export from the
    dashboard, animated question transitions, sortable dashboard columns.
 

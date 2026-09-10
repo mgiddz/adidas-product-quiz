@@ -99,10 +99,15 @@ ungraded step after them); flag to Mike if that's not wanted.
   ranking question** ("order these 5 shoes lightest → heaviest") answered
   via up/down move buttons, checked with a "Check Order" button, colored
   per-item on check.
-- Question bank covers all **5** products: Hyperboost Edge (Q1–5), Adios
-  Pro 4 (Q6–9), Boston 13 (Q10–12), Evo SL Woven (Q13–15), Supernova Rise 3
-  (Q16–18), plus 2 "Full Lineup" questions spanning all five (Q19 price
-  ranking MC, Q20 weight ranking order question).
+- Question bank (display order, as of 2026-09-10): Hyperboost Edge (Q1–5),
+  Adios Pro 5 (Q6–9, was Adios Pro 4 until 2026-09-10), Boston 13
+  (Q10–11), Evo SL Woven (Q12–14), Supernova Rise 3 (Q15–17), Footwear
+  Pillars (Q18: Adizero = Light & Fast → Hyperboost = Comfort Energized →
+  Supernova = Supportive Comfort), plus 2 "Full Lineup" questions (Q19
+  price ranking MC, Q20 weight ranking order question).
+- Question `id`s are stored in Supabase answers, so they stay stable and
+  are never reused. Display numbers come from array position. Retired:
+  id 11. The pillars question is id 22.
 - Full question text, options, and explanations transcribed into
   `js/questions.js`.
 
@@ -203,6 +208,14 @@ ungraded step after them); flag to Mike if that's not wanted.
 - Dark theme: `#0d0d0d` background, off-white text `#f5f5f0`.
 - Adidas red accent: `oklch(0.55 0.22 25)`.
 - Display type: `Archivo Black`. Body/UI type: `Barlow` (400/600/700/800).
+- **Brand rule (Mike, 2026-09-10):** anything produced for adidas must use
+  the correct fonts, logos, and graphics from adidas's "PRODUCT EDUCATION
+  FW26" deck (the 104-page July 2026 Product Education Session PDF). Mike
+  was told this explicitly. Product imagery should come from the deck or
+  official tech sheets. Note: the deck's typefaces are rasterized (the only
+  embedded fonts are Calibri/Arial), and adidas's own typefaces are
+  proprietary, so the Archivo Black / Barlow pair above is NOT the deck's
+  type. A brand pass on the site's type/logo is an open item.
 - Header: "adidas RUNNING" + "Retail Specialist Program" eyebrow.
 - Progress indicator: "Question X of 20".
 - Badge pill colors on results screen (from prototype's `BADGES` table):
@@ -217,9 +230,19 @@ ungraded step after them); flag to Mike if that's not wanted.
    Hyperboost Pro foam, PRIMEWEAVE woven upper, LIGHTTRAXION outsole,
    45mm/39mm stack (6mm drop). Feel: soft landing, springy/plush toe-off —
    comfort-forward, not race-day firm.
-2. **Adios Pro 4** — race-day shoe. ~7oz, 39mm/33mm stack (6mm drop),
-   EnergyRods 2.0 (shaped like the foot/metatarsal bones). Retail $250.
-   Franchise purpose: "Race to win."
+2. **Adios Pro 5** (replaced Adios Pro 4 on 2026-09-10) — marathon
+   racing shoe. Purpose "Race to win," benefit "Lightweight & fast," use
+   case 0–42km, neutral, road. RRP **$275** (Pro 4 was $250). Weight
+   177g / 6.3oz men's, 150g / 5.3oz women's. Stack 39mm / 34mm, 5mm drop.
+   Upper: Adizero microfit, Engineered LIGHTLOCK 2.0 (one-way stretch
+   woven, internal locking bands, anti-slip heel foam pods), with better
+   breathability than the Pro 4's LIGHTLOCK. Midsole: 39mm LIGHTSTRIKE
+   PRO + all-new carbon-fiber-infused **ENERGYRIM(S)** (replaces Pro 4's
+   EnergyRods 2.0) for higher energy return and more stability. Outsole:
+   LIGHTTRAXION with zoned grip + Continental rubber at the forefoot. New
+   Adizero stripe design + signature heel. Source: official Adios Pro 5
+   tech sheet + FW26 Product Education deck pp. 9–14. **PR embargo /
+   launch: 2026-09-22** (deck p. 1).
 3. **Boston 13** — tempo/daily-trainer. Springy ride via EnergyRods (not a
    plate). Best for tempo workouts + daily training; the "one shoe for easy
    runs and tempo" answer.
@@ -235,10 +258,10 @@ ungraded step after them); flag to Mike if that's not wanted.
 Ranked lightest → heaviest, with approximate weights (added 2026-08-18,
 cross-referenced against third-party review sites since adidas.com doesn't
 publish spec weights — see decision log for sourcing detail):
-Adios Pro 4 (~7oz) → Evo SL Woven (~8oz) → Boston 13 (~8.5oz) →
+Adios Pro 5 (~6.3oz) → Evo SL Woven (~8oz) → Boston 13 (~8.5oz) →
 Hyperboost Edge (~9oz) → Supernova Rise 3 (~9.5oz).
 
-Ranked by retail price, most expensive first: Adios Pro 4 ($250) >
+Ranked by retail price, most expensive first: Adios Pro 5 ($275) >
 Hyperboost Edge ($200) > Evo SL Woven ($150) > Supernova Rise 3 ($140) >
 Boston 13 (exact price not yet confirmed by Mike).
 
@@ -349,3 +372,6 @@ prototype to conflict with there.
 | 2026-08-22 | Mike confirmed: do not add the soccer-specialty doors (Teresita Pelayo's and Edward Yeboah-Alexander's territories) to `js/stores.js`. The 385-store exclusion from 2026-08-19 stands as final | Closes the last open item on the store-list work; no further action needed on this unless Mike changes his mind later |
 | 2026-09-03 | Simplified the intake form to five fields. (1) Dropped the "Store / Banner Name" dropdown and turned "Store Location" into the single store picker fed by `js/stores.js`; its value is written to **both** `store_name` and `store_location` on submit, so the colleague dashboard's per-store tabs and the `profiles.store_name` RLS match keep working with no schema change. `dashboard.js` now prints the store once instead of "X — X". (2) Favorite Snack went from a Smoothie/Coffee/Candy/Other dropdown + conditional "Tell us what" field to a plain free-text input; `favorite_snack_other` is written as null going forward, and the dashboard still renders it for older rows | Mike's ask, both changes in one session. The two store fields were redundant once `js/stores.js` values became "Banner - Location" strings (e.g. "Fleet Feet - Blue Ash") — the free-text location was asking associates to retype what the dropdown already said. Keeping `store_name` as the canonical grouping key (rather than switching the dashboard/RLS to `store_location`) meant zero Supabase changes and no risk to the live table. Snack is an icebreaker/prize-logistics field, not reporting data, so a controlled list bought nothing |
 | 2026-09-03 | **The quiz's Supabase project was shared with an unrelated app, which dropped this app's tables — moved the quiz to its own dedicated project.** Discovered while verifying Mike's live test submission: `quiz_submissions` no longer existed in project `gplkjimpinqkplpcdeio`, whose public schema had become a run-club tracker (`members`, `checkins`, `rewards`, `rsvps`, `leaderboard`, `strava_tokens`). Migration `20260903054550 drop_quiz_and_profiles_tables` ran at 05:45 UTC that morning; Mike confirmed it was not intentional (another Claude session clearing space). All prior submissions and all `profiles` rows were lost with the tables; the 9 `auth.users` accounts survived but their store links did not. Created a new project **"Product Education Quiz", ref `hlfcaczeayotkfkukaca`** (us-east-1, free tier), applied the full `supabase/schema.sql` to it, and repointed `js/config.js`. Verified with an insert + delete round-trip; security advisors clean | A dedicated project was chosen over rebuilding in the shared one because the two apps had already collided on a shared name: both defined `public.handle_new_user` on `auth.users`, so restoring the quiz's version verbatim would have silently broken the run club's signup trigger. **The quiz's trigger function is now `handle_new_quiz_colleague` (trigger `on_auth_user_created_quiz_colleague`), not the generic `handle_new_user`** — app-specific names so a future collision is impossible. `supabase/schema.sql` and `js/config.js` both updated to match. Failure mode worth remembering: `js/app.js` catches the insert error and only `console.error`s it, so the results screen shows a perfect score whether or not the save worked — a green results screen is NOT evidence the submission saved. Nothing may share this project |
+| 2026-09-10 | Replaced the Adios Pro 4 quiz section (Q6–9) with Adios Pro 5, and swapped "Adios Pro 4" → "Adios Pro 5" everywhere it appears in `js/questions.js` (Q12/17/18/19/20 options, Q19/Q20 explains) and the `index.html` intro line. New Q6 = weight/stack/drop (6.3oz, 39/34mm, 5mm), Q7 = ENERGYRIM, Q8 = $275 price, Q9 = "what's new vs. Pro 4" (ENERGYRIMS, LIGHTLOCK 2.0, more foam underfoot). New photos `images/adios-pro-5-{hero,midsole,upper,outsole}.jpg` extracted from the official tech sheet PDF Mike uploaded; old `adios-pro-4-*.jpg` files left in `images/` but unused. Pro 5 stays lightest (Q20 order unchanged) and most expensive (Q19 answer unchanged). Study guide + cheat sheet updated the same day: Pro 5 spec grid, tech callouts, a "What's new vs. the Pro 4" sell line, and ENERGYRIM + LIGHTLOCK 2.0 glossary entries (EnergyRods entry now says Boston + previous Pro 4). Pro 5 removed from both pages' embargo notes | Mike's request, with the Pro 5 tech sheet as the source. Pro 4 was used as a distractor in Q6/Q9 so associates learn the upgrade story. **Deck p. 1 lists the Pro 5 PR embargo and launch as 2026-09-22**, and this is a public site. Flagged to Mike, who confirmed 2026-09-10 that he's cleared to publish it now |
+| 2026-09-10 | Brand rule: all adidas deliverables use the fonts, logos, and graphics from the "PRODUCT EDUCATION FW26" deck | Mike was told to do this explicitly and asked that it be saved for every adidas project. See Visual language above |
+| 2026-09-10 | Added a Footwear Pillars question (id 22, shown as Q18) and removed the old Q11 ("What is the Boston 13 best used for?", id 11). Added the Footwear Pillars graphic (`images/footwear-pillars.jpg`) to the top of both the study guide and the cheat sheet, with a text breakdown of the three pillars | Mike asked for a pillars question and for one question that doesn't really build product knowledge to go. Old Q11 was a near-duplicate of Q10 (both asked for Boston 13's "tempo + daily" positioning). The graphic comes from Mike's own screenshot of the FW26 deck slide, because it keeps the real adidas typefaces (the PDF export swaps them for Calibri). **The "SUPERNOVA RISE 4" line was replaced with "SUPERNOVA RISE 3"** (Mike's call: keep featuring Rise 3 until Rise 4 is public), because the deck marks Rise 4 as under embargo until 2027-03-01. The new line is built from the slide's own glyphs so the font matches. When Rise 4 goes public, swap in the original slide. It lists Hyperboost Run and Adizero Pro Evo 3, whose PR embargoes have lifted |
