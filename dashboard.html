@@ -5,10 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 <title>Results Dashboard — adidas Product Education Quiz</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
-<link
-  href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow:wght@400;600;700;800&display=swap"
-  rel="stylesheet"
-/>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="css/styles.css" />
 <link rel="stylesheet" href="css/admin.css" />
 </head>
@@ -16,9 +13,12 @@
 
 <div class="admin-app">
   <div class="admin-header">
-    <div>
+    <div class="admin-lockup">
+      <img class="logo" src="images/adidas-logo-black.png" alt="adidas" />
+      <div>
       <div class="admin-title display">Results Dashboard</div>
       <div class="admin-whoami" id="whoami">Loading…</div>
+      </div>
     </div>
     <button type="button" class="btn-link" id="logout-btn">Sign out</button>
   </div>
@@ -31,6 +31,7 @@
         <tr>
           <th>Employee</th>
           <th>Score</th>
+          <th>Prize</th>
           <th>Location</th>
           <th>Submitted</th>
         </tr>
@@ -50,6 +51,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/config.js"></script>
+<script src="js/prizes.js"></script>
 <script src="js/dashboard.js"></script>
 </body>
 </html>

@@ -5,7 +5,7 @@ not a history log (that's `MEMORY.md`'s decision log). Durable facts and
 locked decisions belong in [`MEMORY.md`](./MEMORY.md), not here. Toolchain
 and stack details live in [`CLAUDE.md`](./CLAUDE.md).
 
-_Last updated: 2026-09-10 (Cowork session: Adios Pro 5 replaces Pro 4 across the quiz, study guide, and cheat sheet; Mike cleared it to publish; FW26 brand rule added)_
+_Last updated: 2026-09-29 (Cowork session: pre-demo check for program director — Supabase project found paused + empty, restored and schema re-applied; Pull Up A Chair project paused to free the slot; demo-readiness review + national-platform roadmap given to Mike)_
 
 ## What we're building right now
 
@@ -29,6 +29,8 @@ Vercel redeployed, and the live site was verified showing the five-field
 intake form.
 
 ## Current status
+
+- 🚨 **2026-09-29: Supabase project had auto-paused (free tier, idle >7 days) and restored EMPTY.** Schema re-applied, insert verified. **All colleague accounts are gone again** — anyone needs to re-sign-up on `login.html`, and Mike's account still needs `is_admin = true`. `Pull Up A Chair` Supabase project is now paused to free the 2-active-project slot. **Decision needed: upgrade to Supabase Pro** before this goes to more Product Educators — otherwise any quiet week silently breaks saving + login.
 
 - 🚨 **Data loss, 2026-09-03: every submission before today is gone.** The
   Supabase project the quiz shared with an unrelated app had
@@ -91,16 +93,23 @@ intake form.
 
 ## Immediate next steps
 
-0. **Adios Pro 5 update is staged, waiting on Mike to commit + push.**
-   Quiz (Q6–9 plus lineup references), `index.html` intro, study guide,
-   cheat sheet, and 4 new `images/adios-pro-5-*.jpg`. Same batch: new
-   Footwear Pillars quiz question (Q18) replacing the old duplicate Boston
-   Q11, plus the pillars graphic on the study guide and cheat sheet
-   (Supernova Rise 4 swapped for Rise 3 until Rise 4's embargo lifts). Mike confirmed
-   2026-09-10 that he's cleared to publish, even though the deck listed a
-   9/22 embargo. Follow-up: do a brand pass so the site's fonts/logo match
-   the FW26 deck (see MEMORY.md's Visual language brand rule).
+**2026-09-29 pre-demo session — all staged, NOT yet committed/pushed:**
+brand pass (all 5 pages + logo PNGs), prize tiers (`js/prizes.js`,
+intake ladder, results card, dashboard column), loud save banner +
+intake preflight, `prize_tier` column (already live in Supabase),
+MEMORY/CONTEXT updates. **Mike: `git commit` + `git push origin main`
+from your Terminal, then verify the live site.** Then sign up on
+`login.html` and tell Claude the email to flag `is_admin`.
 
+Decisions Mike owes: (a) Supabase Pro — he'll ask the director;
+(b) retake policy now that prizes have real value (see MEMORY.md
+2026-09-29 prize entry).
+
+0. ✅ **Adios Pro 5 + Footwear Pillars update is live** (`af07f38`, pushed
+   2026-09-10, confirmed on the live site). Remaining follow-up: a brand
+   pass so the site's fonts and logo match the FW26 deck (see MEMORY.md's
+   Visual language brand rule). When Supernova Rise 4's embargo lifts
+   (2027-03-01), swap the original pillars slide back in.
 1. **Push the new Supabase config** (`git push origin main` from Mike's
    Terminal) — until then the live site is still pointed at the old,
    table-less project and every submission is silently lost.

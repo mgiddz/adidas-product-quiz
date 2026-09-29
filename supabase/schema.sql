@@ -27,8 +27,11 @@ create table if not exists quiz_submissions (
   -- Quiz results
   answers jsonb not null,               -- array of { questionId, type, yourAnswer, correct }
   score int not null,                   -- out of 20 (19 multiple choice + 1 order/ranking question)
+  prize_tier text,                      -- added 2026-09-29: key from js/prizes.js (shoes/tshirt/socks/keychain/none)
   open_ended_response text
 );
+-- Safe to re-run on a table that predates prize_tier:
+alter table quiz_submissions add column if not exists prize_tier text;
 
 -- Enable Row Level Security, then allow anonymous INSERT only.
 alter table quiz_submissions enable row level security;

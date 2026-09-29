@@ -5,10 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 <title>adidas Running — Product Knowledge Quiz</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
-<link
-  href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow:wght@400;600;700;800&display=swap"
-  rel="stylesheet"
-/>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
@@ -16,10 +13,14 @@
 <div class="app">
   <div class="header">
     <div class="header-top">
-      <div class="stripes"><span></span><span></span><span></span></div>
+      <div class="header-lockup">
+        <img class="logo" src="images/adidas-logo-white.png" alt="adidas" />
+        <div>
+          <div class="brand">adidas Running</div>
+          <div class="eyebrow">Retail Specialist Program</div>
+        </div>
+      </div>
     </div>
-    <div class="brand">adidas RUNNING</div>
-    <div class="eyebrow">Retail Specialist Program</div>
   </div>
 
   <!-- ================= INTAKE ================= -->
@@ -32,10 +33,19 @@
       spotlight on this season's featured push, Hyperboost Edge.
     </p>
     <p class="subtext">
-      Score 14+ for Specialist status, 18+ for Legend Status, and be
-      eligible for a prize. Fill in your info below, then start the quiz —
-      you'll see your score and a full breakdown the moment you finish.
+      Score 14+ for Specialist status, 18+ for Legend Status. The higher you
+      score, the better the prize — a perfect 20 wins a pair of shoes. Fill
+      in your info below, then start the quiz; you'll see your score, your
+      prize, and a full breakdown the moment you finish.
     </p>
+
+    <div class="prize-ladder" id="prize-ladder" aria-label="Prizes by score"></div>
+
+    <div class="save-banner error hidden" id="preflight-banner">
+      <strong>Heads up:</strong> we can't reach the results server right now.
+      You can still take the quiz and see your score, but it may not save.
+      Check your connection or tell your Product Educator before starting.
+    </div>
 
     <form id="intake-form" novalidate>
       <div class="field">
@@ -139,16 +149,31 @@
 
   <!-- ================= RESULTS ================= -->
   <section id="screen-results" class="screen hidden">
+    <div class="save-banner" id="save-banner">
+      <span id="save-banner-text">Saving your results…</span>
+      <button type="button" class="btn-inline hidden" id="save-retry-btn">Retry save</button>
+    </div>
+
     <div class="score-hero">
       <div class="tier-pill" id="score-tier-pill"></div>
       <div class="score-number" id="score-number"></div>
       <div class="score-message" id="score-message"></div>
     </div>
 
+    <div class="prize-card" id="prize-card">
+      <div class="prize-card-label">Your prize</div>
+      <div class="prize-card-row">
+        <div class="prize-card-icon" id="prize-icon"></div>
+        <div>
+          <div class="prize-card-title" id="prize-title"></div>
+          <div class="prize-card-value" id="prize-value"></div>
+        </div>
+      </div>
+      <div class="prize-card-note" id="prize-note"></div>
+    </div>
+
     <div class="breakdown-title">Question Breakdown</div>
     <div id="breakdown-list"></div>
-
-    <div class="status-message" id="status-message"></div>
 
     <div class="next-steps">
       <div class="next-steps-title">Want to brush up?</div>
@@ -182,6 +207,7 @@
 <script src="js/config.js"></script>
 <script src="js/stores.js"></script>
 <script src="js/questions.js"></script>
+<script src="js/prizes.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

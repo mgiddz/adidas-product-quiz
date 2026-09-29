@@ -52,6 +52,15 @@
     });
   }
 
+  // Prize label for a row. Rows saved before 2026-09-29 have no prize_tier,
+  // so fall back to computing it from the score via js/prizes.js.
+  function prizeLabel(r) {
+    if (typeof getPrize !== "function") return r.prize_tier || "";
+    const tier =
+      (r.prize_tier && PRIZE_TIERS.find((t) => t.key === r.prize_tier)) || getPrize(r.score);
+    return tier ? `${tier.short}${tier.value ? " (" + tier.value + ")" : ""}` : "";
+  }
+
   function renderTable() {
     const rows = allRows.filter((r) => r.store_name === activeStore);
     tableBody.innerHTML = "";
@@ -66,6 +75,7 @@
       tr.innerHTML = `
         <td>${escapeHtml(r.employee_name)}</td>
         <td>${r.score} / 20</td>
+        <td>${escapeHtml(prizeLabel(r))}</td>
         <td>${escapeHtml(r.store_location)}</td>
         <td>${escapeHtml(submitted)}</td>
       `;
@@ -85,6 +95,7 @@
           : ""
       }</p>
       <p><strong>Score:</strong> ${r.score} / 20</p>
+      <p><strong>Prize earned:</strong> ${escapeHtml(prizeLabel(r))}</p>
       <p><strong>Email:</strong> ${escapeHtml(r.email)}</p>
       <p><strong>Shoe size:</strong> ${escapeHtml(r.shoe_size)} (${escapeHtml(r.shoe_size_gender)})</p>
       <p><strong>Clothing size:</strong> ${escapeHtml(r.clothing_size)} (${escapeHtml(r.clothing_size_gender)})</p>

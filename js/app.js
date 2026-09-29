@@ -65,6 +65,54 @@
   }
 
   // ---------------------------------------------------------------------
+  // Preflight: can we reach Supabase at all? (2026-09-29) The anon key has
+  // no SELECT policy, so this returns an empty list — but a 200 proves the
+  // project is awake and reachable. A paused free-tier project or a dead
+  // network shows a warning on the intake screen BEFORE someone spends
+  // five minutes on the quiz.
+  // ---------------------------------------------------------------------
+
+  const preflightBanner = document.getElementById("preflight-banner");
+
+  async function preflight() {
+    if (!supabaseClient) {
+      preflightBanner.classList.remove("hidden");
+      return;
+    }
+    try {
+      const { error } = await supabaseClient
+        .from("quiz_submissions")
+        .select("id", { head: true, count: "exact" })
+        .limit(1);
+      if (error) throw error;
+      preflightBanner.classList.add("hidden");
+    } catch (err) {
+      console.error("[quiz] Preflight failed — results server unreachable:", err);
+      preflightBanner.classList.remove("hidden");
+    }
+  }
+
+  // ---------------------------------------------------------------------
+  // Prize ladder on the intake screen (js/prizes.js)
+  // ---------------------------------------------------------------------
+
+  function renderPrizeLadder() {
+    const ladder = document.getElementById("prize-ladder");
+    if (!ladder || typeof PRIZE_TIERS === "undefined") return;
+    const rows = PRIZE_TIERS.filter((t) => t.key !== "none")
+      .map(
+        (t, i) => `
+        <div class="prize-row ${i === 0 ? "top" : ""}">
+          <div class="prize-range">${prizeRange(t)}</div>
+          <div class="prize-name">${t.icon} ${escapeHtml(t.label)}</div>
+          <div class="prize-worth">${escapeHtml(t.value)}</div>
+        </div>`
+      )
+      .join("");
+    ladder.innerHTML = `<div class="prize-ladder-title">Score &rarr; Prize (out of 20)</div>${rows}`;
+  }
+
+  // ---------------------------------------------------------------------
   // DOM refs
   // ---------------------------------------------------------------------
 
@@ -379,7 +427,10 @@
   const scoreNumber = document.getElementById("score-number");
   const scoreMessage = document.getElementById("score-message");
   const breakdownList = document.getElementById("breakdown-list");
-  const statusMessage = document.getElementById("status-message");
+  const saveBanner = document.getElementById("save-banner");
+  const saveBannerText = document.getElementById("save-banner-text");
+  const saveRetryBtn = document.getElementById("save-retry-btn");
+  const prizeCard = document.getElementById("prize-card");
   const retakeBtn = document.getElementById("retake-btn");
 
   function gradeQuiz() {
@@ -422,6 +473,13 @@
     badgePill.style.color = badge.color;
     scoreNumber.textContent = `${score} / ${QUIZ_QUESTIONS.length}`;
     scoreMessage.textContent = badge.message;
+
+    const prize = getPrize(score);
+    prizeCard.classList.toggle("none", prize.key === "none");
+    document.getElementById("prize-icon").textContent = prize.icon;
+    document.getElementById("prize-title").textContent = prize.label;
+    document.getElementById("prize-value").textContent = prize.value;
+    document.getElementById("prize-note").textContent = prize.note;
 
     breakdownList.innerHTML = "";
     detailed.forEach((d, i) => {
@@ -491,6 +549,7 @@
         correct: d.correct,
       })),
       score,
+      prize_tier: getPrize(score).key,
       open_ended_response: state.openEndedResponse.trim() || null,
     };
 
@@ -498,23 +557,41 @@
     // score is the primary delivery mechanism (build spec §4/§9).
     renderResults(score, detailed);
     showScreen("results");
+    await saveWithBanner(payload);
+  }
 
-    statusMessage.textContent = "Saving your results…";
-    statusMessage.classList.remove("error");
+  // Save status is loud on purpose (2026-09-29): a failed save used to be a
+  // grey one-liner under the breakdown, so a green results screen looked
+  // identical whether or not the row landed. Now it's a banner at the top
+  // that goes red with a Retry button.
+  let pendingPayload = null;
+
+  async function saveWithBanner(payload) {
+    pendingPayload = payload;
+    saveBanner.className = "save-banner";
+    saveBannerText.textContent = "Saving your results…";
+    saveRetryBtn.classList.add("hidden");
 
     const result = await submitToSupabase(payload);
     if (result.ok) {
-      statusMessage.textContent = "Results saved. Nice work!";
+      saveBanner.className = "save-banner ok";
+      saveBannerText.textContent = "✅ Results saved. Your Product Educator can see your score and prize.";
+      pendingPayload = null;
     } else if (result.reason === "not_configured") {
-      statusMessage.textContent =
-        "Your score is shown above. (Admin note: Supabase isn't configured yet — see js/config.js.)";
-      statusMessage.classList.add("error");
+      saveBanner.className = "save-banner error";
+      saveBannerText.textContent =
+        "⚠️ Your score is shown below but was NOT saved — the results server isn't configured (js/config.js).";
     } else {
-      statusMessage.textContent =
-        "Your score is shown above, but we couldn't save it — please show this screen to your manager just in case.";
-      statusMessage.classList.add("error");
+      saveBanner.className = "save-banner error";
+      saveBannerText.textContent =
+        "⚠️ Your score is shown below but was NOT saved. Tap Retry, or screenshot this page and send it to your Product Educator.";
+      saveRetryBtn.classList.remove("hidden");
     }
   }
+
+  saveRetryBtn.addEventListener("click", () => {
+    if (pendingPayload) saveWithBanner(pendingPayload);
+  });
 
   retakeBtn.addEventListener("click", () => {
     state.quizIdx = 0;
@@ -531,5 +608,7 @@
   // ---------------------------------------------------------------------
 
   validateIntake();
+  renderPrizeLadder();
+  preflight();
   showScreen("intake");
 })();

@@ -55,7 +55,7 @@
   margin: 60px auto;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius);
   padding: 28px 24px;
 }
 
@@ -102,15 +102,15 @@
 }
 
 .auth-message.error {
-  background: rgba(214, 69, 69, 0.15);
+  background: var(--incorrect-bg);
   border: 1px solid var(--incorrect);
-  color: #ff9c9c;
+  color: var(--incorrect);
 }
 
 .auth-message.success {
-  background: rgba(47, 174, 91, 0.15);
+  background: var(--correct-bg);
   border: 1px solid var(--correct);
-  color: #8be0a8;
+  color: var(--correct);
 }
 
 /* ---------- Store tabs ---------- */
@@ -198,7 +198,7 @@ table.results-table {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.45);
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -255,13 +255,24 @@ table.results-table {
 }
 
 .answer-row.correct {
-  background: rgba(47, 174, 91, 0.12);
+  background: var(--correct-bg);
 }
 
 .answer-row.incorrect {
-  background: rgba(214, 69, 69, 0.12);
+  background: var(--incorrect-bg);
 }
 
 .hidden {
   display: none !important;
+}
+
+/* Brand pass 2026-09-29: logo lockup in the admin header / auth card */
+.admin-lockup {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.admin-lockup .logo {
+  height: 28px;
+  width: auto;
 }
