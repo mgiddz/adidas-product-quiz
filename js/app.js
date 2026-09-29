@@ -270,8 +270,11 @@
 
     if (q.image) {
       questionImage.src = `images/${q.image}`;
-      questionImage.alt = q.imageCaption || q.section;
-      questionImageCaption.textContent = q.imageCaption || "";
+      // 2026-09-29: captions are no longer shown during the quiz — Q3's
+      // caption ("LIGHTTRAXION outsole, stamped right on the sole") was the
+      // answer. Alt text stays generic for the same reason.
+      questionImage.alt = "Product photo";
+      questionImageCaption.textContent = "";
       questionImageWrap.classList.remove("hidden");
     }
 
