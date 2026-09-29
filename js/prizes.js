@@ -8,6 +8,9 @@
 // associate what they earned, and the tier is saved with their submission
 // (quiz_submissions.prize_tier) so the dashboard shows who's owed what.
 //
+// Internal value guide (Mike, 2026-09-29) — NOT shown to associates:
+//   shoes $120–150, t-shirt $10–15, socks $8–12, keychain/lanyard $4–8.
+//
 // Badge labels (LEGEND / SPECIALIST / ROOKIE) still come from js/questions.js;
 // prizes are a separate ladder on purpose so either can change alone.
 
@@ -16,7 +19,7 @@ const PRIZE_TIERS = [
     min: 20,
     key: "shoes",
     label: "adidas Running Shoes",
-    value: "$120–$150 value",
+    value: "",
     short: "Shoes",
     icon: "👟",
     note: "Perfect score. A pair from the current lineup — your size is on file.",
@@ -25,7 +28,7 @@ const PRIZE_TIERS = [
     min: 18,
     key: "tshirt",
     label: "adidas T-Shirt",
-    value: "$10–$15 value",
+    value: "",
     short: "T-shirt",
     icon: "👕",
     note: "Legend Status. Your clothing size is on file.",
@@ -34,7 +37,7 @@ const PRIZE_TIERS = [
     min: 14,
     key: "socks",
     label: "adidas Running Socks",
-    value: "$8–$12 value",
+    value: "",
     short: "Socks",
     icon: "🧦",
     note: "Specialist. Your shoe size is on file.",
@@ -43,7 +46,7 @@ const PRIZE_TIERS = [
     min: 10,
     key: "keychain",
     label: "adidas Keychain / Lanyard",
-    value: "$4–$8 value",
+    value: "",
     short: "Keychain / Lanyard",
     icon: "🔑",
     note: "Rookie. Retake after a pass through the study guide to move up a tier.",

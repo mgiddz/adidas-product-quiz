@@ -261,7 +261,11 @@
     }
 
     const q = QUIZ_QUESTIONS[state.quizIdx];
-    sectionLabel.textContent = q.section;
+    // 2026-09-29: the section label (shoe name, top right of the question)
+    // is no longer shown during the quiz at all — Mike's call after it gave
+    // away the "which shoe?" questions. q.section is still used for the
+    // results breakdown / dashboard grouping.
+    sectionLabel.textContent = "";
     questionText.textContent = q.prompt;
 
     if (q.image) {
@@ -418,6 +422,17 @@
     workingOrder = null;
     renderQuizStep();
   });
+
+  const SHOE_NAMES = ["Hyperboost Edge", "Adios Pro 5", "Boston 13", "Evo SL Woven", "Supernova Rise 3"];
+
+  function givesAwayAnswer(q) {
+    const choices = q.type === "order" ? q.items : q.options;
+    return (
+      Array.isArray(choices) &&
+      choices.some((c) => SHOE_NAMES.some((n) => c.toLowerCase().includes(n.toLowerCase()))) &&
+      SHOE_NAMES.some((n) => q.section.toLowerCase().includes(n.toLowerCase()))
+    );
+  }
 
   // ---------------------------------------------------------------------
   // Grading + results screen
