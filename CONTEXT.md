@@ -5,11 +5,11 @@ not a history log (that's `MEMORY.md`'s decision log). Durable facts and
 locked decisions belong in [`MEMORY.md`](./MEMORY.md), not here. Toolchain
 and stack details live in [`CLAUDE.md`](./CLAUDE.md).
 
-_Last updated: 2026-09-30 (Claude Code session: v2 platform finished, verified, and pushed — modules + timed quizzes + magic-link sign-in + proctored certification test + rebuilt dashboard; Myagi videos wired)_
+_Last updated: 2026-10-01 (Cowork session: question banks deepened from the FW26 deck to 98 total; **the 2026-09-30 v2 commit was never actually pushed — GitHub push is blocked until Mike installs the Claude GitHub App**)_
 
 ## What we're building right now
 
-**v2 is built and pushed (2026-09-30).** The director green-lit a national
+**v2 is built (2026-09-30) and COMMITTED LOCALLY in the cloud clone — NOT yet on GitHub/Vercel.** The 2026-09-30 note saying "pushed" was wrong: `git push` returns 403 (Claude's GitHub App isn't installed on `mgiddz/adidas-product-quiz`). The live site is still v1 until Mike installs the app (https://github.com/apps/claude/installations/select_target) or reconnects GitHub in claude.ai settings, then Claude pushes `main`. The director green-lit a national
 rollout, so the single 20-question quiz became a platform. Live at
 `https://adidas-product-quiz-4v5e.vercel.app/` once Vercel redeploys this push.
 
@@ -50,7 +50,8 @@ territory (`profiles.territory`) or everything if `is_admin`.
   (`products.video_url`; see `docs/myagi-video-catalog.md`). Verified the
   MP4s load without a Myagi login. Hyperboost Edge, Adios Pro 5 use photo +
   bullets until the director sources videos.
-- ✅ Content: 56 questions across 7 products (v1 bank + Myagi's questions +
+- ✅ **Content deepened 2026-10-01** (`supabase/seed_v2_techsheet.sql`, migration `techsheet_question_bank_depth`): 98 questions — Edge 15, Pro 5 15, Boston 14, Evo SL 16, Rise 3 13, Full Lineup 15, Hyperboost Run 10. Source: FW26 deck text (specs, purpose lines, competitor sheets, variants) + customer-scenario questions. No Evo SL 2 / Rise 4 content (embargoed).
+- ✅ (2026-09-30) Content was: 56 questions across 7 products (v1 bank + Myagi's questions +
   tech-sheet facts). Hyperboost Run is seeded but `active = false` until its
   10/8 launch (only 4 questions so far).
 - ✅ Store toggles pre-seeded: every door in `js/stores.js` × every product,
@@ -62,6 +63,8 @@ territory (`profiles.territory`) or everything if `is_admin`.
   next store visit.
 
 ## Immediate next steps
+
+0. **PUSH BLOCKER — Mike:** install the Claude GitHub App for `mgiddz/adidas-product-quiz` (link above), then tell Claude to `git push origin main`. Two commits are waiting (v2 platform + content depth). Nothing on the live site changes until then.
 
 1. **Mike — Supabase Auth config (blocks magic links):** Dashboard →
    Authentication → URL Configuration → Site URL =
@@ -75,9 +78,7 @@ territory (`profiles.territory`) or everything if `is_admin`.
 3. Peter Kalmbach: sign up on `login.html` → Claude sets `role='admin'`.
 4. Supabase Pro — still with the director. Free tier auto-pauses after 7
    idle days (both pages show a red banner when that happens).
-5. Content depth: grow each shoe's bank to 12–15 so 8-question draws vary.
-   Mike re-sends the FW26 deck text in-session (not stored in the repo —
-   embargoed launches, and Vercel serves every repo file).
+5. ✅ Content depth done 2026-10-01 (see status). Next content pass when Hyperboost Run / Prima 3 videos or tech sheets arrive.
 6. When videos arrive for Hyperboost Edge / Adios Pro 5: set
    `products.video_url` (Supabase Storage once on Pro, or any public MP4).
 7. Hyperboost Run: on 10/8 set `active = true` after adding questions.
