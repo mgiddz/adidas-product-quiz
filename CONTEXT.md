@@ -5,131 +5,84 @@ not a history log (that's `MEMORY.md`'s decision log). Durable facts and
 locked decisions belong in [`MEMORY.md`](./MEMORY.md), not here. Toolchain
 and stack details live in [`CLAUDE.md`](./CLAUDE.md).
 
-_Last updated: 2026-09-29 (Cowork session: pre-demo check for program director — Supabase project found paused + empty, restored and schema re-applied; Pull Up A Chair project paused to free the slot; demo-readiness review + national-platform roadmap given to Mike)_
+_Last updated: 2026-09-30 (Claude Code session: v2 platform finished, verified, and pushed — modules + timed quizzes + magic-link sign-in + proctored certification test + rebuilt dashboard; Myagi videos wired)_
 
 ## What we're building right now
 
-The quiz is **live and taking real submissions**:
-`https://adidas-product-quiz-4v5e.vercel.app/`. Supabase is fully wired —
-Mike's own test submission (20/20) landed in `quiz_submissions`, confirming
-the whole pipeline end to end. The **colleague results dashboard**
-(`login.html` + `dashboard.html`) from the last session is confirmed
-**pushed and live** — `fd8301e` is on `origin/main`. This session:
-replaced the 24-entry hand-typed Columbus store list with a **385-store
-national list** pulled from Mike's monday.com "aBSP Doors" board, covering
-Mike + 14 colleagues (excluded 2 colleagues' territories that are almost
-entirely soccer-specialty retailers — flagged to Mike, see Open questions).
-This session: **simplified the intake form** — the "Store / Banner Name"
-dropdown is gone (Store Location is now the single store picker, feeding
-both DB columns) and Favorite Snack is now free text instead of a
-dropdown. Everything that had been sitting staged since 2026-08-19 (the
-385-store list, study guide, cheat sheet, styles) went into the same
-commit. **Pushed by Mike 2026-09-03** — `74b7095` is on `origin/main`,
-Vercel redeployed, and the live site was verified showing the five-field
-intake form.
+**v2 is built and pushed (2026-09-30).** The director green-lit a national
+rollout, so the single 20-question quiz became a platform. Live at
+`https://adidas-product-quiz-4v5e.vercel.app/` once Vercel redeploys this push.
+
+- `index.html` — **magic-link sign-in** (email, no password) → one-time
+  profile (name, store, sizes) → **module grid** showing only the shoes
+  that store carries → certification-test code entry.
+- `module.html?p=<product>` — intro (Myagi presenter video with a
+  must-finish gate, or hero photo + "what to know" bullets) → **timed quiz**
+  (20 s/question, first tap locks, no back, tab-blur counted) → server-graded
+  results with breakdown. Retakes allowed; prizes are NOT earned here.
+- `test.html?code=XXXXXX` — **proctored certification test**. PE opens a
+  session on the dashboard (store + products + question count) → 6-char code
+  (4 h expiry) → employee enters it → one attempt → prize tier from this score.
+- `dashboard.html` — Results (tests / modules / legacy, per store, CSV
+  export) · Employees (history + sizes) · **Store products** (toggle grid =
+  "which stores carry what") · **Test sessions** (open, live roster with
+  blur counts, close).
+- `legacy-quiz.html` — the v1 intake-form quiz, kept reachable but off the
+  front door.
+
+Backend: `supabase/v2_schema.sql` (applied as migration `v2_platform_schema`)
++ `supabase/seed_v2.sql`. **Correct answers never reach the browser** —
+`get_module_questions` / `join_test_session` return shuffled questions
+without the key; `submit_module_attempt` / `submit_test_attempt` grade
+server-side. RLS: employees see only their own rows; staff see their
+territory (`profiles.territory`) or everything if `is_admin`.
 
 ## Current status
 
-- 🚨 **2026-09-29: Supabase project had auto-paused (free tier, idle >7 days) and restored EMPTY.** Schema re-applied, insert verified. **All colleague accounts are gone again** — anyone needs to re-sign-up on `login.html`, and Mike's account still needs `is_admin = true`. `Pull Up A Chair` Supabase project is now paused to free the 2-active-project slot. **Decision needed: upgrade to Supabase Pro** before this goes to more Product Educators — otherwise any quiet week silently breaks saving + login.
-
-- 🚨 **Data loss, 2026-09-03: every submission before today is gone.** The
-  Supabase project the quiz shared with an unrelated app had
-  `quiz_submissions` and `profiles` dropped out from under it at 05:45 UTC
-  (migration `drop_quiz_and_profiles_tables`, not intentional). Fixed by
-  moving the quiz to its own project — **"Product Education Quiz", ref
-  `hlfcaczeayotkfkukaca`** — with the full schema re-applied and
-  `js/config.js` repointed. **Mike still needs to push that config change
-  before the live site saves anything.** Old data may be recoverable from
-  the old project's daily backups (Supabase Dashboard -> Database ->
-  Backups) — unchecked as of this writing.
-
-- ✅ Quiz itself (content/format/scoring) is done and working, deployed,
-  and confirmed saving real submissions to Supabase.
-- ✅ Real product photos on every question card, all Mike-confirmed.
-  Several photos reframed to focus on the shoe; answer-giveaway photos
-  removed from "which shoe in the lineup" questions (Q12/17/18).
-- ✅ Content accuracy pass, 2026-08-18: Q14/Q15 rewritten to fix an
-  Evo SL Woven / Supernova Rise 3 positioning mix-up and self-answering
-  wording; real (reviewer-measured) shoe weights cross-referenced into
-  Q6/Q20.
-- ✅ **Colleague results dashboard built and confirmed live**
-  (`login.html` + `dashboard.html`) — a colleague creates their own
-  account, picks their store from a dropdown (`js/stores.js`), and sees
-  only their store's results after signing in. Mike's account, once
-  flagged `is_admin` in the `profiles` table, sees every store as tabs.
-  Enforced with Supabase Auth + Row Level Security (not just hidden in
-  the UI — a colleague genuinely cannot query another store's rows).
-  Confirmed pushed: `origin/main` is at `fd8301e`. See MEMORY.md decision
-  log for full design.
-- ✅ **Store list expanded to 385 doors** — `js/stores.js` replaced with
-  a national list pulled from Mike's monday.com "aBSP Doors" board
-  (Covered Doors, filtered to doors with an assigned Product Educator),
-  covering Mike + 14 colleagues. The quiz intake form's store field stays
-  a dropdown from this same list. **Pushed live 2026-09-03.**
-  **Excluded 2 colleagues' doors** (Teresita Pelayo,
-  Edward Yeboah-Alexander — almost entirely soccer-specialty retailers)
-  — **Mike confirmed 2026-08-22: correct, do not add soccer doors.**
-  Settled, no longer an open question.
-- ❌ **Blocked on Mike to finish dashboard setup:**
-  1. Mike needs to sign up his own account via `login.html`, then tell
-     Claude the email he used so it can be flagged `is_admin = true` in
-     Supabase (no self-serve way to become admin, by design).
-- ✅ **Study guide + cheat sheet built out** — Mike uploaded adidas's
-  internal Product Education PDF deck (July 2026, 104 pages); both pages
-  now have real content (spec tables, tech breakdowns, sell lines) for all
-  5 shoes plus a Technology Glossary. Deliberately excludes several FW26
-  launches previewed in that deck that are unreleased or still under PR
-  embargo (Adios Pro 5, Hyperboost Run, Evo SL 2, Supernova Rise 4) since
-  this is a public site — see MEMORY.md decision log. **Pushed live
-  2026-09-03.**
-
-- ✅ **Intake form simplified (2026-09-03)** — five fields now: Employee
-  Name, Store Location (the single `js/stores.js` dropdown, written to
-  both `store_name` and `store_location`), Shoe Size + gender, Clothing
-  Size + gender, Email, Favorite Snack (free text). The redundant "Store /
-  Banner Name" dropdown and the snack dropdown's conditional "Tell us
-  what" field are gone. No Supabase change was needed — see MEMORY.md
-  decision log for why `store_name` stayed the grouping key.
+- ✅ **Verified 2026-09-30, end to end:** RPCs exercised in SQL as a signed-in
+  user (questions shuffled with no answer key; module graded 3/8 with
+  breakdown; session opened → joined → submitted 5/10 → `keychain`; roster
+  shows score + blur count; `my_progress` returns best/attempts). All smoke
+  data deleted afterwards. All 11 screens rendered headless with a mock
+  client: **zero JS errors.** Dashboard CSS was missing for the new panels
+  — added. Header user chip no longer collides with the brand lockup.
+- ✅ **Myagi videos wired** for Supernova Rise 3, Boston 13, Evo SL
+  (`products.video_url`; see `docs/myagi-video-catalog.md`). Verified the
+  MP4s load without a Myagi login. Hyperboost Edge, Adios Pro 5 use photo +
+  bullets until the director sources videos.
+- ✅ Content: 56 questions across 7 products (v1 bank + Myagi's questions +
+  tech-sheet facts). Hyperboost Run is seeded but `active = false` until its
+  10/8 launch (only 4 questions so far).
+- ✅ Store toggles pre-seeded: every door in `js/stores.js` × every product,
+  all on.
+- ⚠️ **Nobody has signed in yet** — `employees` is empty. First real test:
+  Mike signs in on the live site with the magic link.
+- ⚠️ **The QR code now lands on a sign-in screen**, not the old intake
+  form. Expected (it's the new front door), but worth knowing before the
+  next store visit.
 
 ## Immediate next steps
 
-**2026-09-29 pre-demo session — all staged, NOT yet committed/pushed:**
-brand pass (all 5 pages + logo PNGs), prize tiers (`js/prizes.js`,
-intake ladder, results card, dashboard column), loud save banner +
-intake preflight, `prize_tier` column (already live in Supabase),
-MEMORY/CONTEXT updates. **Mike: `git commit` + `git push origin main`
-from your Terminal, then verify the live site.** Then sign up on
-`login.html` and tell Claude the email to flag `is_admin`.
-
-Decisions Mike owes: (a) Supabase Pro — he'll ask the director;
-(b) retake policy now that prizes have real value (see MEMORY.md
-2026-09-29 prize entry).
-
-0. ✅ **Adios Pro 5 + Footwear Pillars update is live** (`af07f38`, pushed
-   2026-09-10, confirmed on the live site). Remaining follow-up: a brand
-   pass so the site's fonts and logo match the FW26 deck (see MEMORY.md's
-   Visual language brand rule). When Supernova Rise 4's embargo lifts
-   (2027-03-01), swap the original pillars slide back in.
-1. **Push the new Supabase config** (`git push origin main` from Mike's
-   Terminal) — until then the live site is still pointed at the old,
-   table-less project and every submission is silently lost.
-2. Re-take the quiz on the live site once pushed; Claude verifies the row
-   landed in the new project. A green results screen is not proof it
-   saved — `js/app.js` only logs insert failures to the console.
-3. Decide whether to try restoring the old project's backup to recover
-   pre-2026-09-03 submissions (Dashboard -> Database -> Backups).
-4. Colleague accounts: the 9 auth users survived but their `profiles`
-   rows did not. Colleagues will need to sign up again on `login.html`,
-   and Mike still needs his own account flagged `is_admin = true`.
-5. Optional cleanup in Mike's Terminal: `rm -rf .git/_stale_locks` —
-   leftover git lock/temp files from the Cowork device-bridge shell, which
-   can move them aside but not delete them. Harmless if left.
-6. Mike says when the embargoed FW26 shoes (Hyperboost Run, Evo SL 2,
-   Supernova Rise 4) are public/in his stores → Claude adds them to the
-   study guide, cheat sheet, and quiz. (Adios Pro 5 is already in the quiz
-   as of 2026-09-10; see step 0.)
-7. Optional/nice-to-have, still not blocking: CSV export from the
-   dashboard, animated question transitions, sortable dashboard columns.
+1. **Mike — Supabase Auth config (blocks magic links):** Dashboard →
+   Authentication → URL Configuration → Site URL =
+   `https://adidas-product-quiz-4v5e.vercel.app` and add
+   `https://adidas-product-quiz-4v5e.vercel.app/**` to Redirect URLs. Until
+   then sign-in links bounce to `localhost:3000`. Claude has no tool for
+   this setting.
+2. Mike: sign in on the live site as an employee, take the Boston 13 module
+   (video gate) and the Hyperboost Edge module (photo intro) on your phone.
+   Then open a session from the dashboard and take the test with the code.
+3. Peter Kalmbach: sign up on `login.html` → Claude sets `role='admin'`.
+4. Supabase Pro — still with the director. Free tier auto-pauses after 7
+   idle days (both pages show a red banner when that happens).
+5. Content depth: grow each shoe's bank to 12–15 so 8-question draws vary.
+   Mike re-sends the FW26 deck text in-session (not stored in the repo —
+   embargoed launches, and Vercel serves every repo file).
+6. When videos arrive for Hyperboost Edge / Adios Pro 5: set
+   `products.video_url` (Supabase Storage once on Pro, or any public MP4).
+7. Hyperboost Run: on 10/8 set `active = true` after adding questions.
+8. Retake policy for the *proctored* test is one attempt per session; a PE
+   can open a new session for a retest — decide whether that's the policy.
 
 ## Deploy notes for next time
 

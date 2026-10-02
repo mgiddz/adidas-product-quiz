@@ -276,3 +276,248 @@ table.results-table {
   height: 28px;
   width: auto;
 }
+
+/* =====================================================================
+   v2 dashboard (2026-09-30): tabs, panels, store-product toggles,
+   certification sessions. Same tokens as styles.css.
+   ===================================================================== */
+
+.admin-tabs {
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+  border-bottom: 1px dotted var(--border);
+  flex-wrap: wrap;
+}
+
+.admin-tabs button {
+  background: transparent;
+  color: var(--text-dim);
+  border: none;
+  border-bottom: 3px solid transparent;
+  border-radius: 0;
+  min-height: 44px;
+  padding: 10px 18px;
+  font-size: 14px;
+}
+
+.admin-tabs button:hover {
+  color: var(--text);
+}
+
+.admin-tabs button.active {
+  color: var(--text);
+  border-bottom-color: var(--accent);
+}
+
+.admin-panel {
+  width: 100%;
+  max-width: 1100px;
+}
+
+.panel-help {
+  font-size: 14px;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin: 0 0 14px;
+}
+
+.panel-toolbar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.admin-select {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  padding: 9px 12px;
+  min-height: 40px;
+  min-width: 200px;
+}
+
+.admin-select[type="search"] {
+  min-width: 280px;
+}
+
+.btn-inline.dark {
+  background: var(--text);
+  color: #fff;
+}
+
+.btn-inline.dark:hover {
+  background: var(--accent);
+}
+
+/* ---------- Store products: toggle grid ---------- */
+.toggle-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.toggle-card {
+  display: grid;
+  grid-template-columns: auto 64px 1fr;
+  align-items: center;
+  gap: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-left: 5px solid var(--border-soft);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  cursor: pointer;
+  user-select: none;
+  transition: border-color 0.15s ease, opacity 0.15s ease;
+}
+
+.toggle-card.on {
+  border-left-color: var(--correct);
+}
+
+.toggle-card:not(.on) {
+  opacity: 0.6;
+}
+
+.toggle-card.inactive {
+  opacity: 0.45;
+}
+
+.toggle-card input {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--correct);
+  margin: 0;
+}
+
+.toggle-card-img {
+  width: 64px;
+  height: 48px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 2px;
+  background-color: var(--surface-2);
+}
+
+.toggle-card-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-size: 15px;
+  line-height: 1.15;
+}
+
+.toggle-card-sub {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+
+/* ---------- Sessions ---------- */
+.session-new {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 18px 12px;
+  margin-bottom: 20px;
+}
+
+.session-new-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 15px;
+  margin-bottom: 12px;
+}
+
+.product-checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.check-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--border-soft);
+  border-radius: 999px;
+  padding: 6px 12px 6px 8px;
+  font-size: 13px;
+  cursor: pointer;
+  background: var(--surface-2);
+}
+
+.check-chip input {
+  accent-color: var(--accent);
+  margin: 0;
+}
+
+.session-card {
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-left: 5px solid var(--border-soft);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  margin-bottom: 14px;
+}
+
+.session-card.open {
+  border-left-color: var(--accent);
+}
+
+.session-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.session-code {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 40px;
+  letter-spacing: 0.18em;
+  line-height: 1;
+}
+
+.session-card.open .session-code {
+  color: var(--accent);
+}
+
+.session-meta {
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-top: 6px;
+}
+
+.results-table.small th,
+.results-table.small td {
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+.results-table td.warn {
+  color: var(--incorrect);
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .session-code { font-size: 30px; }
+  .admin-select { min-width: 0; flex: 1; }
+}

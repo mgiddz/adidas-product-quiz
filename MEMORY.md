@@ -8,6 +8,16 @@ file. Toolchain and stack context lives in [`CLAUDE.md`](./CLAUDE.md).
 
 ## Product overview
 
+> **v2 (2026-09-30) supersedes most of this section.** The app is now a
+> sign-in platform: magic-link employee accounts, one timed module per
+> shoe (video or photo intro → 20 s/question quiz), a PE-proctored
+> certification test by 6-character code, per-store product toggles, and
+> an employee record (scores, modules, sizes). `index.html` is the sign-in
+> + module grid; the v1 intake-form quiz lives on as `legacy-quiz.html`.
+> Full design: `docs/v2-build-spec.md` (also in the Claude project) and
+> `supabase/v2_schema.sql`. The v1 notes below remain accurate for the
+> legacy page, the study guide / cheat sheet, and the survey.
+
 - **What (revised 2026-08-19):** a training **platform** for Adidas retail
   store associates (the "Retail Specialist Program"), reached via a QR code
   on their phones. **The landing page IS the quiz** (`index.html`) — no
@@ -393,3 +403,6 @@ prototype to conflict with there.
 | 2026-09-29 | **Brand pass** (see Visual language): light cyan deck theme, red poster header band, real adidas logo extracted from the poster PDF, Oswald + Arial type. Applied to all 5 pages | Mike: "Brand pass needs to happen" — the standing FW26 brand rule. Mike also uploaded the deck's text layer this session (no graphics/fonts in it — it's the tech-sheet content for future per-product quiz generation). **Kept OUT of the repo on purpose:** Vercel serves every repo file publicly and the deck lists embargoed launches (Evo SL 2 12/1/2026, Supernova Rise 4 3/1/2027) |
 | 2026-09-29 | **Prize tiers** (`js/prizes.js`, Mike's values): 20/20 → shoes ($120–150); 18–19 → t-shirt ($10–15); 14–17 → socks ($8–12); 10–13 → keychain/lanyard ($4–8); <10 → none. Ladder shown on the intake screen, "Your prize" card on results, `prize_tier` column added to `quiz_submissions` (Supabase migration `add_prize_tier_to_quiz_submissions` + `schema.sql`), Prize column + detail line on the dashboard | Mike: "the better the scores, the higher the value prize." Tier boundaries reuse the badge thresholds so the two ladders line up; the 20/20 shoe tier is the one addition. Fulfillment is outside the app. ⚠️ **Open policy question flagged to Mike:** the Retake button + immediate per-question feedback means anyone can loop until 20/20 — with shoes on the line, decide whether first attempt counts, best-of-N, or a cooldown |
 | 2026-09-29 | **Save failure is now loud:** results screen opens with a status banner at the top (grey → green "saved" / red "NOT saved" + Retry button) replacing the grey one-liner under the breakdown; intake screen runs a preflight `select … head:true` on load and shows a red "can't reach the results server" warning if Supabase is paused/unreachable | Mike: "turn on silent save." The 2026-09-03 and 2026-09-29 incidents both produced perfect-looking results screens with nothing saved. Preflight works because a 200 on an anon SELECT (which RLS returns empty) proves the project is awake |
+| 2026-09-30 | **v2 platform built, verified, pushed.** Magic-link sign-in + `employees`; per-shoe modules with video gate (Myagi MP4s for Rise 3 / Boston 13 / Evo SL) or photo+bullets; 20 s/question timer with blur counting (`js/timer.js`, `js/quiz-engine.js`); proctored certification test by code (`test_sessions`/`test_attempts`, one attempt, 4 h expiry); `store_products` toggles; dashboard rebuilt with Results/Employees/Store products/Sessions. **Correct answers never leave the server** — grading is in `submit_*` RPCs (`supabase/v2_schema.sql`, migration `v2_platform_schema`). Prize tier is now earned on the certification test only; modules are practice | Director approved national rollout 2026-09-30; Mike: build "up a notch" with videos (photos until new ones exist), 20 s timer, magic link. Server-side grading was chosen because a static site with the key in `js/questions.js` is trivially cheatable once prizes are real. The legacy quiz stays as `legacy-quiz.html` so existing `quiz_submissions` history still has a page |
+| 2026-09-30 | Myagi presenter videos embedded straight from Myagi's CDN (`docs/myagi-video-catalog.md`) rather than downloaded/re-hosted | Verified with a cookie-less HEAD: 200, video/mp4, no auth. Zero hosting cost or egress on the free tier. Risk accepted: if Myagi locks the CDN, null `video_url` and the photo intro takes over automatically |
+| 2026-09-30 | Hyperboost Run seeded but `active = false` | Deck p.1: NAM holds launch until 2026-10-08; also only 4 questions so far |

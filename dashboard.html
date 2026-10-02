@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-<title>Results Dashboard — adidas Product Education Quiz</title>
+<title>Dashboard — adidas Product Education</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="css/styles.css" />
@@ -16,30 +16,83 @@
     <div class="admin-lockup">
       <img class="logo" src="images/adidas-logo-black.png" alt="adidas" />
       <div>
-      <div class="admin-title display">Results Dashboard</div>
-      <div class="admin-whoami" id="whoami">Loading…</div>
+        <div class="admin-title display">Product Education Dashboard</div>
+        <div class="admin-whoami" id="whoami">Loading…</div>
       </div>
     </div>
     <button type="button" class="btn-link" id="logout-btn">Sign out</button>
   </div>
 
-  <div class="store-tabs hidden" id="store-tabs"></div>
-
-  <div class="results-wrap">
-    <table class="results-table">
-      <thead>
-        <tr>
-          <th>Employee</th>
-          <th>Score</th>
-          <th>Prize</th>
-          <th>Location</th>
-          <th>Submitted</th>
-        </tr>
-      </thead>
-      <tbody id="results-tbody"></tbody>
-    </table>
-    <div class="empty-state hidden" id="empty-state">No submissions yet.</div>
+  <div class="admin-tabs" id="admin-tabs">
+    <button type="button" data-tab="results" class="active">Results</button>
+    <button type="button" data-tab="employees">Employees</button>
+    <button type="button" data-tab="products">Store products</button>
+    <button type="button" data-tab="sessions">Test sessions</button>
   </div>
+
+  <!-- ================= RESULTS ================= -->
+  <section class="admin-panel" id="panel-results">
+    <div class="panel-toolbar">
+      <select id="results-store" class="admin-select"><option value="">All my stores</option></select>
+      <select id="results-kind" class="admin-select">
+        <option value="test">Certification tests</option>
+        <option value="module">Module attempts</option>
+        <option value="legacy">Legacy lineup quiz</option>
+      </select>
+      <button type="button" class="btn-inline dark" id="export-btn">Export CSV</button>
+    </div>
+    <div class="results-wrap">
+      <table class="results-table">
+        <thead id="results-head"></thead>
+        <tbody id="results-tbody"></tbody>
+      </table>
+      <div class="empty-state hidden" id="results-empty">No results yet.</div>
+    </div>
+  </section>
+
+  <!-- ================= EMPLOYEES ================= -->
+  <section class="admin-panel hidden" id="panel-employees">
+    <div class="panel-toolbar">
+      <input type="search" id="emp-search" class="admin-select" placeholder="Search name, email, store…" />
+    </div>
+    <div class="results-wrap">
+      <table class="results-table">
+        <thead><tr><th>Name</th><th>Store</th><th>Email</th><th>Modules done</th><th>Best test</th><th>Sizes</th><th>Joined</th></tr></thead>
+        <tbody id="emp-tbody"></tbody>
+      </table>
+      <div class="empty-state hidden" id="emp-empty">No employees have signed in yet.</div>
+    </div>
+  </section>
+
+  <!-- ================= STORE PRODUCTS ================= -->
+  <section class="admin-panel hidden" id="panel-products">
+    <p class="panel-help">Turn a shoe off for a store and its associates won't see that module or get tested on it. The Full Running Lineup module is always on.</p>
+    <div class="panel-toolbar">
+      <select id="products-store" class="admin-select"></select>
+    </div>
+    <div class="toggle-grid" id="toggle-grid"></div>
+    <div class="save-banner hidden" id="products-banner"><span id="products-banner-text"></span></div>
+  </section>
+
+  <!-- ================= SESSIONS ================= -->
+  <section class="admin-panel hidden" id="panel-sessions">
+    <div class="session-new">
+      <div class="session-new-title">Open a certification test</div>
+      <div class="panel-toolbar">
+        <select id="session-store" class="admin-select"></select>
+        <select id="session-count" class="admin-select">
+          <option value="20">20 questions</option>
+          <option value="15">15 questions</option>
+          <option value="10">10 questions</option>
+        </select>
+        <button type="button" class="btn-inline dark" id="open-session-btn">Open session &rarr; get code</button>
+      </div>
+      <div class="product-checks" id="session-products"></div>
+      <div class="error-text" id="session-error"></div>
+    </div>
+
+    <div id="sessions-list"></div>
+  </section>
 </div>
 
 <div class="modal-overlay hidden" id="detail-modal">
@@ -51,6 +104,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/config.js"></script>
+<script src="js/stores.js"></script>
 <script src="js/prizes.js"></script>
 <script src="js/dashboard.js"></script>
 </body>

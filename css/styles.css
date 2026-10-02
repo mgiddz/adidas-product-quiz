@@ -89,6 +89,11 @@ h3,
   align-items: center;
   gap: 12px;
   min-width: 0;
+  flex: 1 1 auto;
+}
+@media (max-width: 420px) {
+  .header-lockup .brand { font-size: 16px; }
+  .header-lockup .eyebrow { font-size: 10px; letter-spacing: 0.08em; }
 }
 
 .logo {
@@ -1123,3 +1128,97 @@ button,
   color: #fff;
   flex: none;
 }
+
+/* =====================================================================
+   v2 (2026-09-30): sign-in / home grid / modules / timed quiz / test
+   ===================================================================== */
+
+.user-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  font-size: 12px;
+  color: #fff;
+  flex: none;
+  max-width: 40%;
+  text-align: right;
+}
+.user-chip .chip-name { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+@media (min-width: 480px) { .user-chip { flex-direction: row; align-items: center; gap: 10px; } }
+.user-chip .chip-store { display: none; }
+@media (min-width: 480px) { .user-chip .chip-store { display: inline; opacity: 0.85; } }
+.btn-link.light { background: none; border: none; color: #fff; text-decoration: underline; cursor: pointer; font-family: var(--font-body); font-size: 12px; padding: 4px 0; text-transform: none; letter-spacing: 0; min-height: 0; }
+
+.fineprint { font-size: 13px; color: var(--text-dim); margin-top: 18px; }
+.fineprint a { color: var(--text); }
+
+.home-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; }
+
+/* Module grid */
+.module-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 8px 0 28px; }
+@media (min-width: 520px) { .module-grid { grid-template-columns: 1fr 1fr; } }
+.module-card {
+  display: grid;
+  grid-template-columns: 96px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: var(--text);
+  overflow: hidden;
+  min-height: 96px;
+}
+.module-card:hover, .module-card:focus-visible { border-color: var(--accent); }
+.module-card-img { width: 96px; height: 100%; min-height: 96px; background-size: cover; background-position: center; background-color: #ddd; }
+.module-card-body { padding: 10px 0; min-width: 0; }
+.module-card-pillar { font-family: var(--font-display); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+.module-card-title { font-family: var(--font-display); font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; font-size: 19px; line-height: 1.1; margin: 2px 0 4px; }
+.module-status { font-size: 12px; color: var(--text-dim); }
+.module-status.good { color: var(--correct); font-weight: 700; }
+.module-status.perfect { color: var(--accent); font-weight: 700; }
+.module-status.new { color: var(--text-dim); }
+.module-card-cta { font-family: var(--font-display); font-weight: 600; font-size: 13px; letter-spacing: 0.08em; padding: 0 14px; white-space: nowrap; }
+
+.empty-state { padding: 24px; text-align: center; color: var(--text-dim); border: 1px dashed var(--border-soft); border-radius: var(--radius); background: var(--surface); }
+
+/* Certification code card */
+.test-card { background: var(--text); color: #fff; border-radius: var(--radius); padding: 18px; margin-bottom: 8px; }
+.test-card-label { font-family: var(--font-display); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #ffb3b3; }
+.test-card-title { font-family: var(--font-display); font-weight: 700; text-transform: uppercase; font-size: 20px; letter-spacing: 0.03em; margin: 4px 0 12px; }
+.code-form { display: flex; gap: 8px; }
+.code-form input { flex: 1; min-width: 0; font-family: var(--font-display); font-size: 22px; letter-spacing: 0.25em; text-transform: uppercase; text-align: center; padding: 10px; border: 1px solid #555; border-radius: var(--radius); background: #111; color: #fff; }
+.code-form .btn-primary { width: auto; padding: 10px 16px; min-height: 48px; }
+.test-card-note { font-size: 12px; color: #bbb; margin-top: 10px; }
+.test-card .error-text { color: #ff9c9c; }
+
+/* Module intro */
+.intro-media { margin: 0 0 18px; border: 1px solid var(--border); background: #000; border-radius: var(--radius); overflow: hidden; }
+.intro-media video, .intro-media .intro-hero { display: block; width: 100%; max-height: 320px; object-fit: cover; }
+.intro-bullets-title { font-family: var(--font-display); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; font-size: 13px; padding-bottom: 6px; border-bottom: 1px dotted var(--border); margin-bottom: 10px; }
+.intro-bullets { margin: 0 0 20px; padding-left: 20px; font-size: 15px; line-height: 1.55; }
+.intro-bullets li { margin-bottom: 6px; }
+.timer-rules { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 18px; }
+.timer-rules-title { font-family: var(--font-display); font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; font-size: 13px; margin-bottom: 8px; }
+.timer-rules ul { margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.55; }
+
+/* Timer ring */
+.timer { position: relative; width: 44px; height: 44px; flex: none; }
+.timer-svg { width: 44px; height: 44px; transform: rotate(-90deg); }
+.timer-track { fill: none; stroke: rgba(0,0,0,0.12); stroke-width: 4; }
+.timer-ring { fill: none; stroke: var(--text); stroke-width: 4; stroke-linecap: round; transition: stroke 0.2s; }
+.timer-label { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 16px; }
+.timer.urgent .timer-ring { stroke: var(--accent); }
+.timer.urgent .timer-label { color: var(--accent); animation: pulse 0.5s infinite alternate; }
+@keyframes pulse { from { transform: scale(1); } to { transform: scale(1.18); } }
+
+/* Results extras */
+.tier-pill.legend { background: var(--accent); color: #fff; }
+.tier-pill.specialist { background: #e9c94a; color: #000; }
+.tier-pill.rookie { background: #d9dde0; color: #000; }
+.tier-pill.study { background: #bfbfbf; color: #000; }
+.bq-explain { font-size: 13px; line-height: 1.5; margin-top: 6px; padding-top: 6px; border-top: 1px dotted var(--border-soft); color: var(--text); }
+.results-actions { display: flex; flex-direction: column; gap: 10px; margin-top: 24px; }
+.btn-center { display: block; text-align: center; text-decoration: none; }

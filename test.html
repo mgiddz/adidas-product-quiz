@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>adidas Running — Certification Test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<div class="app">
+  <div class="header">
+    <div class="header-top">
+      <div class="header-lockup">
+        <img class="logo" src="images/adidas-logo-white.png" alt="adidas" />
+        <div>
+          <div class="brand">adidas Running</div>
+          <div class="eyebrow">Certification Test</div>
+        </div>
+      </div>
+      <a class="home-link" href="index.html" id="home-link">&larr; Modules</a>
+    </div>
+  </div>
+
+  <!-- ================= READY ================= -->
+  <section id="screen-ready" class="screen hidden">
+    <div class="badge-pill">Certification test</div>
+    <h1 class="title">READY?</h1>
+    <p class="subtext" id="ready-store"></p>
+    <div class="timer-rules">
+      <div class="timer-rules-title">The rules</div>
+      <ul>
+        <li><strong id="rule-count">20</strong> questions across the shoes your store carries.</li>
+        <li><strong>20 seconds</strong> per question. First tap locks. No going back.</li>
+        <li><strong>One attempt.</strong> Your Product Educator sees your score live.</li>
+        <li>Leaving the page is recorded and shown to your Product Educator.</li>
+        <li>Prizes are earned here — the higher the score, the better the prize.</li>
+      </ul>
+    </div>
+    <div class="error-text" id="ready-error"></div>
+    <button type="button" class="btn-primary" id="start-btn">BEGIN — I'M READY</button>
+  </section>
+
+  <!-- ================= QUIZ ================= -->
+  <section id="screen-quiz" class="screen hidden">
+    <div class="quiz-meta">
+      <div class="progress-label" id="progress-label">Question 1 of 20</div>
+      <div class="timer" id="timer">
+        <svg viewBox="0 0 44 44" class="timer-svg" aria-hidden="true">
+          <circle class="timer-track" cx="22" cy="22" r="19"></circle>
+          <circle class="timer-ring" id="timer-ring" cx="22" cy="22" r="19"></circle>
+        </svg>
+        <div class="timer-label" id="timer-label">20</div>
+      </div>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width: 0%"></div></div>
+
+    <div class="question-card">
+      <div class="question-image-wrap hidden" id="question-image-wrap">
+        <img class="question-image" id="question-image" alt="Product photo" />
+      </div>
+      <h2 class="question-text" id="question-text"></h2>
+      <div class="option-list" id="option-list"></div>
+      <div class="order-list hidden" id="order-list"></div>
+      <div class="quiz-nav">
+        <button type="button" class="btn-primary" id="lock-order-btn" style="display:none">LOCK IN ORDER</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= RESULTS ================= -->
+  <section id="screen-results" class="screen hidden">
+    <div class="save-banner" id="save-banner"><span id="save-banner-text">Submitting…</span></div>
+
+    <div class="score-hero">
+      <div class="tier-pill" id="score-tier-pill"></div>
+      <div class="score-number" id="score-number"></div>
+      <div class="score-message" id="score-message"></div>
+    </div>
+
+    <div class="prize-card" id="prize-card">
+      <div class="prize-card-label">Your prize</div>
+      <div class="prize-card-row">
+        <div class="prize-card-icon" id="prize-icon"></div>
+        <div>
+          <div class="prize-card-title" id="prize-title"></div>
+          <div class="prize-card-value" id="prize-value"></div>
+        </div>
+      </div>
+      <div class="prize-card-note" id="prize-note"></div>
+    </div>
+
+    <p class="subtext">Show this screen to your Product Educator. Your full breakdown is on their dashboard.</p>
+    <a class="btn-primary btn-center" href="index.html">BACK TO MODULES</a>
+  </section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script src="js/prizes.js"></script>
+<script src="js/session.js"></script>
+<script src="js/timer.js"></script>
+<script src="js/quiz-engine.js"></script>
+<script src="js/test.js"></script>
+</body>
+</html>

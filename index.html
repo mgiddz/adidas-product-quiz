@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-<title>adidas Running — Product Knowledge Quiz</title>
+<title>adidas Running — Retail Specialist Program</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="css/styles.css" />
@@ -20,163 +20,118 @@
           <div class="eyebrow">Retail Specialist Program</div>
         </div>
       </div>
+      <div class="user-chip hidden" id="user-chip"></div>
     </div>
   </div>
 
-  <!-- ================= INTAKE ================= -->
-  <section id="screen-intake" class="screen">
-    <div class="badge-pill">Product Knowledge Quiz</div>
-    <h1 class="title">RUNNING LINE<br />PRODUCT TEST</h1>
+  <!-- ================= SIGN IN ================= -->
+  <section id="screen-signin" class="screen hidden">
+    <div class="badge-pill">Sign In</div>
+    <h1 class="title">TRAIN.<br />TEST.<br />GET REWARDED.</h1>
     <p class="subtext">
-      20 questions covering the current running lineup — Hyperboost Edge,
-      Adios Pro 5, Boston 13, Evo SL Woven, and Supernova Rise 3 — with a
-      spotlight on this season's featured push, Hyperboost Edge.
+      Enter your email and we'll send you a one-tap sign-in link — no
+      password. Your scores, completed modules, and prizes are saved to you.
     </p>
-    <p class="subtext">
-      Score 14+ for Specialist status, 18+ for Legend Status. The higher you
-      score, the better the prize — a perfect 20 wins a pair of shoes. Fill
-      in your info below, then start the quiz; you'll see your score, your
-      prize, and a full breakdown the moment you finish.
-    </p>
-
-    <div class="prize-ladder" id="prize-ladder" aria-label="Prizes by score"></div>
 
     <div class="save-banner error hidden" id="preflight-banner">
-      <strong>Heads up:</strong> we can't reach the results server right now.
-      You can still take the quiz and see your score, but it may not save.
-      Check your connection or tell your Product Educator before starting.
+      <strong>Heads up:</strong> we can't reach the training server right now.
+      Check your connection or tell your Product Educator.
     </div>
 
-    <form id="intake-form" novalidate>
+    <form id="signin-form" novalidate>
       <div class="field">
-        <label for="field-name">Employee Name</label>
-        <input type="text" id="field-name" data-field="employeeName" required />
+        <label for="field-email">Work or personal email</label>
+        <input type="email" id="field-email" required autocomplete="email" inputmode="email" />
+        <div class="error-text" id="email-error">Please enter a valid email address.</div>
       </div>
+      <button type="submit" class="btn-primary" id="signin-btn">EMAIL ME A SIGN-IN LINK</button>
+    </form>
 
+    <div class="save-banner ok hidden" id="sent-banner">
+      <span id="sent-text">Check your inbox — tap the link on this phone to continue.</span>
+    </div>
+
+    <p class="fineprint">Product Educators and managers: <a href="login.html">dashboard sign-in</a>.</p>
+  </section>
+
+  <!-- ================= PROFILE (first sign-in) ================= -->
+  <section id="screen-profile" class="screen hidden">
+    <div class="badge-pill">One-time setup</div>
+    <h1 class="title">TELL US<br />WHO YOU ARE</h1>
+    <p class="subtext">
+      Your store decides which shoe modules you see. Sizes are for prizes —
+      score well and we'll know what to send.
+    </p>
+
+    <form id="profile-form" novalidate>
       <div class="field">
-        <label for="field-store-location">Store Location</label>
-        <select id="field-store-location" data-field="storeLocation" required>
+        <label for="field-name">Your name</label>
+        <input type="text" id="field-name" required autocomplete="name" />
+      </div>
+      <div class="field">
+        <label for="field-store">Store</label>
+        <select id="field-store" required>
           <option value="" disabled selected>Select your store</option>
         </select>
       </div>
-
       <div class="field">
-        <label for="field-shoe-size">Shoe Size</label>
-        <input type="text" id="field-shoe-size" data-field="shoeSize" placeholder="e.g. 10.5" required />
+        <label for="field-shoe-size">Shoe size</label>
+        <input type="text" id="field-shoe-size" placeholder="e.g. 10.5" required inputmode="decimal" />
         <div class="toggle-group" id="shoe-gender-toggle" style="margin-top: 8px">
           <button type="button" data-value="M">Men's (M)</button>
           <button type="button" data-value="W">Women's (W)</button>
         </div>
       </div>
-
       <div class="field">
-        <label for="field-clothing-size">Clothing Size</label>
-        <select id="field-clothing-size" data-field="clothingSize" required>
+        <label for="field-clothing-size">Clothing size</label>
+        <select id="field-clothing-size" required>
           <option value="" disabled selected>Select a size</option>
-          <option value="XS">XS</option>
-          <option value="S">S</option>
-          <option value="M">M</option>
-          <option value="L">L</option>
-          <option value="XL">XL</option>
-          <option value="XXL">XXL</option>
+          <option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
         </select>
         <div class="toggle-group" id="clothing-gender-toggle" style="margin-top: 8px">
           <button type="button" data-value="M">Men's (M)</button>
           <button type="button" data-value="W">Women's (W)</button>
         </div>
       </div>
-
       <div class="field">
-        <label for="field-email">Email Address</label>
-        <input type="email" id="field-email" data-field="email" required />
-        <div class="error-text" id="email-error">Please enter a valid email address.</div>
+        <label for="field-snack">Favorite snack (optional)</label>
+        <input type="text" id="field-snack" placeholder="e.g. trail mix, cold brew, gummy bears" />
       </div>
-
-      <div class="field">
-        <label for="field-snack">Favorite Snack</label>
-        <input
-          type="text"
-          id="field-snack"
-          data-field="favoriteSnack"
-          placeholder="e.g. trail mix, cold brew, gummy bears"
-          required
-        />
-      </div>
-
-      <button type="submit" class="btn-primary" id="start-quiz-btn" disabled>START QUIZ</button>
+      <button type="submit" class="btn-primary" id="profile-btn" disabled>SAVE &amp; CONTINUE</button>
     </form>
   </section>
 
-  <!-- ================= QUIZ ================= -->
-  <section id="screen-quiz" class="screen hidden">
-    <div class="quiz-meta">
-      <div class="progress-label" id="progress-label">Question 1 of 21</div>
-      <div class="section-label" id="section-label"></div>
-    </div>
-    <div class="progress-track">
-      <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
-    </div>
-
-    <div class="question-card">
-      <div class="question-image-wrap hidden" id="question-image-wrap">
-        <img class="question-image" id="question-image" alt="" />
-        <div class="question-image-caption" id="question-image-caption"></div>
-      </div>
-
-      <h2 class="question-text" id="question-text"></h2>
-
-      <div class="option-list" id="option-list"></div>
-
-      <div class="order-list hidden" id="order-list"></div>
-
-      <div class="field hidden" id="open-ended-wrap">
-        <textarea
-          id="open-ended-input"
-          placeholder="Type your answer here — there's no wrong answer."
-        ></textarea>
-      </div>
-
-      <div class="explanation-box hidden" id="explanation-box"></div>
-
-      <div class="quiz-nav">
-        <button type="button" class="btn-secondary check-order-btn hidden" id="check-order-btn">
-          CHECK ORDER
-        </button>
-        <button type="button" class="btn-primary" id="next-btn" disabled>Next Question</button>
+  <!-- ================= HOME ================= -->
+  <section id="screen-home" class="screen hidden">
+    <div class="home-head">
+      <div>
+        <div class="badge-pill">Your modules</div>
+        <h1 class="title" id="home-title">KNOW THE<br />LINEUP</h1>
       </div>
     </div>
-  </section>
+    <p class="subtext">
+      One module per shoe your store carries. Each is a short intro, then a
+      timed quiz — <strong>20 seconds a question</strong>, no going back.
+      Retake modules to sharpen up before your certification test.
+    </p>
 
-  <!-- ================= RESULTS ================= -->
-  <section id="screen-results" class="screen hidden">
-    <div class="save-banner" id="save-banner">
-      <span id="save-banner-text">Saving your results…</span>
-      <button type="button" class="btn-inline hidden" id="save-retry-btn">Retry save</button>
+    <div class="module-grid" id="module-grid">
+      <div class="empty-state">Loading your modules…</div>
     </div>
 
-    <div class="score-hero">
-      <div class="tier-pill" id="score-tier-pill"></div>
-      <div class="score-number" id="score-number"></div>
-      <div class="score-message" id="score-message"></div>
+    <div class="test-card">
+      <div class="test-card-label">Certification test</div>
+      <div class="test-card-title">Got a code from your Product Educator?</div>
+      <form id="code-form" class="code-form" novalidate>
+        <input type="text" id="field-code" placeholder="6-digit code" maxlength="6" autocomplete="off" autocapitalize="characters" />
+        <button type="submit" class="btn-primary">START TEST</button>
+      </form>
+      <div class="error-text" id="code-error"></div>
+      <div class="test-card-note">One attempt, timed, and it counts. Prizes are earned here.</div>
     </div>
-
-    <div class="prize-card" id="prize-card">
-      <div class="prize-card-label">Your prize</div>
-      <div class="prize-card-row">
-        <div class="prize-card-icon" id="prize-icon"></div>
-        <div>
-          <div class="prize-card-title" id="prize-title"></div>
-          <div class="prize-card-value" id="prize-value"></div>
-        </div>
-      </div>
-      <div class="prize-card-note" id="prize-note"></div>
-    </div>
-
-    <div class="breakdown-title">Question Breakdown</div>
-    <div id="breakdown-list"></div>
 
     <div class="next-steps">
-      <div class="next-steps-title">Want to brush up?</div>
+      <div class="next-steps-title">Study up</div>
       <div class="next-steps-grid">
         <a class="hub-card" href="study-guide.html">
           <div class="hub-card-label">Prep</div>
@@ -188,26 +143,16 @@
           <div class="hub-card-title">Cheat Sheet</div>
           <div class="hub-card-desc">A condensed, one-page refresher.</div>
         </a>
-        <a class="hub-card" href="https://survey.typeform.com/to/e9urwqa7" target="_blank" rel="noopener">
-          <div class="hub-card-label">Tell Us &middot; Opens in a new tab</div>
-          <div class="hub-card-title">Experience Survey</div>
-          <div class="hub-card-desc">Quick feedback on the training — takes about a minute.</div>
-        </a>
       </div>
     </div>
-
-    <button type="button" class="btn-secondary" id="retake-btn" style="margin-top: 24px">
-      RETAKE QUIZ
-    </button>
   </section>
 </div>
 
-<!-- Supabase client (public anon key only — see js/config.js) -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/config.js"></script>
 <script src="js/stores.js"></script>
-<script src="js/questions.js"></script>
 <script src="js/prizes.js"></script>
-<script src="js/app.js"></script>
+<script src="js/session.js"></script>
+<script src="js/home.js"></script>
 </body>
 </html>

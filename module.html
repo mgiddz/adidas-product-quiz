@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>adidas Running — Shoe Module</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<div class="app">
+  <div class="header">
+    <div class="header-top">
+      <div class="header-lockup">
+        <img class="logo" src="images/adidas-logo-white.png" alt="adidas" />
+        <div>
+          <div class="brand">adidas Running</div>
+          <div class="eyebrow">Retail Specialist Program</div>
+        </div>
+      </div>
+      <a class="home-link" href="index.html" id="home-link">&larr; Modules</a>
+    </div>
+  </div>
+
+  <!-- ================= INTRO ================= -->
+  <section id="screen-intro" class="screen hidden">
+    <div class="badge-pill" id="intro-pillar">Module</div>
+    <h1 class="title" id="intro-title">…</h1>
+
+    <div class="intro-media" id="intro-media">
+      <!-- video or hero image injected -->
+    </div>
+
+    <div class="intro-bullets-title">What to know</div>
+    <ul class="intro-bullets" id="intro-bullets"></ul>
+
+    <div class="timer-rules">
+      <div class="timer-rules-title">How the quiz works</div>
+      <ul>
+        <li><strong id="rule-count">8</strong> questions, <strong>20 seconds</strong> each.</li>
+        <li>Pick an answer and it locks — no going back.</li>
+        <li>Out of time? It moves on without you.</li>
+        <li>Leaving the page is recorded on your attempt.</li>
+      </ul>
+    </div>
+
+    <button type="button" class="btn-primary" id="start-btn" disabled>START TIMED QUIZ</button>
+    <div class="fineprint" id="video-gate-note"></div>
+  </section>
+
+  <!-- ================= QUIZ ================= -->
+  <section id="screen-quiz" class="screen hidden">
+    <div class="quiz-meta">
+      <div class="progress-label" id="progress-label">Question 1 of 8</div>
+      <div class="timer" id="timer">
+        <svg viewBox="0 0 44 44" class="timer-svg" aria-hidden="true">
+          <circle class="timer-track" cx="22" cy="22" r="19"></circle>
+          <circle class="timer-ring" id="timer-ring" cx="22" cy="22" r="19"></circle>
+        </svg>
+        <div class="timer-label" id="timer-label">20</div>
+      </div>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width: 0%"></div></div>
+
+    <div class="question-card">
+      <div class="question-image-wrap hidden" id="question-image-wrap">
+        <img class="question-image" id="question-image" alt="Product photo" />
+      </div>
+      <h2 class="question-text" id="question-text"></h2>
+      <div class="option-list" id="option-list"></div>
+      <div class="order-list hidden" id="order-list"></div>
+      <div class="quiz-nav">
+        <button type="button" class="btn-primary" id="lock-order-btn" style="display:none">LOCK IN ORDER</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= RESULTS ================= -->
+  <section id="screen-results" class="screen hidden">
+    <div class="save-banner" id="save-banner"><span id="save-banner-text">Grading…</span></div>
+
+    <div class="score-hero">
+      <div class="tier-pill" id="score-tier-pill"></div>
+      <div class="score-number" id="score-number"></div>
+      <div class="score-message" id="score-message"></div>
+    </div>
+
+    <div class="breakdown-title">Question breakdown</div>
+    <div id="breakdown-list"></div>
+
+    <div class="results-actions">
+      <a class="btn-primary btn-center" href="index.html">BACK TO MODULES</a>
+      <button type="button" class="btn-secondary" id="retake-btn">RETAKE THIS MODULE</button>
+    </div>
+  </section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script src="js/session.js"></script>
+<script src="js/timer.js"></script>
+<script src="js/quiz-engine.js"></script>
+<script src="js/module.js"></script>
+</body>
+</html>
