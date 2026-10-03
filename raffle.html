@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>adidas × Move Fest — Raffle Check-In</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/styles.css" />
+<link rel="stylesheet" href="css/movefest.css" />
+</head>
+<body>
+
+<header class="mf-header" style="padding:12px 18px">
+  <div class="mf-lockup">
+    <img class="logo" src="images/adidas-logo-white.png" alt="adidas" style="height:26px" />
+    <div>
+      <div class="brand" style="font-size:18px">adidas Running</div>
+      <div class="eyebrow" style="font-size:10px">Move Fest Shoe Demo</div>
+    </div>
+  </div>
+  <img class="mf-fest" src="images/movefest-logo.png" alt="Move Fest" style="height:44px;width:44px" />
+</header>
+
+<div class="mf-form-wrap">
+
+  <!-- ===== FORM ===== -->
+  <section id="mf-form-screen">
+    <div class="mf-form-hero">
+      <div>
+        <h1>Raffle<br /><span>Check-In</span></h1>
+        <p>Demo a pair today and you're entered to win adidas Superstars, merch &amp; more gear.</p>
+      </div>
+      <img src="images/hyperboost-edge-hero.jpg" alt="adidas Hyperboost Edge" />
+    </div>
+
+    <form id="raffle-form" novalidate>
+      <div class="mf-field">
+        <label for="full_name">Name</label>
+        <input type="text" id="full_name" name="full_name" autocomplete="name" required placeholder="First and last name" />
+      </div>
+
+      <div class="mf-field">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" autocomplete="email" inputmode="email" required placeholder="you@example.com" />
+      </div>
+
+      <div class="mf-field">
+        <span class="lab">Shoe size</span>
+        <div class="mf-row">
+          <div class="mf-seg" role="radiogroup" aria-label="Sizing">
+            <input type="radio" id="g-mens" name="shoe_size_gender" value="mens" checked />
+            <label for="g-mens">Men's</label>
+            <input type="radio" id="g-womens" name="shoe_size_gender" value="womens" />
+            <label for="g-womens">Women's</label>
+          </div>
+          <select id="shoe_size" name="shoe_size" required aria-label="Shoe size"></select>
+        </div>
+      </div>
+
+      <div class="mf-field">
+        <label for="top_size">Top size</label>
+        <select id="top_size" name="top_size" required>
+          <option value="" disabled selected>Select…</option>
+          <option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option><option>3XL</option>
+        </select>
+      </div>
+
+      <div class="mf-field">
+        <label for="favorite_brand">Favorite running shoe brand</label>
+        <select id="favorite_brand" name="favorite_brand" required>
+          <option value="" disabled selected>Select…</option>
+          <option>adidas</option><option>ASICS</option><option>Brooks</option><option>HOKA</option><option>New Balance</option>
+          <option>Nike</option><option>On</option><option>Saucony</option><option>Altra</option><option>Mizuno</option><option>Puma</option>
+          <option>Under Armour</option><option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="mf-field">
+        <label for="current_shoe">Current running shoe</label>
+        <input type="text" id="current_shoe" name="current_shoe" required placeholder="e.g. Brooks Ghost 16" />
+      </div>
+
+      <div class="mf-field">
+        <label for="demo_shoe">Which adidas shoe are you demoing today? <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
+        <select id="demo_shoe" name="demo_shoe">
+          <option value="">Not sure yet — help me pick</option>
+          <option>Hyperboost Edge</option>
+          <option>Supernova Rise 3</option>
+          <option>Boston 13</option>
+          <option>Evo SL</option>
+          <option>Adios Pro 5</option>
+        </select>
+      </div>
+
+      <label class="mf-consent">
+        <input type="checkbox" id="consent" name="consent" checked />
+        <span>It's OK for adidas Running (via Mike, your local Product Educator) to email me about the raffle result and future local run events. Unsubscribe anytime.</span>
+      </label>
+
+      <div id="mf-status" class="mf-status" role="alert"></div>
+      <button type="submit" class="mf-btn" id="submit-btn">Enter the raffle</button>
+    </form>
+  </section>
+
+  <!-- ===== DONE ===== -->
+  <section id="mf-done-screen" class="mf-done" hidden>
+    <div class="check">✓</div>
+    <h2>You're in,<br /><span id="done-name"></span>!</h2>
+    <p>Show this screen at the tent. Here's what's next:</p>
+    <ol>
+      <li><b>Pick your adidas shoes</b> — we'll size you up.</li>
+      <li><b>Leave your shoes with us</b> — safe at the tent.</li>
+      <li><b>Run!</b></li>
+      <li><b>Tell us what you thought</b> when you're back.</li>
+      <li><b>Stick around for the drawing</b> — Superstars, merch &amp; more.</li>
+    </ol>
+  </section>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script>
+(function () {
+  var sizes = {
+    mens:   ["4","4.5","5","5.5","6","6.5","7","7.5","8","8.5","9","9.5","10","10.5","11","11.5","12","12.5","13","14","15"],
+    womens: ["5","5.5","6","6.5","7","7.5","8","8.5","9","9.5","10","10.5","11","11.5","12"]
+  };
+  var sizeSel = document.getElementById("shoe_size");
+  function fillSizes(g) {
+    var cur = sizeSel.value;
+    sizeSel.innerHTML = '<option value="" disabled selected>Size…</option>' +
+      sizes[g].map(function (s) { return '<option' + (s === cur ? ' selected' : '') + '>' + s + '</option>'; }).join("");
+  }
+  fillSizes("mens");
+  document.querySelectorAll('input[name="shoe_size_gender"]').forEach(function (r) {
+    r.addEventListener("change", function () { fillSizes(r.value); });
+  });
+
+  var client = null;
+  try {
+    if (window.supabase && SUPABASE_URL && SUPABASE_ANON_KEY) {
+      client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    }
+  } catch (e) { console.error("Supabase init failed", e); }
+
+  var form = document.getElementById("raffle-form");
+  var status = document.getElementById("mf-status");
+  var btn = document.getElementById("submit-btn");
+
+  function showError(msg) {
+    status.textContent = msg;
+    status.className = "mf-status err";
+    btn.disabled = false;
+    btn.textContent = "Try again";
+  }
+
+  form.addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    status.className = "mf-status";
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+    var fd = new FormData(form);
+    var payload = {
+      event: "movefest-2026",
+      full_name: (fd.get("full_name") || "").trim(),
+      email: (fd.get("email") || "").trim().toLowerCase(),
+      shoe_size: fd.get("shoe_size"),
+      shoe_size_gender: fd.get("shoe_size_gender"),
+      top_size: fd.get("top_size"),
+      favorite_brand: fd.get("favorite_brand"),
+      current_shoe: (fd.get("current_shoe") || "").trim(),
+      demo_shoe: fd.get("demo_shoe") || null,
+      consent: !!fd.get("consent")
+    };
+    if (!payload.shoe_size) { showError("Pick your shoe size."); return; }
+
+    btn.disabled = true;
+    btn.textContent = "Entering…";
+
+    if (!client) { showError("Can't reach the raffle server. Grab Mike at the tent and we'll enter you by hand."); return; }
+
+    try {
+      var res = await client.from("raffle_entries").insert([payload]);
+      if (res.error) throw res.error;
+      document.getElementById("done-name").textContent = payload.full_name.split(" ")[0];
+      document.getElementById("mf-form-screen").hidden = true;
+      document.getElementById("mf-done-screen").hidden = false;
+      window.scrollTo(0, 0);
+    } catch (err) {
+      console.error("Raffle insert failed", err);
+      showError("Your entry did NOT save (" + (err.message || "network error") + "). Tap Try again, or grab Mike at the tent.");
+    }
+  });
+})();
+</script>
+</body>
+</html>
