@@ -141,7 +141,9 @@
   var client = null;
   try {
     if (window.supabase && SUPABASE_URL && SUPABASE_ANON_KEY) {
-      client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+        auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false }
+      }); // always anon — don't inherit a dashboard login saved on this domain
     }
   } catch (e) { console.error("Supabase init failed", e); }
 

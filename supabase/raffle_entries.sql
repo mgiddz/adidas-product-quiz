@@ -20,4 +20,6 @@ create policy "raffle_anon_insert" on public.raffle_entries for insert to anon w
 drop policy if exists "raffle_admin_select" on public.raffle_entries;
 create policy "raffle_admin_select" on public.raffle_entries for select to authenticated
   using (exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin = true));
+drop policy if exists "raffle_authenticated_insert" on public.raffle_entries;
+create policy "raffle_authenticated_insert" on public.raffle_entries for insert to authenticated with check (true);
 create index if not exists raffle_entries_event_idx on public.raffle_entries (event, created_at desc);
