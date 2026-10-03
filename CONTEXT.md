@@ -5,7 +5,7 @@ not a history log (that's `MEMORY.md`'s decision log). Durable facts and
 locked decisions belong in [`MEMORY.md`](./MEMORY.md), not here. Toolchain
 and stack details live in [`CLAUDE.md`](./CLAUDE.md).
 
-_Last updated: 2026-10-01 (Cowork session: question banks deepened from the FW26 deck to 98 total; **the 2026-09-30 v2 commit was never actually pushed — GitHub push is blocked until Mike installs the Claude GitHub App**)_
+_Last updated: 2026-10-03 (Cowork: v2 pushed + live; Supabase Site URL/redirects set; answer-key leak closed with .vercelignore; giveaway + coverage audit applied — see MEMORY.md) · previously 2026-10-01 (Cowork session: question banks deepened from the FW26 deck to 98 total; **the 2026-09-30 v2 commit was never actually pushed — GitHub push is blocked until Mike installs the Claude GitHub App**)_
 
 ## What we're building right now
 
@@ -39,6 +39,11 @@ territory (`profiles.territory`) or everything if `is_admin`.
 
 ## Current status
 
+- ✅ **2026-10-03: v2 is LIVE** (pushed after Mike installed the Claude GitHub App). Supabase Auth Site URL + redirect allow-list set to the Vercel URL via Mike's Chrome — magic links now land on the live site.
+- ✅ **Answer-key leak closed:** `.vercelignore` keeps `supabase/`, `docs/`, `designs/`, photos and `*.md` out of the deployment. Before this, `/supabase/seed_v2.sql` was publicly downloadable with every correct answer.
+- ✅ **Giveaway + coverage audit applied** (`supabase/v2_audit_fixes.sql`): `questions.scope` ('test_only' keeps "which shoe?" questions out of that shoe's own module), 12 questions reworded, 4 retired (Q13/Q49/Q74/Q82), 2 Rise 3 questions added, every product's intro bullets rewritten so each tested fact appears before the quiz. Active bank: 96; module pools 9–16 per shoe.
+- ⚠️ Still nobody has signed in — `employees` is empty. Mike's first real run-through is next.
+
 - ✅ **Verified 2026-09-30, end to end:** RPCs exercised in SQL as a signed-in
   user (questions shuffled with no answer key; module graded 3/8 with
   breakdown; session opened → joined → submitted 5/10 → `keychain`; roster
@@ -64,14 +69,8 @@ territory (`profiles.territory`) or everything if `is_admin`.
 
 ## Immediate next steps
 
-0. **PUSH BLOCKER — Mike:** install the Claude GitHub App for `mgiddz/adidas-product-quiz` (link above), then tell Claude to `git push origin main`. Two commits are waiting (v2 platform + content depth). Nothing on the live site changes until then.
 
-1. **Mike — Supabase Auth config (blocks magic links):** Dashboard →
-   Authentication → URL Configuration → Site URL =
-   `https://adidas-product-quiz-4v5e.vercel.app` and add
-   `https://adidas-product-quiz-4v5e.vercel.app/**` to Redirect URLs. Until
-   then sign-in links bounce to `localhost:3000`. Claude has no tool for
-   this setting.
+1. ✅ Supabase Auth URL config done 2026-10-03 (Claude did it through Mike's Chrome).
 2. Mike: sign in on the live site as an employee, take the Boston 13 module
    (video gate) and the Hyperboost Edge module (photo intro) on your phone.
    Then open a session from the dashboard and take the test with the code.

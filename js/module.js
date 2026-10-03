@@ -73,6 +73,9 @@
   }
 
   async function startQuiz() {
+    // Keep the shoe name out of the browser tab while the quiz runs
+    // (audit 2026-10-03). Restored on the results screen.
+    document.title = "Timed quiz — adidas Running";
     const { data: questions, error } = await client.rpc("get_module_questions", { p_product_id: productId });
     if (error || !questions || !questions.length) {
       alert("Couldn't load questions: " + (error ? error.message : "no questions yet"));

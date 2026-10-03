@@ -1,5 +1,11 @@
 -- supabase/v2_audit_fixes.sql — answer-giveaway + coverage audit, 2026-10-03.
--- Applied live as migration `audit_giveaways_and_coverage`. Idempotent.
+-- Applied live 2026-10-03 as migration `audit_a_scope_column` (part A) plus
+-- a series of single statements through the Supabase connector (the
+-- connector cancelled several multi-statement batches, so parts B-E went in
+-- piecemeal; wording of a few bullets/options differs slightly from below —
+-- the live DB is authoritative). Q49 (Edge vs Superblast) was retired
+-- instead of reworded; two Rise 3 questions (price, ride feel) were added so
+-- its module pool stays above the 8-question draw. Idempotent.
 --
 -- Findings (Mike asked: "do we give away any answers, or ask things we never
 -- taught before the test?"):
