@@ -1,0 +1,11 @@
+# Files that must NOT be served from the public site.
+# Vercel deploys every file in the repo by default — the seed SQL files
+# contain the full answer key, and docs/ holds internal planning material.
+supabase/
+docs/
+designs/
+Adidas-product-photos/
+_to_delete/
+Claude outputs/
+*.md
+.gitignore
