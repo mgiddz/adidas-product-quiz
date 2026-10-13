@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>adidas Running × Taco Tuesday Run Club — Demo &amp; Raffle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/styles.css" />
+<link rel="stylesheet" href="css/movefest.css" />
+<style>
+  /* Taco Tuesday one-off (2026-10-13) — layers on movefest.css */
+  .tt-voucher {
+    border: 2px solid var(--accent);
+    border-radius: var(--radius);
+    background: #fff;
+    padding: 14px 16px;
+    margin-top: 16px;
+  }
+  .tt-voucher .amt {
+    font-family: var(--font-display); font-weight: 700; text-transform: uppercase;
+    font-size: 26px; line-height: 1; color: var(--accent); letter-spacing: .02em;
+  }
+  .tt-voucher .who {
+    font-family: var(--font-display); font-weight: 600; text-transform: uppercase;
+    letter-spacing: .1em; font-size: 11px; color: var(--text-dim); margin-top: 6px;
+  }
+  .tt-voucher p { font-size: 13px; color: var(--text-dim); margin: 8px 0 0; line-height: 1.45; }
+  .tt-split { display: grid; gap: 10px; margin-top: 16px; }
+  .tt-card {
+    border: 1.5px solid var(--border); border-radius: var(--radius);
+    background: #fff; padding: 12px 14px;
+  }
+  .tt-card .k {
+    font-family: var(--font-display); font-weight: 700; text-transform: uppercase;
+    letter-spacing: .08em; font-size: 12px; margin-bottom: 4px;
+  }
+  .tt-card.win .k { color: var(--accent); }
+  .tt-card .v { font-size: 14px; color: var(--text-dim); line-height: 1.45; }
+  .tt-hint { font-size: 12px; color: var(--text-dim); margin-top: 6px; line-height: 1.4; }
+  .tt-hint b { color: var(--accent); }
+  .tt-done-voucher {
+    border: 2px solid var(--correct); border-radius: var(--radius);
+    background: var(--correct-bg); padding: 14px 16px; margin: 16px 0 4px; text-align: left;
+  }
+  .tt-done-voucher .k {
+    font-family: var(--font-display); font-weight: 700; text-transform: uppercase;
+    letter-spacing: .06em; font-size: 14px; color: var(--correct);
+  }
+  .tt-done-voucher .em { font-weight: 700; color: var(--text); word-break: break-all; }
+  .tt-done-voucher p { margin: 6px 0 0; font-size: 13px; color: var(--text-dim); line-height: 1.45; }
+  .tt-foot {
+    margin-top: 22px; padding-top: 14px; border-top: 2px dotted var(--border);
+    font-size: 11px; color: var(--text-dim); line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+
+<header class="mf-header" style="padding:12px 18px">
+  <div class="mf-lockup">
+    <img class="logo" src="images/adidas-logo-white.png" alt="adidas" style="height:26px" />
+    <div>
+      <div class="brand" style="font-size:18px">adidas Running</div>
+      <div class="eyebrow" style="font-size:10px">Taco Tuesday Run Club</div>
+    </div>
+  </div>
+  <div style="text-align:right;font-family:var(--font-display);text-transform:uppercase;line-height:1.1">
+    <div style="font-size:10px;letter-spacing:.14em;opacity:.9">Tuesday</div>
+    <div style="font-size:17px;font-weight:700;letter-spacing:.03em">Oct 13</div>
+  </div>
+</header>
+
+<div class="mf-form-wrap">
+
+  <!-- ===== FORM ===== -->
+  <section id="tt-form-screen">
+    <div class="mf-form-hero">
+      <div>
+        <h1>Demo<br /><span>&amp; Win</span></h1>
+        <p>Take a pair out on tonight's run. Everybody walks away with $25 off — demo a pair and you're in the drawing for adidas merch.</p>
+      </div>
+      <img src="images/hyperboost-edge-hero.jpg" alt="adidas Hyperboost Edge" />
+    </div>
+
+    <div class="tt-voucher">
+      <div class="amt">$25 off any adidas shoe</div>
+      <div class="who">Fleet Feet Cincinnati · all 7 stores</div>
+      <p>Everyone who signs up tonight gets one — emailed to you after the run, good through <b>October 31</b>.</p>
+    </div>
+
+    <div class="tt-split">
+      <div class="tt-card win">
+        <div class="k">Demo a pair → raffle entry</div>
+        <div class="v">Run in adidas tonight and you're entered to win adidas merch. Winner drawn after the run.</div>
+      </div>
+      <div class="tt-card">
+        <div class="k">Takes about 30 seconds</div>
+        <div class="v">We use your sizes to get you laced up fast and to size any prizes correctly.</div>
+      </div>
+    </div>
+
+    <form id="raffle-form" novalidate>
+      <div class="mf-field">
+        <label for="full_name">Name</label>
+        <input type="text" id="full_name" name="full_name" autocomplete="name" required placeholder="First and last name" />
+      </div>
+
+      <div class="mf-field">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" autocomplete="email" inputmode="email" required placeholder="you@example.com" />
+        <div class="tt-hint"><b>Double-check this one</b> — your $25 voucher gets emailed here.</div>
+      </div>
+
+      <div class="mf-field">
+        <span class="lab">Shoe size</span>
+        <div class="mf-row">
+          <div class="mf-seg" role="radiogroup" aria-label="Sizing">
+            <input type="radio" id="g-mens" name="shoe_size_gender" value="mens" checked />
+            <label for="g-mens">Men's</label>
+            <input type="radio" id="g-womens" name="shoe_size_gender" value="womens" />
+            <label for="g-womens">Women's</label>
+          </div>
+          <select id="shoe_size" name="shoe_size" required aria-label="Shoe size"></select>
+        </div>
+      </div>
+
+      <div class="mf-field">
+        <label for="top_size">Top size</label>
+        <select id="top_size" name="top_size" required>
+          <option value="" disabled selected>Select…</option>
+          <option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option><option>3XL</option>
+        </select>
+      </div>
+
+      <div class="mf-field">
+        <label for="favorite_brand">Favorite running shoe brand</label>
+        <select id="favorite_brand" name="favorite_brand" required>
+          <option value="" disabled selected>Select…</option>
+          <option>adidas</option><option>ASICS</option><option>Brooks</option><option>HOKA</option><option>New Balance</option>
+          <option>Nike</option><option>On</option><option>Saucony</option><option>Altra</option><option>Mizuno</option><option>Puma</option>
+          <option>Under Armour</option><option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="mf-field">
+        <label for="current_shoe">Current running shoe</label>
+        <input type="text" id="current_shoe" name="current_shoe" required placeholder="e.g. Brooks Ghost 16" />
+      </div>
+
+      <div class="mf-field">
+        <label for="demo_shoe">Which adidas shoe are you demoing tonight? <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
+        <select id="demo_shoe" name="demo_shoe">
+          <option value="">Not sure yet — help me pick</option>
+          <option>Hyperboost Edge</option>
+          <option>Supernova Rise 3</option>
+          <option>Boston 13</option>
+          <option>Evo SL</option>
+          <option>Adios Pro 5</option>
+        </select>
+      </div>
+
+      <label class="mf-consent">
+        <input type="checkbox" id="consent" name="consent" checked />
+        <span>Email me my $25 Fleet Feet voucher, and it's OK for adidas Running (via Mike, your local Product Educator) to email me about the raffle result and future local run events. Unsubscribe anytime.</span>
+      </label>
+
+      <div id="tt-status" class="mf-status" role="alert"></div>
+      <button type="submit" class="mf-btn" id="submit-btn">Sign up &amp; get my $25</button>
+
+      <div class="tt-foot">
+        One entry per person. Must demo a pair on tonight's run to be eligible for the merch drawing. $25 voucher valid on any adidas shoe at any of the 7 Fleet Feet Cincinnati stores through October 31, 2026 — one per person, cannot be combined with other offers.
+      </div>
+    </form>
+  </section>
+
+  <!-- ===== DONE ===== -->
+  <section id="tt-done-screen" class="mf-done" hidden>
+    <div class="check">✓</div>
+    <h2>You're in,<br /><span id="done-name"></span>!</h2>
+
+    <div class="tt-done-voucher">
+      <div class="k">$25 voucher on its way</div>
+      <p>We'll email it to <span class="em" id="done-email"></span> after tonight's run. Good on any adidas shoe at any of the 7 Fleet Feet Cincinnati stores through <b>October 31</b>.</p>
+      <p style="margin-top:8px">Wrong email? Grab Mike before you head out and he'll fix it.</p>
+    </div>
+
+    <p>Show this screen at the tent. Here's what's next:</p>
+    <ol>
+      <li><b>Pick your adidas shoes</b> — we'll size you up.</li>
+      <li><b>Leave your shoes with us</b> — safe at the tent.</li>
+      <li><b>Run!</b></li>
+      <li><b>Tell us what you thought</b> when you're back.</li>
+      <li><b>Stick around for the drawing</b> — adidas merch on the line.</li>
+      <li><b>Tacos.</b></li>
+    </ol>
+  </section>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script>
+(function () {
+  var EVENT_TAG = "taco-tuesday-2026-10-13";
+
+  var sizes = {
+    mens:   ["4","4.5","5","5.5","6","6.5","7","7.5","8","8.5","9","9.5","10","10.5","11","11.5","12","12.5","13","14","15"],
+    womens: ["5","5.5","6","6.5","7","7.5","8","8.5","9","9.5","10","10.5","11","11.5","12"]
+  };
+  var sizeSel = document.getElementById("shoe_size");
+  function fillSizes(g) {
+    var cur = sizeSel.value;
+    sizeSel.innerHTML = '<option value="" disabled selected>Size…</option>' +
+      sizes[g].map(function (s) { return '<option' + (s === cur ? ' selected' : '') + '>' + s + '</option>'; }).join("");
+  }
+  fillSizes("mens");
+  document.querySelectorAll('input[name="shoe_size_gender"]').forEach(function (r) {
+    r.addEventListener("change", function () { fillSizes(r.value); });
+  });
+
+  var client = null;
+  try {
+    if (window.supabase && SUPABASE_URL && SUPABASE_ANON_KEY) {
+      client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+        auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false }
+      }); // always anon — don't inherit a dashboard login saved on this domain
+    }
+  } catch (e) { console.error("Supabase init failed", e); }
+
+  var form   = document.getElementById("raffle-form");
+  var status = document.getElementById("tt-status");
+  var btn    = document.getElementById("submit-btn");
+
+  function showError(msg) {
+    status.textContent = msg;
+    status.className = "mf-status err";
+    btn.disabled = false;
+    btn.textContent = "Try again";
+  }
+
+  form.addEventListener("submit", async function (ev) {
+    ev.preventDefault();
+    status.className = "mf-status";
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+
+    var fd = new FormData(form);
+    var payload = {
+      event: EVENT_TAG,
+      full_name: (fd.get("full_name") || "").trim(),
+      email: (fd.get("email") || "").trim().toLowerCase(),
+      shoe_size: fd.get("shoe_size"),
+      shoe_size_gender: fd.get("shoe_size_gender"),
+      top_size: fd.get("top_size"),
+      favorite_brand: fd.get("favorite_brand"),
+      current_shoe: (fd.get("current_shoe") || "").trim(),
+      demo_shoe: fd.get("demo_shoe") || null,
+      consent: !!fd.get("consent")
+    };
+    if (!payload.shoe_size) { showError("Pick your shoe size."); return; }
+
+    btn.disabled = true;
+    btn.textContent = "Signing you up…";
+
+    if (!client) { showError("Can't reach the server. Grab Mike at the tent and we'll sign you up by hand."); return; }
+
+    try {
+      var res = await client.from("raffle_entries").insert([payload]);
+      if (res.error) throw res.error;
+      document.getElementById("done-name").textContent  = payload.full_name.split(" ")[0];
+      document.getElementById("done-email").textContent = payload.email;
+      document.getElementById("tt-form-screen").hidden = true;
+      document.getElementById("tt-done-screen").hidden = false;
+      window.scrollTo(0, 0);
+    } catch (err) {
+      console.error("Raffle insert failed", err);
+      showError("You did NOT get signed up (" + (err.message || "network error") + "). Tap Try again, or grab Mike at the tent.");
+    }
+  });
+})();
+</script>
+</body>
+</html>
