@@ -18,7 +18,7 @@
 
   .tt-offer {
     border: 3px solid var(--accent); border-radius: var(--radius); background: #fff;
-    padding: 18px 22px; text-align: center; margin-bottom: 18px;
+    padding: clamp(18px, 2.6vh, 34px) 22px; text-align: center; margin-bottom: clamp(16px, 2.2vh, 26px);
   }
   .tt-offer .big {
     font-family: var(--font-display); font-weight: 700; text-transform: uppercase;
@@ -40,23 +40,37 @@
   }
 
   .tt-scan {
-    display: flex; align-items: center; gap: 26px; justify-content: center;
+    display: flex; align-items: center; gap: clamp(18px, 2vw, 30px); justify-content: center;
     border: 3px solid var(--border); border-radius: var(--radius);
-    background: #fff; padding: 20px 24px;
+    background: #fff; padding: clamp(18px, 2.4vh, 30px) 24px;
   }
-  .tt-scan img { width: clamp(180px, 20vw, 290px); height: auto; display: block; }
+  .tt-scan img { width: clamp(190px, 23vw, 340px); height: auto; display: block; }
   .tt-scan .t .k {
     font-family: var(--font-display); font-weight: 700; text-transform: uppercase;
     font-size: clamp(26px, 2.7vw, 44px); line-height: .95; letter-spacing: .02em;
   }
   .tt-scan .t .k span { color: var(--accent); }
   .tt-scan .t .u {
-    font-family: var(--font-body); font-size: clamp(11px, 1vw, 15px);
-    color: var(--text-dim); margin-top: 10px; word-break: break-all;
+    font-family: var(--font-body); font-size: clamp(10px, .92vw, 14px);
+    color: var(--text-dim); margin-top: 10px; white-space: nowrap;
   }
   .tt-scan .t .n {
     font-family: var(--font-display); text-transform: uppercase; letter-spacing: .1em;
     font-size: clamp(11px, .9vw, 14px); color: var(--text-dim); margin-top: 8px;
+  }
+
+  .mf-stage > div:last-child { display: flex; flex-direction: column; justify-content: center; }
+  .mf-stage .mf-steps { margin-top: auto; margin-bottom: auto; }
+  .mf-stage .mf-steps li { padding: clamp(7px, 1.1vh, 14px) 0; }
+
+  /* short landscape screens (iPad, small laptops) — keep it to one screen */
+  @media (max-height: 820px) and (min-width: 901px) {
+    .mf-stage { padding-top: 12px; padding-bottom: 6px; gap: 26px; }
+    .tt-offer { padding: 14px 18px; margin-bottom: 12px; }
+    .tt-scan { padding: 14px 18px; }
+    .mf-sub { margin: 8px 0 10px; }
+    .mf-foot { padding-top: 6px; padding-bottom: 8px; }
+    .mf-foot .fine { font-size: 10px; }
   }
 
   @media (max-width: 900px) {
