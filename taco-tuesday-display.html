@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>adidas Running × Taco Tuesday Run Club — Demo &amp; Win</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/styles.css" />
+<link rel="stylesheet" href="css/movefest.css" />
+<style>
+  /* Taco Tuesday display sign (2026-10-13) — layers on movefest.css */
+  .tt-date {
+    text-align: right; font-family: var(--font-display); text-transform: uppercase; line-height: 1.05;
+  }
+  .tt-date .d1 { font-size: 12px; letter-spacing: .18em; opacity: .9; }
+  .tt-date .d2 { font-size: 26px; font-weight: 700; letter-spacing: .03em; }
+
+  .tt-offer {
+    border: 3px solid var(--accent); border-radius: var(--radius); background: #fff;
+    padding: 18px 22px; text-align: center; margin-bottom: 18px;
+  }
+  .tt-offer .big {
+    font-family: var(--font-display); font-weight: 700; text-transform: uppercase;
+    color: var(--accent); line-height: .9; letter-spacing: .01em;
+    font-size: clamp(42px, 5.4vw, 82px);
+  }
+  .tt-offer .sub {
+    font-family: var(--font-display); font-weight: 600; text-transform: uppercase;
+    letter-spacing: .1em; font-size: clamp(13px, 1.15vw, 17px); margin-top: 8px;
+  }
+  .tt-offer .fine {
+    font-size: clamp(11px, .85vw, 13px); color: var(--text-dim); margin-top: 7px;
+  }
+  .tt-everyone {
+    display: inline-block; background: var(--accent); color: #fff;
+    font-family: var(--font-display); font-weight: 700; text-transform: uppercase;
+    letter-spacing: .12em; font-size: clamp(11px, .9vw, 14px);
+    padding: 5px 14px; margin-bottom: 10px;
+  }
+
+  .tt-scan {
+    display: flex; align-items: center; gap: 26px; justify-content: center;
+    border: 3px solid var(--border); border-radius: var(--radius);
+    background: #fff; padding: 20px 24px;
+  }
+  .tt-scan img { width: clamp(180px, 20vw, 290px); height: auto; display: block; }
+  .tt-scan .t .k {
+    font-family: var(--font-display); font-weight: 700; text-transform: uppercase;
+    font-size: clamp(26px, 2.7vw, 44px); line-height: .95; letter-spacing: .02em;
+  }
+  .tt-scan .t .k span { color: var(--accent); }
+  .tt-scan .t .u {
+    font-family: var(--font-body); font-size: clamp(11px, 1vw, 15px);
+    color: var(--text-dim); margin-top: 10px; word-break: break-all;
+  }
+  .tt-scan .t .n {
+    font-family: var(--font-display); text-transform: uppercase; letter-spacing: .1em;
+    font-size: clamp(11px, .9vw, 14px); color: var(--text-dim); margin-top: 8px;
+  }
+
+  @media (max-width: 900px) {
+    .mf-stage { grid-template-columns: 1fr !important; padding: 18px 20px 10px; }
+    .tt-scan { flex-direction: column; gap: 14px; text-align: center; }
+  }
+
+  @media print {
+    @page { size: landscape; margin: 10mm; }
+    body { background: #fff !important; }
+    .mf-display { min-height: auto; }
+    .tt-scan, .tt-offer { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="mf-display">
+
+  <header class="mf-header">
+    <div class="mf-lockup">
+      <img class="logo" src="images/adidas-logo-white.png" alt="adidas" />
+      <div>
+        <div class="brand">adidas Running</div>
+        <div class="eyebrow">Taco Tuesday Run Club · Shoe Demo</div>
+      </div>
+    </div>
+    <div class="tt-date">
+      <div class="d1">Tuesday</div>
+      <div class="d2">Oct 13</div>
+    </div>
+  </header>
+
+  <main class="mf-stage">
+
+    <!-- LEFT: the offer + QR -->
+    <div>
+      <div class="tt-offer">
+        <div class="tt-everyone">Everyone who signs up</div>
+        <div class="big">$25 off</div>
+        <div class="sub">Any adidas shoe · Fleet Feet Cincinnati</div>
+        <div class="fine">All 7 stores · emailed to you after the run · good through Oct 31</div>
+      </div>
+
+      <div class="tt-scan">
+        <img src="images/taco-tuesday-qr.png" alt="QR code to the Taco Tuesday sign-up form" />
+        <div class="t">
+          <div class="k">Scan to<br /><span>sign up</span></div>
+          <div class="n">Phone camera — no app needed</div>
+          <div class="u">adidas-product-quiz-4v5e.vercel.app/taco-tuesday.html</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: the pitch + steps -->
+    <div>
+      <h1 class="mf-title">Run in adidas.<br /><span>Win adidas.</span></h1>
+      <p class="mf-sub">
+        Take a pair out on tonight's run. Everybody walks away with $25 off —
+        demo a pair and you're in the drawing for adidas merch.
+      </p>
+
+      <ol class="mf-steps">
+        <li class="go"><div class="n">1</div><div><div class="t">Scan the QR code</div><div class="d">Takes about 30 seconds.</div></div></li>
+        <li><div class="n">2</div><div><div class="t">Pick your adidas shoes</div><div class="d">Tell us your size and we'll get you laced up.</div></div></li>
+        <li><div class="n">3</div><div><div class="t">Leave your shoes with us</div><div class="d">Safe at the tent while you run.</div></div></li>
+        <li><div class="n">4</div><div><div class="t">Run!</div><div class="d">That's the whole job.</div></div></li>
+        <li><div class="n">5</div><div><div class="t">Tell us what you thought</div><div class="d">Quick feedback when you're back.</div></div></li>
+        <li><div class="n">6</div><div><div class="t">Stick around for the drawing</div><div class="d">Then tacos.</div></div></li>
+      </ol>
+    </div>
+
+  </main>
+
+  <footer class="mf-foot">
+    <div class="mf-prizes">
+      <span class="lbl">Up for grabs</span>
+      <span class="mf-prize hot">adidas Merch</span>
+      <span class="mf-prize">$25 off for everyone</span>
+    </div>
+    <div class="fine">Must demo a pair on tonight's run to be eligible for the drawing. One entry per person. $25 voucher valid on any adidas shoe at any of the 7 Fleet Feet Cincinnati stores through October 31, 2026 — one per person, cannot be combined with other offers.</div>
+  </footer>
+
+</div>
+</body>
+</html>
