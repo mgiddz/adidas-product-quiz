@@ -59,16 +59,25 @@ create view public.speed_test_board as
 
 grant select on public.speed_test_board to anon, authenticated;
 
--- Pull the winner. One leaderboard across both expo days, scoring closed
--- Saturday 1 PM. The test page and the display sign filter to the same
--- window (SCORING_START / SCORING_END) — keep this query in step with them
--- or it will name a different winner than the board showed.
---   select full_name, email, phone, shoe_size, shoe_size_gender,
---          max(score) as best, min(time_seconds) as fastest
---   from public.speed_test_entries
---   where event = 'columbus-marathon-2026'
---     and created_at >= timestamptz '2026-10-16 00:00 America/New_York'
---     and created_at <  timestamptz '2026-10-17 13:00 America/New_York'
---   group by 1,2,3,4,5
---   order by best desc, fastest asc
+-- Pull the winner. One pool across both expo days; scoring closed Sat 1 PM.
+-- Keep this window in step with SCORING_START / SCORING_END in columbus.html
+-- and columbus-display.html, or it will name a different winner than the
+-- board showed.
+--
+-- Keyed on email, not name: one row per person = their BEST run, with the
+-- time, phone and size from that same run. (The on-screen boards dedupe by
+-- display name instead, so if two runners share a first name + last initial
+-- the board merges them while this query keeps them apart. Trust this query.)
+--
+--   select * from (
+--     select distinct on (lower(email))
+--       full_name, email, phone, shoe_size, shoe_size_gender,
+--       score, time_seconds, created_at
+--     from public.speed_test_entries
+--     where event = 'columbus-marathon-2026'
+--       and created_at >= timestamptz '2026-10-16 00:00 America/New_York'
+--       and created_at <  timestamptz '2026-10-17 13:00 America/New_York'
+--     order by lower(email), score desc, time_seconds asc
+--   ) best
+--   order by score desc, time_seconds asc
 --   limit 10;
