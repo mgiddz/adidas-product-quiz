@@ -59,15 +59,16 @@ create view public.speed_test_board as
 
 grant select on public.speed_test_board to anon, authenticated;
 
--- Pull the winner. ONLY scores set on the giveaway day count — the test
--- page and the display sign both filter to 2026-10-16 (America/New_York),
--- so this query must use the same window or it will name a different winner.
+-- Pull the winner. One leaderboard across both expo days, scoring closed
+-- Saturday 1 PM. The test page and the display sign filter to the same
+-- window (SCORING_START / SCORING_END) — keep this query in step with them
+-- or it will name a different winner than the board showed.
 --   select full_name, email, phone, shoe_size, shoe_size_gender,
 --          max(score) as best, min(time_seconds) as fastest
 --   from public.speed_test_entries
 --   where event = 'columbus-marathon-2026'
 --     and created_at >= timestamptz '2026-10-16 00:00 America/New_York'
---     and created_at <  timestamptz '2026-10-17 00:00 America/New_York'
+--     and created_at <  timestamptz '2026-10-17 13:00 America/New_York'
 --   group by 1,2,3,4,5
 --   order by best desc, fastest asc
 --   limit 10;

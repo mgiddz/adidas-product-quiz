@@ -394,14 +394,14 @@ select.sm option{background:#151515;color:var(--paper)}
   <div class="start-body">
     <p>Ten questions on the Adizero Adios Pro 5. Fifteen seconds each — the clock is worth as much as the answer.</p>
     <p>Three right in a row doubles your points. Five in a row triples them.</p>
-    <p>Study the tech sheet on the table first. Today's highest score wins the shoes.</p>
+    <p>Study the tech sheet on the table first. The highest score of the expo wins the shoes.</p>
   </div>
   <div class="ladder">
     <span class="prize-tag">The prize</span>
     <ul class="tiers">
       <li class="top"><b>TOP SCORE</b><span>Free pair of Adizero Adios Pro 5</span></li>
     </ul>
-    <p class="ladder-note">Today only — run it as often as you like, your best score today counts. Ties broken by fastest time. The winner is emailed Saturday at 2 PM.</p>
+    <p class="ladder-note">Friday and Saturday, one leaderboard — run it as often as you like, your best score counts. Scoring closes Saturday at 1 PM and the winner is emailed at 2. Ties broken by fastest time.</p>
   </div>
   <label for="name">Your name</label>
   <input id="name" maxlength="30" placeholder="FIRST + LAST" autocomplete="name" autocapitalize="words">
@@ -591,13 +591,16 @@ const PER = 15, BASE = 100, BONUS = 100;
 const MAXP = 4800;
 const TIERS = [];
 const EVENT = 'columbus-marathon-2026';
-/* Only scores set on this calendar day (America/New_York) count toward the
-   free pair. Change SCORING_DAY to run the giveaway on a different day. */
-const SCORING_DAY = '2026-10-16';
-const COUNTS_TODAY = (function(){
+/* The giveaway pool: one leaderboard across both expo days. Every score set
+   between these two moments counts. Scoring closes Saturday 1 PM so the
+   winner can be emailed at 2. Move the window by editing these two lines
+   (and the matching pair in columbus-display.html). */
+const SCORING_START = '2026-10-16T00:00:00-04:00';
+const SCORING_END   = '2026-10-17T13:00:00-04:00';
+const COUNTS_NOW = (function(){
   try {
-    return new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' })
-      .format(new Date()) === SCORING_DAY;
+    var now = Date.now();
+    return now >= Date.parse(SCORING_START) && now < Date.parse(SCORING_END);
   } catch(e){ return true; }
 })();
 const SB_URL = 'https://hlfcaczeayotkfkukaca.supabase.co';
@@ -912,10 +915,10 @@ function finish(){
   won.innerHTML =
     '<span class="prize-tag">You are on the board</span>' +
     '<div class="won-item">' + score + ' points</div>' +
-    '<p>' + (COUNTS_TODAY
-      ? 'Today\u2019s highest score takes a free pair of Adizero Adios Pro 5. Ties go to the fastest time.'
-      : 'Scoring for the giveaway closed yesterday \u2014 this run is just for bragging rights.') + '</p>' +
-    (COUNTS_TODAY ? '<p class="nextup">Winner announced by email Saturday at 2 PM.</p>' : '');
+    '<p>' + (COUNTS_NOW
+      ? 'The highest score of the expo takes a free pair of Adizero Adios Pro 5. Ties go to the fastest time.'
+      : 'Scoring closed Saturday at 1 PM \u2014 this run is just for bragging rights.') + '</p>' +
+    (COUNTS_NOW ? '<p class="nextup">Winner announced by email Saturday at 2 PM.</p>' : '');
   submitEntry();
 
   $('recap').innerHTML = log.map(r =>

@@ -182,7 +182,7 @@
         <div class="big">Free shoes</div>
         <div class="sub">Adizero Adios Pro 5</div>
         <img class="shoe" src="images/adios-pro-5-hero.jpg" alt="adidas Adizero Adios Pro 5" />
-        <div class="fine">Today's highest score takes the pair. Ties go to the fastest time.</div>
+        <div class="fine">The highest score of the expo takes the pair. Ties go to the fastest time.</div>
       </div>
 
       <div class="cb-scan">
@@ -200,7 +200,7 @@
       <h1 class="mf-title">Study the shoe.<br /><span>Beat the clock.</span></h1>
       <p class="mf-sub">
         Ten questions on the Adizero Adios Pro 5. Fifteen seconds each — answer
-        fast and the clock pays you. Today's highest score runs home in a free pair.
+        fast and the clock pays you. The highest score of the expo runs home in a free pair.
       </p>
 
       <div class="cb-rules">
@@ -214,11 +214,11 @@
         <li><div class="n">2</div><div><div class="t">Scan the QR code</div><div class="d">Name and email, then you're racing. Takes 30 seconds.</div></div></li>
         <li><div class="n">3</div><div><div class="t">Answer fast</div><div class="d">15 seconds a question. Leftover time is worth points.</div></div></li>
         <li><div class="n">4</div><div><div class="t">Chain a streak</div><div class="d">3 right in a row doubles your points. 5 in a row triples them.</div></div></li>
-        <li><div class="n">5</div><div><div class="t">Check the board</div><div class="d">Today's top score wins the shoes. Winner emailed Saturday at 2 PM.</div></div></li>
+        <li><div class="n">5</div><div><div class="t">Check the board</div><div class="d">Scoring closes Saturday at 1 PM. Winner emailed at 2.</div></div></li>
       </ol>
 
       <div class="cb-board" id="cb-board" hidden>
-        <h2>Today's top scores</h2>
+        <h2>Top scores</h2>
         <ol id="cb-list"></ol>
         <p class="empty" id="cb-empty" hidden>Be the first on the board.</p>
       </div>
@@ -232,7 +232,7 @@
       <span class="mf-prize hot">Adizero Adios Pro 5</span>
       <span class="mf-prize">Bragging rights</span>
     </div>
-    <div class="fine">Free to enter, no purchase necessary. Run it as many times as you like — your best score counts. Scores set today only. The highest score today wins one pair of Adizero Adios Pro 5 in your size; ties broken by fastest completion time. Winner notified by email Saturday, October 17 at 2 PM.</div>
+    <div class="fine">Free to enter, no purchase necessary. Run it as many times as you like — your best score counts. One leaderboard across Friday and Saturday; scoring closes Saturday, October 17 at 1 PM. The highest score wins one pair of Adizero Adios Pro 5 in your size; ties broken by fastest completion time. Winner notified by email Saturday at 2 PM.</div>
   </footer>
 
 </div>
@@ -243,15 +243,13 @@
 (function(){
   var SB  = 'https://hlfcaczeayotkfkukaca.supabase.co';
   var KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhsZmNhY3plYXlvdGtma3VrYWNhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg0NDk0MTYsImV4cCI6MjEwNDAyNTQxNn0.X2ZIqqg04QdnHe9EESzT6PoQAyZdJx144HB06S8laOI';
-  /* Only scores set on this calendar day count. Change SCORING_DAY to move the
-     giveaway to another day; the board and the sign's copy follow it. */
-  var SCORING_DAY = '2026-10-16';
-  var DAY_START = new Date(SCORING_DAY + 'T00:00:00-04:00').toISOString();
-  var DAY_END   = new Date(new Date(SCORING_DAY + 'T00:00:00-04:00').getTime()
-                           + 24 * 60 * 60 * 1000).toISOString();
+  /* One leaderboard across both expo days. Keep these two in step with
+     SCORING_START / SCORING_END in columbus.html. */
+  var SCORING_START = '2026-10-16T00:00:00-04:00';
+  var SCORING_END   = '2026-10-17T13:00:00-04:00';
   var URL_ = SB + '/rest/v1/speed_test_board?event=eq.columbus-marathon-2026'
-           + '&created_at=gte.' + encodeURIComponent(DAY_START)
-           + '&created_at=lt.'  + encodeURIComponent(DAY_END)
+           + '&created_at=gte.' + encodeURIComponent(new Date(SCORING_START).toISOString())
+           + '&created_at=lt.'  + encodeURIComponent(new Date(SCORING_END).toISOString())
            + '&select=display_name,score,time_seconds&order=score.desc,time_seconds.asc&limit=60';
 
   function paint(rows){
