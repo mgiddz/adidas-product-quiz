@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>adidas Running × Columbus Marathon — Speed Shoe Speed Test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/styles.css" />
+<link rel="stylesheet" href="css/movefest.css" />
+<style>
+  /* Columbus Marathon expo display sign (2026-10-16) — layers on movefest.css */
+  .cb-date { text-align: right; font-family: var(--font-display); text-transform: uppercase; line-height: 1.05; }
+  .cb-date .d1 { font-size: 12px; letter-spacing: .18em; opacity: .9; }
+  .cb-date .d2 { font-size: 26px; font-weight: 700; letter-spacing: .03em; }
+
+  .cb-prize {
+    border: 3px solid var(--accent); border-radius: var(--radius); background: #fff;
+    padding: clamp(14px, 2.2vh, 26px) 22px; text-align: center;
+    margin-bottom: clamp(14px, 2vh, 22px);
+  }
+  .cb-prize .tag {
+    display: inline-block; background: var(--accent); color: #fff;
+    font-family: var(--font-display); font-weight: 700; text-transform: uppercase;
+    letter-spacing: .12em; font-size: clamp(11px, .9vw, 14px); padding: 5px 14px; margin-bottom: 10px;
+  }
+  .cb-prize .big {
+    font-family: var(--font-display); font-weight: 700; text-transform: uppercase;
+    color: var(--accent); line-height: .88; letter-spacing: .01em;
+    font-size: clamp(38px, 4.6vw, 70px);
+  }
+  .cb-prize .sub {
+    font-family: var(--font-display); font-weight: 600; text-transform: uppercase;
+    letter-spacing: .1em; font-size: clamp(13px, 1.15vw, 18px); margin-top: 6px;
+  }
+  .cb-prize img.shoe {
+    width: 100%; max-height: clamp(90px, 17vh, 180px); object-fit: cover; object-position: center;
+    margin: 10px auto 0; display: block; border-radius: calc(var(--radius) - 2px); background: #000;
+  }
+  .cb-prize .fine { font-size: clamp(11px, .85vw, 13px); color: var(--text-dim); margin-top: 6px; }
+
+  .cb-scan {
+    display: flex; align-items: center; gap: clamp(16px, 2vw, 28px); justify-content: center;
+    border: 3px solid var(--border); border-radius: var(--radius); background: #fff;
+    padding: clamp(14px, 2.2vh, 26px) 24px;
+  }
+  .cb-scan img { width: clamp(160px, 20vw, 290px); height: auto; display: block; }
+  .cb-scan .t .k {
+    font-family: var(--font-display); font-weight: 700; text-transform: uppercase;
+    font-size: clamp(24px, 2.6vw, 42px); line-height: .95; letter-spacing: .02em;
+  }
+  .cb-scan .t .k span { color: var(--accent); }
+  .cb-scan .t .n {
+    font-family: var(--font-display); text-transform: uppercase; letter-spacing: .1em;
+    font-size: clamp(11px, .9vw, 14px); color: var(--text-dim); margin-top: 8px;
+  }
+  .cb-scan .t .u {
+    font-family: var(--font-body); font-size: clamp(10px, .92vw, 13px);
+    color: var(--text-dim); margin-top: 8px; white-space: nowrap;
+  }
+
+  /* the rules strip */
+  .cb-rules { display: flex; gap: 10px; margin: 0 0 clamp(10px, 1.6vh, 18px); }
+  .cb-rule {
+    flex: 1; background: #fff; border: 2px solid var(--border); border-radius: var(--radius);
+    padding: clamp(8px, 1.3vh, 14px) 10px; text-align: center;
+  }
+  .cb-rule .v {
+    font-family: var(--font-display); font-weight: 700; color: var(--accent);
+    font-size: clamp(24px, 2.5vw, 38px); line-height: 1;
+  }
+  .cb-rule .l {
+    font-family: var(--font-display); text-transform: uppercase; letter-spacing: .1em;
+    font-size: clamp(10px, .8vw, 12px); color: var(--text-dim); margin-top: 4px;
+  }
+
+  /* live leaderboard */
+  .cb-board { margin-top: clamp(10px, 1.8vh, 18px); }
+  .cb-board h2 {
+    font-family: var(--font-display); text-transform: uppercase; font-weight: 700;
+    letter-spacing: .1em; font-size: clamp(13px, 1.1vw, 16px); color: var(--text-dim);
+    margin: 0 0 8px; display: flex; align-items: center; gap: 10px;
+  }
+  .cb-board h2::after { content: ""; flex: 1; height: 2px; background: var(--border); opacity: .35; }
+  .cb-board ol { list-style: none; margin: 0; padding: 0; }
+  .cb-board li {
+    display: flex; align-items: center; gap: 12px;
+    padding: clamp(4px, .8vh, 9px) 0; border-bottom: 1.5px dotted var(--border);
+  }
+  .cb-board li .pos {
+    font-family: var(--font-display); font-weight: 700; font-size: clamp(16px, 1.5vw, 22px);
+    color: var(--text-dim); min-width: 26px; font-variant-numeric: tabular-nums;
+  }
+  .cb-board li .who {
+    flex: 1; font-family: var(--font-display); text-transform: uppercase; font-weight: 600;
+    letter-spacing: .03em; font-size: clamp(15px, 1.4vw, 21px);
+  }
+  .cb-board li .pts {
+    font-family: var(--font-display); font-weight: 700; font-size: clamp(16px, 1.5vw, 23px);
+    font-variant-numeric: tabular-nums;
+  }
+  .cb-board li.lead .pos, .cb-board li.lead .who, .cb-board li.lead .pts { color: var(--accent); }
+  .cb-board .empty { font-size: 13px; color: var(--text-dim); padding: 6px 0; }
+
+  .mf-stage > div:last-child { display: flex; flex-direction: column; justify-content: center; }
+
+  /* laptop screens — keep it to one screen, no scroll */
+  @media (max-height: 1010px) and (min-width: 901px) {
+    .mf-stage { padding-top: 8px; padding-bottom: 4px; gap: 26px; }
+    .mf-header { padding-top: 10px; padding-bottom: 10px; }
+    .cb-prize { padding: 10px 16px; margin-bottom: 9px; }
+    .cb-prize .big { font-size: clamp(32px, 3.6vw, 52px); }
+    .cb-prize img.shoe { max-height: 12vh; margin-top: 2px; }
+    .cb-prize .fine { margin-top: 4px; }
+    .cb-scan { padding: 10px 16px; }
+    .cb-scan img { width: clamp(140px, 16vw, 210px); }
+    .mf-title { font-size: clamp(28px, 2.7vw, 38px); }
+    .mf-sub { margin: 5px 0 9px; font-size: 14.5px; }
+    .cb-rules { margin-bottom: 9px; }
+    .cb-rule { padding: 6px 8px; }
+    .mf-steps li { padding: 4px 0; gap: 12px; }
+    .mf-steps .n { width: 34px; height: 34px; font-size: 19px; }
+    .mf-steps .t { font-size: 17px; }
+    .mf-steps .d { font-size: 12.5px; }
+    .cb-board { margin-top: 9px; }
+    .cb-board li { padding: 3px 0; }
+    .mf-foot { padding-top: 5px; padding-bottom: 7px; }
+    .mf-foot .fine { font-size: 9.5px; max-width: 54ch; }
+  }
+
+  /* very short screens (iPad landscape, small laptops) */
+  @media (max-height: 820px) and (min-width: 901px) {
+    .mf-stage { gap: 20px; padding-left: 30px; padding-right: 30px; }
+    .cb-prize img.shoe { max-height: 10vh; }
+    .cb-scan img { width: clamp(120px, 14vw, 170px); }
+    .mf-sub { display: none; }
+    .mf-steps .n { width: 30px; height: 30px; font-size: 17px; }
+    .mf-steps .t { font-size: 15.5px; }
+    .mf-steps .d { font-size: 11.5px; }
+    .cb-board h2 { font-size: 12px; margin-bottom: 5px; }
+  }
+
+  @media (max-width: 900px) {
+    .mf-stage { grid-template-columns: 1fr !important; padding: 18px 20px 10px; }
+    .cb-scan { flex-direction: column; gap: 14px; text-align: center; }
+  }
+
+  @media print {
+    @page { size: landscape; margin: 10mm; }
+    body { background: #fff !important; }
+    .mf-display { min-height: auto; }
+    .cb-scan, .cb-prize { break-inside: avoid; }
+    .cb-board { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="mf-display">
+
+  <header class="mf-header">
+    <div class="mf-lockup">
+      <img class="logo" src="images/adidas-logo-white.png" alt="adidas" />
+      <div>
+        <div class="brand">adidas Running</div>
+        <div class="eyebrow">Columbus Marathon · Speed Shoe Speed Test</div>
+      </div>
+    </div>
+    <div class="cb-date">
+      <div class="d1">Expo</div>
+      <div class="d2">Oct 16–17</div>
+    </div>
+  </header>
+
+  <main class="mf-stage">
+
+    <!-- LEFT: the prize + QR -->
+    <div>
+      <div class="cb-prize">
+        <div class="tag">Top score wins</div>
+        <div class="big">Free shoes</div>
+        <div class="sub">Adizero Adios Pro 5</div>
+        <img class="shoe" src="images/adios-pro-5-hero.jpg" alt="adidas Adizero Adios Pro 5" />
+        <div class="fine">Highest score of the weekend takes the pair. Ties go to the fastest time.</div>
+      </div>
+
+      <div class="cb-scan">
+        <img src="images/columbus-qr.png" alt="QR code to the Speed Shoe Speed Test" />
+        <div class="t">
+          <div class="k">Scan to<br /><span>take the test</span></div>
+          <div class="n">Phone camera — no app needed</div>
+          <div class="u">adidas-product-quiz-4v5e.vercel.app/columbus.html</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: the pitch + how it works -->
+    <div>
+      <h1 class="mf-title">Study the shoe.<br /><span>Beat the clock.</span></h1>
+      <p class="mf-sub">
+        Ten questions on the Adizero Adios Pro 5. Fifteen seconds each — answer
+        fast and the clock pays you. Highest score of the weekend runs home in a free pair.
+      </p>
+
+      <div class="cb-rules">
+        <div class="cb-rule"><div class="v">10</div><div class="l">Questions</div></div>
+        <div class="cb-rule"><div class="v">15s</div><div class="l">Per answer</div></div>
+        <div class="cb-rule"><div class="v">×3</div><div class="l">Streak bonus</div></div>
+      </div>
+
+      <ol class="mf-steps">
+        <li class="go"><div class="n">1</div><div><div class="t">Grab a tech sheet</div><div class="d">Everything you need is on it. Study it first — this is open book.</div></div></li>
+        <li><div class="n">2</div><div><div class="t">Scan the QR code</div><div class="d">Name and email, then you're racing. Takes 30 seconds.</div></div></li>
+        <li><div class="n">3</div><div><div class="t">Answer fast</div><div class="d">15 seconds a question. Leftover time is worth points.</div></div></li>
+        <li><div class="n">4</div><div><div class="t">Chain a streak</div><div class="d">3 right in a row doubles your points. 5 in a row triples them.</div></div></li>
+        <li><div class="n">5</div><div><div class="t">Check the board</div><div class="d">Top score Saturday at 2 PM wins the shoes — winner emailed.</div></div></li>
+      </ol>
+
+      <div class="cb-board" id="cb-board" hidden>
+        <h2>Today's top scores</h2>
+        <ol id="cb-list"></ol>
+        <p class="empty" id="cb-empty" hidden>Be the first on the board.</p>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="mf-foot">
+    <div class="mf-prizes">
+      <span class="lbl">Up for grabs</span>
+      <span class="mf-prize hot">Adizero Adios Pro 5</span>
+      <span class="mf-prize">Bragging rights</span>
+    </div>
+    <div class="fine">Free to enter, no purchase necessary. Run it as many times as you like — your best score counts. Highest score across the expo wins one pair of Adizero Adios Pro 5 in your size; ties broken by fastest completion time. Winner notified by email Saturday, October 17 at 2 PM.</div>
+  </footer>
+
+</div>
+
+<script>
+/* Live top scores. Reads a name-and-score-only view — no emails, no phone numbers.
+   If the view is not reachable the board just stays hidden and the sign still works. */
+(function(){
+  var SB  = 'https://hlfcaczeayotkfkukaca.supabase.co';
+  var KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhsZmNhY3plYXlvdGtma3VrYWNhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg0NDk0MTYsImV4cCI6MjEwNDAyNTQxNn0.X2ZIqqg04QdnHe9EESzT6PoQAyZdJx144HB06S8laOI';
+  var URL_ = SB + '/rest/v1/speed_test_board?event=eq.columbus-marathon-2026'
+           + '&select=display_name,score,time_seconds&order=score.desc,time_seconds.asc&limit=60';
+
+  function paint(rows){
+    var seen = {}, top = [];
+    for (var i = 0; i < rows.length; i++){
+      var k = (rows[i].display_name || '').toUpperCase();
+      if (seen[k]) continue;          // one line per runner, their best
+      seen[k] = 1;
+      top.push(rows[i]);
+      if (top.length === 5) break;
+    }
+    var list = document.getElementById('cb-list');
+    list.innerHTML = top.map(function(r, n){
+      return '<li class="' + (n === 0 ? 'lead' : '') + '">' +
+             '<span class="pos">' + (n + 1) + '</span>' +
+             '<span class="who">' + (r.display_name || 'Runner') + '</span>' +
+             '<span class="pts">' + r.score + '</span></li>';
+    }).join('');
+    document.getElementById('cb-empty').hidden = top.length > 0;
+    document.getElementById('cb-board').hidden = false;
+  }
+
+  function load(){
+    fetch(URL_, { headers: { apikey: KEY, Authorization: 'Bearer ' + KEY } })
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(rows){ if (rows) paint(rows); })
+      .catch(function(){});
+  }
+  load();
+  setInterval(load, 30000);
+})();
+</script>
+</body>
+</html>
