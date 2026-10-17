@@ -9,143 +9,152 @@
 <link rel="stylesheet" href="css/styles.css" />
 <link rel="stylesheet" href="css/movefest.css" />
 <style>
-  /* Columbus Marathon expo display sign (2026-10-16) — layers on movefest.css */
-  .cb-date { text-align: right; font-family: var(--font-display); text-transform: uppercase; line-height: 1.05; }
-  .cb-date .d1 { font-size: 12px; letter-spacing: .18em; opacity: .9; }
-  .cb-date .d2 { font-size: 26px; font-weight: 700; letter-spacing: .03em; }
+  /* Columbus Marathon expo display sign — layers on movefest.css.
+     Type is sized from min(vw, vh) so the sign grows into tall screens
+     instead of capping out and leaving dead space at the bottom.
+     Verified no-scroll from 1024x768 up to 2560x1100 and on wide/short
+     monitors (see the fit sweep in the session notes). */
 
+  .mf-header { padding-top: clamp(8px, 1.12vh, 20px); padding-bottom: clamp(8px, 1.12vh, 20px); }
+  .mf-header .logo { height: clamp(26px, min(1.99vw, 3.35vh), 54px); }
+  .mf-header .brand { font-size: clamp(16px, min(1.39vw, 2.31vh), 34px); }
+  .mf-header .eyebrow { font-size: clamp(10px, min(0.797vw, 1.28vh), 17px); }
+
+  .cb-date { text-align: right; font-family: var(--font-display); text-transform: uppercase; line-height: 1.05; }
+  .cb-date .d1 { font-size: clamp(9px, min(0.677vw, 1.12vh), 15px); letter-spacing: .18em; opacity: .9; }
+  .cb-date .d2 { font-size: clamp(18px, min(1.59vw, 2.63vh), 38px); font-weight: 700; letter-spacing: .03em; }
+
+  /* ---------- the prize ---------- */
   .cb-prize {
     border: 3px solid var(--accent); border-radius: var(--radius); background: #fff;
-    padding: clamp(14px, 2.2vh, 26px) 22px; text-align: center;
-    margin-bottom: clamp(14px, 2vh, 22px);
+    padding: clamp(10px, 1.51vh, 28px) clamp(14px, 1.28vw, 26px); text-align: center;
   }
   .cb-prize .tag {
     display: inline-block; background: var(--accent); color: #fff;
     font-family: var(--font-display); font-weight: 700; text-transform: uppercase;
-    letter-spacing: .12em; font-size: clamp(11px, .9vw, 14px); padding: 5px 14px; margin-bottom: 10px;
+    letter-spacing: .12em; font-size: clamp(11px, min(0.837vw, 1.35vh), 18px);
+    padding: .35em .85em; margin-bottom: clamp(6px, 0.717vh, 12px);
   }
   .cb-prize .big {
     font-family: var(--font-display); font-weight: 700; text-transform: uppercase;
-    color: var(--accent); line-height: .88; letter-spacing: .01em;
-    font-size: clamp(38px, 4.6vw, 70px);
+    color: var(--accent); line-height: .86; letter-spacing: .01em;
+    font-size: clamp(40px, min(5.18vw, 8.37vh), 110px);
   }
   .cb-prize .sub {
     font-family: var(--font-display); font-weight: 600; text-transform: uppercase;
-    letter-spacing: .1em; font-size: clamp(13px, 1.15vw, 18px); margin-top: 6px;
+    letter-spacing: .09em; font-size: clamp(14px, min(1.39vw, 2.31vh), 30px);
+    margin-top: clamp(3px, 0.478vh, 9px);
   }
   .cb-prize img.shoe {
-    width: 100%; height: clamp(84px, 15vh, 150px); object-fit: cover; object-position: center 45%;
-    margin: 10px auto 0; display: block; border-radius: calc(var(--radius) - 2px); background: #000;
+    width: 100%; height: clamp(58px, min(8.4vw, 10.6vh), 150px);
+    object-fit: cover; object-position: center 45%;
+    margin: clamp(7px, 0.956vh, 16px) auto 0; display: block;
+    border-radius: calc(var(--radius) - 2px); background: #000;
   }
-  .cb-prize .fine { font-size: clamp(11px, .85vw, 13px); color: var(--text-dim); margin-top: 6px; }
+  .cb-prize .fine {
+    font-size: clamp(11px, min(0.797vw, 1.28vh), 16px); color: var(--text-dim);
+    margin-top: clamp(4px, 0.638vh, 10px);
+  }
 
+  /* ---------- scan ---------- */
   .cb-scan {
-    display: flex; align-items: center; gap: clamp(16px, 2vw, 28px); justify-content: center;
+    display: flex; align-items: center; gap: clamp(14px, 1.59vw, 34px); justify-content: center;
     border: 3px solid var(--border); border-radius: var(--radius); background: #fff;
-    padding: clamp(14px, 2.2vh, 26px) 24px;
+    padding: clamp(10px, 1.51vh, 28px) clamp(16px, 1.43vw, 30px);
   }
-  .cb-scan img { width: clamp(160px, 20vw, 290px); height: auto; display: block; }
+  .cb-scan img { width: clamp(150px, min(17vw, 27.5vh), 360px); height: auto; display: block; }
   .cb-scan .t .k {
     font-family: var(--font-display); font-weight: 700; text-transform: uppercase;
-    font-size: clamp(24px, 2.6vw, 42px); line-height: .95; letter-spacing: .02em;
+    font-size: clamp(26px, min(2.95vw, 4.78vh), 64px); line-height: .94; letter-spacing: .02em;
   }
   .cb-scan .t .k span { color: var(--accent); }
   .cb-scan .t .n {
     font-family: var(--font-display); text-transform: uppercase; letter-spacing: .1em;
-    font-size: clamp(11px, .9vw, 14px); color: var(--text-dim); margin-top: 8px;
+    font-size: clamp(11px, min(0.877vw, 1.43vh), 19px); color: var(--text-dim);
+    margin-top: clamp(5px, 0.717vh, 12px);
   }
   .cb-scan .t .u {
-    font-family: var(--font-body); font-size: clamp(10px, .92vw, 13px);
-    color: var(--text-dim); margin-top: 8px; white-space: nowrap;
+    font-family: var(--font-body); font-size: clamp(10px, min(0.797vw, 1.24vh), 16px);
+    color: var(--text-dim); margin-top: clamp(5px, 0.638vh, 11px); white-space: nowrap;
   }
 
-  /* the rules strip */
-  .cb-rules { display: flex; gap: 10px; margin: 0 0 clamp(10px, 1.4vh, 15px); }
+  /* ---------- 10 / 15s / x3 ---------- */
+  .cb-rules { display: flex; gap: clamp(8px, 0.717vw, 16px); }
   .cb-rule {
     flex: 1; background: #fff; border: 2px solid var(--border); border-radius: var(--radius);
-    padding: clamp(8px, 1.3vh, 14px) 10px; text-align: center;
+    padding: clamp(6px, 0.956vh, 18px) 10px; text-align: center;
   }
   .cb-rule .v {
     font-family: var(--font-display); font-weight: 700; color: var(--accent);
-    font-size: clamp(24px, 2.5vw, 38px); line-height: 1;
+    font-size: clamp(26px, min(2.79vw, 4.46vh), 60px); line-height: 1;
   }
   .cb-rule .l {
     font-family: var(--font-display); text-transform: uppercase; letter-spacing: .1em;
-    font-size: clamp(10px, .8vw, 12px); color: var(--text-dim); margin-top: 4px;
+    font-size: clamp(10px, min(0.757vw, 1.2vh), 16px); color: var(--text-dim);
+    margin-top: clamp(2px, 0.319vh, 6px);
   }
 
-  /* live leaderboard */
-  .cb-board { margin-top: clamp(10px, 1.8vh, 18px); }
+  /* ---------- headline + steps ---------- */
+  .mf-title { margin: 0; font-size: clamp(28px, min(3.11vw, 4.94vh), 62px); line-height: .94; }
+  .mf-sub { margin: 0; font-size: clamp(13px, min(1.08vw, 1.75vh), 22px); max-width: 62ch; }
+
+  .mf-steps li { padding: clamp(4px, 0.837vh, 15px) 0; gap: clamp(10px, 0.877vw, 20px); }
+  .mf-steps .n {
+    width: clamp(30px, min(2.47vw, 3.98vh), 54px); height: clamp(30px, min(2.47vw, 3.98vh), 54px);
+    font-size: clamp(16px, min(1.35vw, 2.23vh), 30px);
+  }
+  .mf-steps .t { font-size: clamp(15px, min(1.43vw, 2.31vh), 30px); }
+  .mf-steps .d { font-size: clamp(11.5px, min(0.916vw, 1.51vh), 18px); }
+
+  /* ---------- live leaderboard ---------- */
   .cb-board h2 {
     font-family: var(--font-display); text-transform: uppercase; font-weight: 700;
-    letter-spacing: .1em; font-size: clamp(13px, 1.1vw, 16px); color: var(--text-dim);
-    margin: 0 0 8px; display: flex; align-items: center; gap: 10px;
+    letter-spacing: .1em; font-size: clamp(12px, min(0.916vw, 1.47vh), 19px);
+    color: var(--text-dim); margin: 0 0 clamp(4px, 0.558vh, 10px);
+    display: flex; align-items: center; gap: 10px;
   }
   .cb-board h2::after { content: ""; flex: 1; height: 2px; background: var(--border); opacity: .35; }
   .cb-board ol { list-style: none; margin: 0; padding: 0; }
   .cb-board li {
     display: flex; align-items: center; gap: 12px;
-    padding: clamp(4px, .8vh, 9px) 0; border-bottom: 1.5px dotted var(--border);
+    padding: clamp(3px, 0.598vh, 11px) 0; border-bottom: 1.5px dotted var(--border);
   }
   .cb-board li .pos {
-    font-family: var(--font-display); font-weight: 700; font-size: clamp(16px, 1.5vw, 22px);
-    color: var(--text-dim); min-width: 26px; font-variant-numeric: tabular-nums;
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(15px, min(1.28vw, 1.99vh), 26px);
+    color: var(--text-dim); min-width: 1.6em; font-variant-numeric: tabular-nums;
   }
   .cb-board li .who {
     flex: 1; font-family: var(--font-display); text-transform: uppercase; font-weight: 600;
-    letter-spacing: .03em; font-size: clamp(15px, 1.4vw, 21px);
+    letter-spacing: .03em; font-size: clamp(15px, min(1.28vw, 2.07vh), 28px);
   }
   .cb-board li .pts {
-    font-family: var(--font-display); font-weight: 700; font-size: clamp(16px, 1.5vw, 23px);
-    font-variant-numeric: tabular-nums;
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(15px, min(1.31vw, 2.15vh), 29px); font-variant-numeric: tabular-nums;
   }
   .cb-board li.lead .pos, .cb-board li.lead .who, .cb-board li.lead .pts { color: var(--accent); }
-  .cb-board .empty { font-size: 13px; color: var(--text-dim); padding: 6px 0; }
+  .cb-board .empty { font-size: clamp(11px, min(0.797vw, 1.28vh), 15px); color: var(--text-dim); padding: 6px 0; }
 
-  .mf-stage > div:last-child { display: flex; flex-direction: column; justify-content: center; }
-  .mf-title { margin: 0 0 8px; }
-  .mf-foot .fine { max-width: 66ch; }
-
-  /* laptop screens — keep it to one screen, no scroll */
-  @media (max-height: 1010px) and (min-width: 901px) {
-    .mf-stage { padding-top: 8px; padding-bottom: 4px; gap: 26px; }
-    .mf-header { padding-top: 10px; padding-bottom: 10px; }
-    .cb-prize { padding: 10px 16px; margin-bottom: 9px; }
-    .cb-prize .big { font-size: clamp(32px, 3.6vw, 52px); }
-    .cb-prize img.shoe { height: clamp(78px, 12vh, 120px); margin-top: 6px; }
-    .cb-prize .fine { margin-top: 4px; }
-    .cb-scan { padding: 10px 16px; }
-    .cb-scan img { width: clamp(140px, 16vw, 210px); }
-    .mf-title { font-size: clamp(28px, 2.7vw, 38px); }
-    .mf-sub { margin: 5px 0 9px; font-size: 14.5px; }
-    .cb-rules { margin-bottom: 9px; }
-    .cb-rule { padding: 6px 8px; }
-    .mf-steps li { padding: 4px 0; gap: 12px; }
-    .mf-steps .n { width: 34px; height: 34px; font-size: 19px; }
-    .mf-steps .t { font-size: 17px; }
-    .mf-steps .d { font-size: 12.5px; }
-    .cb-board { margin-top: 9px; }
-    .cb-board li { padding: 3px 0; }
-    .mf-foot { padding-top: 5px; padding-bottom: 7px; }
-    .mf-foot .fine { font-size: 9.5px; max-width: 54ch; }
+  /* ---------- fill the stage instead of clustering at the top ---------- */
+  .mf-stage {
+    padding: clamp(8px, 1.28vh, 26px) clamp(24px, 2.39vw, 64px) clamp(6px, 0.956vh, 18px);
+    gap: clamp(22px, 2.39vw, 56px);
+    align-items: stretch;
+  }
+  .mf-stage > div {
+    display: flex; flex-direction: column; justify-content: center;
+    gap: clamp(10px, 1.35vh, 24px); min-width: 0;
   }
 
-  /* very short screens (iPad landscape, small laptops) */
-  @media (max-height: 820px) and (min-width: 901px) {
-    .mf-stage { gap: 20px; padding-left: 30px; padding-right: 30px; }
-    .cb-prize img.shoe { height: clamp(70px, 10vh, 100px); }
-    .cb-scan img { width: clamp(120px, 14vw, 170px); }
-    .mf-sub { display: none; }
-    .mf-title { margin-bottom: 12px; }
-    .mf-steps .n { width: 30px; height: 30px; font-size: 17px; }
-    .mf-steps .t { font-size: 15.5px; }
-    .mf-steps .d { font-size: 11.5px; }
-    .cb-board h2 { font-size: 12px; margin-bottom: 5px; }
-  }
+  .mf-foot { padding-top: clamp(4px, 0.638vh, 12px); padding-bottom: clamp(6px, 0.797vh, 16px); }
+  .mf-foot .lbl { font-size: clamp(10px, min(0.797vw, 1.28vh), 16px); }
+  .mf-prize { font-size: clamp(11px, min(0.837vw, 1.35vh), 18px); }
+  .mf-foot .fine { font-size: clamp(9px, min(0.638vw, 1.04vh), 14px); max-width: 70ch; }
 
   @media (max-width: 900px) {
     .mf-stage { grid-template-columns: 1fr !important; padding: 18px 20px 10px; }
     .cb-scan { flex-direction: column; gap: 14px; text-align: center; }
+    .cb-scan .t .u { white-space: normal; word-break: break-all; }
   }
 
   @media print {
