@@ -59,15 +59,15 @@ create view public.speed_test_board as
 
 grant select on public.speed_test_board to anon, authenticated;
 
--- Pull the winner. One pool across both expo days; scoring closed Sat 1 PM.
--- Keep this window in step with SCORING_START / SCORING_END in columbus.html
--- and columbus-display.html, or it will name a different winner than the
--- board showed.
+-- Pull the winner. ONLY a runner's FIRST run counts (Mike, 2026-10-17);
+-- later runs are recorded but are not eligible. One pool across both expo
+-- days, scoring closed Sat 1 PM. Keep this window in step with
+-- SCORING_START / SCORING_END in columbus.html and columbus-display.html.
 --
--- Keyed on email, not name: one row per person = their BEST run, with the
--- time, phone and size from that same run. (The on-screen boards dedupe by
--- display name instead, so if two runners share a first name + last initial
--- the board merges them while this query keeps them apart. Trust this query.)
+-- Keyed on email, earliest run per person. The on-screen boards do the same
+-- thing keyed on display name, so if two runners share a first name + last
+-- initial the board merges them while this query keeps them apart.
+-- Trust this query.
 --
 --   select * from (
 --     select distinct on (lower(email))
@@ -77,7 +77,14 @@ grant select on public.speed_test_board to anon, authenticated;
 --     where event = 'columbus-marathon-2026'
 --       and created_at >= timestamptz '2026-10-16 00:00 America/New_York'
 --       and created_at <  timestamptz '2026-10-17 13:00 America/New_York'
---     order by lower(email), score desc, time_seconds asc
---   ) best
+--     order by lower(email), created_at asc        -- first run, not best
+--   ) first_runs
 --   order by score desc, time_seconds asc
 --   limit 10;
+--
+-- Sanity check - who ran more than once (their extra runs are ignored):
+--   select lower(email) as email, count(*) as runs,
+--          min(created_at) as first_run, max(score) as best_ignored
+--   from public.speed_test_entries
+--   where event = 'columbus-marathon-2026'
+--   group by 1 having count(*) > 1 order by runs desc;

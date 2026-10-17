@@ -238,7 +238,7 @@
         <li><div class="n">2</div><div><div class="t">Scan the QR code</div><div class="d">Name and email, then you're racing. Takes 30 seconds.</div></div></li>
         <li><div class="n">3</div><div><div class="t">Answer fast</div><div class="d">15 seconds a question. Leftover time is worth points.</div></div></li>
         <li><div class="n">4</div><div><div class="t">Chain a streak</div><div class="d">3 right in a row doubles your points. 5 in a row triples them.</div></div></li>
-        <li><div class="n">5</div><div><div class="t">Check the board</div><div class="d">Scoring closes Saturday at 1 PM. Winner emailed at 2.</div></div></li>
+        <li><div class="n">5</div><div><div class="t">Check the board</div><div class="d">First run only. Scoring closes Saturday at 1 PM, winner emailed at 2.</div></div></li>
       </ol>
 
       <div class="cb-board" id="cb-board" hidden>
@@ -256,7 +256,7 @@
       <span class="mf-prize hot">Adizero Adios Pro 5</span>
       <span class="mf-prize">Bragging rights</span>
     </div>
-    <div class="fine">Free to enter, no purchase necessary. Run it as many times as you like — your best score counts. One leaderboard across Friday and Saturday; scoring closes Saturday, October 17 at 1 PM. The highest score wins one pair of Adizero Adios Pro 5 in your size; ties broken by fastest completion time. Winner notified by email Saturday at 2 PM.</div>
+    <div class="fine">Free to enter, no purchase necessary. Only your first run counts toward the prize — play again any time for fun. One leaderboard across Friday and Saturday; scoring closes Saturday, October 17 at 1 PM. The highest first-run score wins one pair of Adizero Adios Pro 5 in your size; ties broken by fastest completion time. Winner notified by email Saturday at 2 PM.</div>
   </footer>
 
 </div>
@@ -274,17 +274,24 @@
   var URL_ = SB + '/rest/v1/speed_test_board?event=eq.columbus-marathon-2026'
            + '&created_at=gte.' + encodeURIComponent(new Date(SCORING_START).toISOString())
            + '&created_at=lt.'  + encodeURIComponent(new Date(SCORING_END).toISOString())
-           + '&select=display_name,score,time_seconds&order=score.desc,time_seconds.asc&limit=60';
+           + '&select=display_name,score,time_seconds,created_at'
+           + '&order=created_at.asc&limit=2000';
 
   function paint(rows){
-    var seen = {}, top = [];
+    /* Only a runner's FIRST run is eligible. Rows arrive oldest-first, so the
+       first time a name appears is their qualifying run; later ones are ignored. */
+    rows.sort(function(a,b){ return new Date(a.created_at) - new Date(b.created_at); });
+    var seen = {}, firsts = [];
     for (var i = 0; i < rows.length; i++){
       var k = (rows[i].display_name || '').toUpperCase();
-      if (seen[k]) continue;          // one line per runner, their best
+      if (seen[k]) continue;
       seen[k] = 1;
-      top.push(rows[i]);
-      if (top.length === 5) break;
+      firsts.push(rows[i]);
     }
+    firsts.sort(function(a,b){
+      return b.score - a.score || (a.time_seconds || 9999) - (b.time_seconds || 9999);
+    });
+    var top = firsts.slice(0, 5);
     var list = document.getElementById('cb-list');
     list.innerHTML = top.map(function(r, n){
       return '<li class="' + (n === 0 ? 'lead' : '') + '">' +

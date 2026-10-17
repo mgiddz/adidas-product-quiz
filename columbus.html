@@ -463,14 +463,14 @@ select.sm option{background:#151515;color:var(--paper)}
   <div class="start-body">
     <p>Ten questions on the Adizero Adios Pro 5. Fifteen seconds each — the clock is worth as much as the answer.</p>
     <p>Three right in a row doubles your points. Five in a row triples them.</p>
-    <p>Study the tech sheet on the table first. The highest score of the expo wins the shoes.</p>
+    <p>Study the tech sheet on the table first — you get one scoring run, and the highest first run of the expo wins the shoes.</p>
   </div>
   <div class="ladder">
     <span class="prize-tag">The prize</span>
     <ul class="tiers">
       <li class="top"><b>TOP SCORE</b><span>Free pair of Adizero Adios Pro 5</span></li>
     </ul>
-    <p class="ladder-note">Friday and Saturday, one leaderboard — run it as often as you like, your best score counts. Scoring closes Saturday at 1 PM and the winner is emailed at 2. Ties broken by fastest time.</p>
+    <p class="ladder-note">One shot: <strong>your first run is the one that counts.</strong> Play again as often as you like for fun, but only that first score is in the running. Ties broken by fastest time. Scoring closes Saturday at 1 PM and the winner is emailed at 2.</p>
   </div>
   <label for="name">Your name</label>
   <input id="name" maxlength="30" placeholder="FIRST + LAST" autocomplete="name" autocapitalize="words">
@@ -944,8 +944,8 @@ function loadStanding(){
   var url = SB_URL + '/rest/v1/speed_test_board?event=eq.' + encodeURIComponent(EVENT)
           + '&created_at=gte.' + encodeURIComponent(new Date(SCORING_START).toISOString())
           + '&created_at=lt.'  + encodeURIComponent(new Date(SCORING_END).toISOString())
-          + '&select=display_name,score,time_seconds'
-          + '&order=score.desc,time_seconds.asc&limit=1000';
+          + '&select=display_name,score,time_seconds,created_at'
+          + '&order=created_at.asc&limit=2000';
 
   fetch(url, { headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY } })
     .then(function(r){ return r.ok ? r.json() : null; })
@@ -953,7 +953,9 @@ function loadStanding(){
       if (btn) btn.disabled = false;
       if (!rows) return;
 
-      /* one line per runner, their best score */
+      /* Only a runner's FIRST run is eligible. Sort oldest-first ourselves so
+         the rule never depends on the API returning rows in order. */
+      rows.sort(function(a,b){ return new Date(a.created_at) - new Date(b.created_at); });
       var seen = {}, people = [];
       rows.forEach(function(r){
         var k = (r.display_name || '').toUpperCase();
@@ -1000,9 +1002,15 @@ function loadStanding(){
         $('chase').hidden = true;
       }
 
-      $('standing-note').textContent = COUNTS_NOW
-        ? 'Live board. Your best run counts \u2014 run it again to move up.'
-        : 'Final standings. Scoring closed Saturday at 1 PM.';
+      if (!COUNTS_NOW){
+        $('standing-note').textContent = 'Final standings. Scoring closed Saturday at 1 PM.';
+      } else if (myIndex >= 0 && people[myIndex].score !== score){
+        $('standing-note').innerHTML =
+          'Your <b>first</b> run is the one in the running \u2014 that is the ' +
+          people[myIndex].score + ' on the board. This one was just for fun.';
+      } else {
+        $('standing-note').textContent = 'Live board. First run only \u2014 play again for fun, but this score is the one that counts.';
+      }
       $('standing').hidden = false;
     })
     .catch(function(){ if (btn) btn.disabled = false; });
@@ -1092,7 +1100,7 @@ function finish(){
     '<p>' + (COUNTS_NOW
       ? 'The highest score of the expo takes a free pair of Adizero Adios Pro 5. Ties go to the fastest time.'
       : 'Scoring closed Saturday at 1 PM \u2014 this run is just for bragging rights.') + '</p>' +
-    (COUNTS_NOW ? '<p class="nextup">Winner announced by email Saturday at 2 PM.</p>' : '');
+    (COUNTS_NOW ? '<p class="nextup">First run only \u2014 winner announced by email Saturday at 2 PM.</p>' : '');
   submitEntry();
 
   $('recap').innerHTML = log.map(r =>
