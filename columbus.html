@@ -133,7 +133,7 @@ input::placeholder{color:rgba(244,242,237,.2)}
 
 /* ---------- midsole diagram ---------- */
 .cut{margin:4px 0 18px;background:#151515;padding:16px 14px 12px}
-.cut svg{width:100%;height:auto;display:block}
+.cut svg{width:100%;height:auto;display:block;max-height:min(26vh,230px)}
 .cut figcaption{
   font-family:'Barlow Condensed';font-size:15px;letter-spacing:.14em;
   color:rgba(244,242,237,.5);margin-top:10px;
@@ -347,13 +347,43 @@ input::placeholder{color:rgba(244,242,237,.2)}
 .shot{margin:2px 0 18px;background:#000;position:relative;overflow:hidden}
 .shot.light{background:#F4F2ED}
 .shot.light figcaption{color:rgba(10,10,10,.55)}
-.shot img{width:100%;height:auto;display:block}
+.shot img{width:100%;height:auto;display:block;max-height:min(26vh,230px);object-fit:contain}
 .shot figcaption{
   position:absolute;left:12px;bottom:10px;
   font-family:'Barlow Condensed';font-size:14px;letter-spacing:.16em;
   color:rgba(244,242,237,.62);
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* Short phones (iPhone SE and friends): tighten the question card so the
+   options stay above the fold while the clock is running. */
+@media (max-height:720px){
+  .shot img,.cut svg{max-height:20vh}
+  .course{margin-bottom:15px}
+  .dash{height:28px;margin-bottom:9px}
+  .qtext{font-size:20px;margin-bottom:13px}
+  .shot{margin:2px 0 11px}
+  .cut{margin:2px 0 11px;padding:10px 10px 8px}
+  .opt{padding:13px 16px;font-size:16px}
+  .opts{gap:8px}
+}
+
+/* ---------- Next pinned to the thumb ----------
+   Once an answer is locked, Next sits on the bottom edge of the screen so
+   nobody has to scroll to carry on. The quiz screen gets matching bottom
+   padding so the verdict text is never hidden behind it. */
+#s-quiz.answered{padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+#next:not([hidden]){
+  position:fixed;left:50%;transform:translateX(-50%);bottom:0;
+  width:min(560px,100%);margin:0;z-index:30;
+  padding:18px 22px calc(18px + env(safe-area-inset-bottom));
+  box-shadow:0 -18px 34px rgba(10,10,10,.75);
+}
+@media (min-width:600px){
+  #next:not([hidden]){bottom:18px;width:min(516px,calc(100% - 44px));
+    padding-bottom:18px;box-shadow:0 16px 34px rgba(10,10,10,.55)}
+  #s-quiz.answered{padding-bottom:96px}
+}
 
 /* ---------- live standing on the results screen ---------- */
 .standing{margin-top:22px;border-top:2px solid var(--line);padding-top:18px}
@@ -713,6 +743,7 @@ function render(){
   }
   $('verdict').hidden = true;
   $('next').hidden = true;
+  $('s-quiz').classList.remove('answered');
 
   const pct = (i / Q.length) * 100;
   $('fill').style.width = pct + '%';
@@ -804,7 +835,14 @@ function answer(pick){
   $('verdict').hidden = false;
   $('next').hidden = false;
   $('next').textContent = i === Q.length - 1 ? 'See your split' : 'Next';
-  $('next').focus();
+  $('s-quiz').classList.add('answered');
+  /* bring the explanation up without stealing the tap target */
+  try {
+    $('next').focus({ preventScroll: true });
+    $('verdict').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  } catch(e){
+    $('verdict').scrollIntoView();
+  }
 }
 
 /* ---------- host leaderboard ---------- */
