@@ -151,6 +151,18 @@
   .mf-prize { font-size: clamp(11px, min(0.837vw, 1.35vh), 18px); }
   .mf-foot .fine { font-size: clamp(9px, min(0.638vw, 1.04vh), 14px); max-width: 70ch; }
 
+  /* Short windows (browser not full screen, small laptops). Shed the
+     least important things rather than shrinking everything to nothing. */
+  @media (max-height: 700px) and (min-width: 901px) {
+    .mf-sub { display: none; }
+    .cb-board li:nth-child(n+4) { display: none; }
+    .mf-foot .fine { display: none; }
+  }
+  @media (max-height: 620px) and (min-width: 901px) {
+    .cb-prize img.shoe { display: none; }
+    .cb-board { display: none; }
+  }
+
   @media (max-width: 900px) {
     .mf-stage { grid-template-columns: 1fr !important; padding: 18px 20px 10px; }
     .cb-scan { flex-direction: column; gap: 14px; text-align: center; }
